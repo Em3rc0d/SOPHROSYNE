@@ -159,8 +159,34 @@ CI builds immutable deployable artifacts once, records provenance/SBOM/digests, 
 
 Canonical detail: `docs/implementation/CI_CD_AND_ENVIRONMENTS.md`.
 
+---
+
+## ADR-0012 — Design Closure Is Separate from Implementation Verification
+
+**Status:** ACCEPTED
+
+### Context
+
+Security, observability and operational nodes were previously marked `CLOSED_FOR_DESIGN` because their actual implementation could only be proven later through tests, drills and measured behavior. That mixed two different states: whether a decision was still architecturally open and whether future code had already proven conformance.
+
+### Decision
+
+MK0 uses `CLOSED` for an internal design node once its semantics, invariants, failure behavior, change control and verification obligations are explicit and no high-impact choice is deferred to coding.
+
+Implementation proof is represented separately through immutable typed acceptance receipts defined in `docs/implementation/ACCEPTANCE_RECEIPTS.md`.
+
+### Consequences
+
+- all known MK1 internal design nodes can be closed without pretending unbuilt software has already passed tests;
+- security/SLO/operations targets remain closed contracts while their receipts remain pending until implementation exists;
+- a failed receipt blocks promotion but does not silently rewrite the design;
+- if implementation reveals a genuine contradiction, the affected lock is explicitly reopened and an ADR is required when an invariant changes;
+- `CLOSED_FOR_DESIGN` is retired from the MK1 internal lock table.
+
+Canonical detail: `docs/implementation/INTERNAL_CLOSURE_AUDIT.md`, `docs/implementation/ACCEPTANCE_RECEIPTS.md`, `docs/implementation/BUILD_READINESS.md`.
+
 ## ADR policy
 
-Create a new ADR whenever a change modifies product promise, execution authority, risk semantics, regulatory posture, data-rights assumptions, probability semantics, LLM authority, runtime topology, authoritative persistence, point-in-time semantics or another invariant listed in `GOVERNANCE.md`.
+Create a new ADR whenever a change modifies product promise, execution authority, risk semantics, regulatory posture, data-rights assumptions, probability semantics, LLM authority, runtime topology, authoritative persistence, point-in-time semantics, design-closure semantics or another invariant listed in `GOVERNANCE.md`.
 
 Accepted ADRs may be superseded, but not silently edited into the opposite decision. A reversal requires a new ADR identifying the superseded record and evidence motivating the change.

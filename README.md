@@ -47,16 +47,19 @@ The system must be able to say **NO CONCLUSION** or **NO TRADE**. Activity is no
 13. **Historical computation cannot use evidence that was not yet available at its `as_of` cutoff.**
 14. **A finalized Decision Record is immutable.**
 15. **Product code does not begin while a known open lock can materially change MK1 architecture or scope.**
+16. **A closed design decision and a passed implementation receipt are different things; neither may impersonate the other.**
 
 ## Program state
 
 **Current phase:** `MK0 — Closure & Validation`
 
-**Internal executable design:** `READY`
+**Internal executable design:** `CLOSED`
+
+**Known internal design nodes remaining:** `0`
 
 **MK1 production implementation:** `BLOCKED BY EXTERNAL / EMPIRICAL LOCKS`
 
-The architecture is now specific enough that implementation should not need to invent major semantics while coding. Remaining blockers are intentionally external or empirical rather than hidden design ambiguity:
+The architecture is now closed enough that implementation must not invent major semantics while coding. Remaining blockers are intentionally external or empirical rather than hidden design ambiguity:
 
 1. Peru regulatory opinion on exact product flows and copy — issue #2.
 2. Commercial data-rights confirmation for exact production sources/use — issue #3.
@@ -64,7 +67,11 @@ The architecture is now specific enough that implementation should not need to i
 4. Reproducible deterministic quant baseline and evidence for/against ML increment — issue #5.
 5. Moat/competitive durability evidence — issue #6.
 
-Canonical gate: [`docs/implementation/BUILD_READINESS.md`](docs/implementation/BUILD_READINESS.md).
+Canonical internal-closure audit: [`docs/implementation/INTERNAL_CLOSURE_AUDIT.md`](docs/implementation/INTERNAL_CLOSURE_AUDIT.md).
+
+Canonical implementation-proof schema: [`docs/implementation/ACCEPTANCE_RECEIPTS.md`](docs/implementation/ACCEPTANCE_RECEIPTS.md).
+
+Canonical promotion gate: [`docs/implementation/BUILD_READINESS.md`](docs/implementation/BUILD_READINESS.md).
 
 Until that gate is satisfied, production feature code must not outrun the evidence.
 
@@ -72,24 +79,26 @@ Until that gate is satisfied, production feature code must not outrun the eviden
 
 Read the repository in this order:
 
-1. [`GOVERNANCE.md`](GOVERNANCE.md) — how decisions and MK promotion work.
-2. [`MK0_LOCKS.md`](MK0_LOCKS.md) — current truth about what is closed and what is not.
-3. [`docs/product/PRODUCT_THESIS.md`](docs/product/PRODUCT_THESIS.md) — problem, JTBD, category and moat hypothesis.
-4. [`docs/architecture/DOMAIN_MODEL.md`](docs/architecture/DOMAIN_MODEL.md) — canonical vocabulary.
-5. [`docs/architecture/SYSTEM_CONTRACTS.md`](docs/architecture/SYSTEM_CONTRACTS.md) — evidence, scenario, risk, strategy, record and LLM contracts.
-6. [`docs/implementation/BUILD_READINESS.md`](docs/implementation/BUILD_READINESS.md) — objective implementation gate.
-7. [`docs/implementation/REFERENCE_ARCHITECTURE.md`](docs/implementation/REFERENCE_ARCHITECTURE.md) — runtime/deployable/module topology.
-8. [`docs/implementation/DATA_MODEL.md`](docs/implementation/DATA_MODEL.md) — point-in-time, lineage and persistence semantics.
-9. [`docs/implementation/MARKET_DATA_SEMANTICS.md`](docs/implementation/MARKET_DATA_SEMANTICS.md) — instrument, session, bar, correction, corporate-action and currency semantics.
-10. [`docs/implementation/API_CONTRACTS.md`](docs/implementation/API_CONTRACTS.md) — API/error/idempotency contract.
-11. [`docs/implementation/FAILURE_AND_DEGRADATION.md`](docs/implementation/FAILURE_AND_DEGRADATION.md) — how the system fails safely.
-12. [`docs/implementation/REPLAY_AND_REPRODUCIBILITY.md`](docs/implementation/REPLAY_AND_REPRODUCIBILITY.md) — historical truth and replay contract.
-13. [`docs/quant/VALIDATION_PROTOCOL.md`](docs/quant/VALIDATION_PROTOCOL.md) — scientific gate for strategies and ML.
-14. [`docs/implementation/QUANT_ENGINE_CONTRACT.md`](docs/implementation/QUANT_ENGINE_CONTRACT.md) — fills, costs, accounting, returns, drawdown and benchmark mechanics.
-15. [`docs/implementation/TEST_STRATEGY.md`](docs/implementation/TEST_STRATEGY.md) — correctness/security/failure gates.
-16. [`RISK_REGISTER.md`](RISK_REGISTER.md) and [`quarries/README.md`](quarries/README.md) — active risks and unresolved workstreams.
-17. [`docs/mvp/MK1_SPEC.md`](docs/mvp/MK1_SPEC.md) and [`docs/implementation/IMPLEMENTATION_SEQUENCE.md`](docs/implementation/IMPLEMENTATION_SEQUENCE.md) — what MK1 contains and the only intended build order.
-18. [`ROADMAP.md`](ROADMAP.md) — promotion path beyond MK0.
+1. [`GOVERNANCE.md`](GOVERNANCE.md) — how decisions, closure and MK promotion work.
+2. [`MK0_LOCKS.md`](MK0_LOCKS.md) — canonical lock registry and current project truth.
+3. [`docs/implementation/INTERNAL_CLOSURE_AUDIT.md`](docs/implementation/INTERNAL_CLOSURE_AUDIT.md) — proof that known MK1 internal design nodes are closed.
+4. [`docs/product/PRODUCT_THESIS.md`](docs/product/PRODUCT_THESIS.md) — problem, JTBD, category and moat hypothesis.
+5. [`docs/architecture/DOMAIN_MODEL.md`](docs/architecture/DOMAIN_MODEL.md) — canonical vocabulary.
+6. [`docs/architecture/SYSTEM_CONTRACTS.md`](docs/architecture/SYSTEM_CONTRACTS.md) — evidence, scenario, risk, strategy, record and LLM contracts.
+7. [`docs/implementation/BUILD_READINESS.md`](docs/implementation/BUILD_READINESS.md) — objective implementation gate.
+8. [`docs/implementation/ACCEPTANCE_RECEIPTS.md`](docs/implementation/ACCEPTANCE_RECEIPTS.md) — how future implementation proves conformance without reopening closed design.
+9. [`docs/implementation/REFERENCE_ARCHITECTURE.md`](docs/implementation/REFERENCE_ARCHITECTURE.md) — runtime/deployable/module topology.
+10. [`docs/implementation/DATA_MODEL.md`](docs/implementation/DATA_MODEL.md) — point-in-time, lineage and persistence semantics.
+11. [`docs/implementation/MARKET_DATA_SEMANTICS.md`](docs/implementation/MARKET_DATA_SEMANTICS.md) — instrument, session, bar, correction, corporate-action and currency semantics.
+12. [`docs/implementation/API_CONTRACTS.md`](docs/implementation/API_CONTRACTS.md) — API/error/idempotency contract.
+13. [`docs/implementation/FAILURE_AND_DEGRADATION.md`](docs/implementation/FAILURE_AND_DEGRADATION.md) — how the system fails safely.
+14. [`docs/implementation/REPLAY_AND_REPRODUCIBILITY.md`](docs/implementation/REPLAY_AND_REPRODUCIBILITY.md) — historical truth and replay contract.
+15. [`docs/quant/VALIDATION_PROTOCOL.md`](docs/quant/VALIDATION_PROTOCOL.md) — scientific gate for strategies and ML.
+16. [`docs/implementation/QUANT_ENGINE_CONTRACT.md`](docs/implementation/QUANT_ENGINE_CONTRACT.md) — fills, costs, accounting, returns, drawdown and benchmark mechanics.
+17. [`docs/implementation/TEST_STRATEGY.md`](docs/implementation/TEST_STRATEGY.md) — correctness/security/failure gates.
+18. [`RISK_REGISTER.md`](RISK_REGISTER.md) and [`quarries/README.md`](quarries/README.md) — active risks and unresolved evidence workstreams.
+19. [`docs/mvp/MK1_SPEC.md`](docs/mvp/MK1_SPEC.md) and [`docs/implementation/IMPLEMENTATION_SEQUENCE.md`](docs/implementation/IMPLEMENTATION_SEQUENCE.md) — what MK1 contains and the only intended build order.
+20. [`ROADMAP.md`](ROADMAP.md) — promotion path beyond MK0.
 
 ## MK1 implementation architecture
 
@@ -138,7 +147,9 @@ SOPHROSYNE/
 │   │   ├── DECISION_RECORD.md
 │   │   └── MULTIMODAL_PIPELINE.md
 │   ├── implementation/
+│   │   ├── INTERNAL_CLOSURE_AUDIT.md
 │   │   ├── BUILD_READINESS.md
+│   │   ├── ACCEPTANCE_RECEIPTS.md
 │   │   ├── REFERENCE_ARCHITECTURE.md
 │   │   ├── TECH_STACK.md
 │   │   ├── DATA_MODEL.md
@@ -209,7 +220,9 @@ build-readiness gate
     ↓
 implementation
     ↓
-tests / operational receipts
+typed acceptance receipts
+    ↓
+MK promotion / certification
 ```
 
 Implementation never promotes itself to evidence.
