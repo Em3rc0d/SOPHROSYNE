@@ -8,7 +8,7 @@ The name comes from the Greek concept **sophrosyne**: self-control, prudence, mo
 
 ## Product thesis
 
-Retail investors can access more market data than ever—candles, indicators, order books, derivatives, macro releases, news, on-chain activity, portfolio data—but access is not the same as understanding. SOPHROSYNE aims to translate heterogeneous market evidence into a structured view of:
+Retail investors can access more market data than ever—candles, indicators, order books, derivatives, macro releases, news, on-chain activity and portfolio data—but access is not the same as understanding. SOPHROSYNE aims to translate heterogeneous market evidence into a structured view of:
 
 - **Market State** — what is observable now.
 - **Scenarios** — plausible paths supported by current evidence.
@@ -60,6 +60,21 @@ Four hard external-evidence locks remain before a commercial beta can be treated
 
 Until those close, product code must not outrun the documentation.
 
+## Start here
+
+Read the repository in this order:
+
+1. [`GOVERNANCE.md`](GOVERNANCE.md) — how decisions and MK promotion work.
+2. [`MK0_LOCKS.md`](MK0_LOCKS.md) — current truth about what is closed and what is not.
+3. [`docs/product/PRODUCT_THESIS.md`](docs/product/PRODUCT_THESIS.md) — problem, JTBD, category and moat hypothesis.
+4. [`docs/architecture/DOMAIN_MODEL.md`](docs/architecture/DOMAIN_MODEL.md) — canonical vocabulary.
+5. [`docs/architecture/SYSTEM_CONTRACTS.md`](docs/architecture/SYSTEM_CONTRACTS.md) — evidence, scenario, risk, strategy, record and LLM contracts.
+6. [`docs/architecture/MULTIMODAL_PIPELINE.md`](docs/architecture/MULTIMODAL_PIPELINE.md) — end-to-end intelligence architecture.
+7. [`docs/quant/VALIDATION_PROTOCOL.md`](docs/quant/VALIDATION_PROTOCOL.md) — scientific gate for strategies and ML.
+8. [`RISK_REGISTER.md`](RISK_REGISTER.md) and [`quarries/README.md`](quarries/README.md) — active risks and unresolved workstreams.
+9. [`docs/mvp/MK1_SPEC.md`](docs/mvp/MK1_SPEC.md) — what the first product may and may not contain.
+10. [`ROADMAP.md`](ROADMAP.md) — promotion path beyond MK0.
+
 ## Repository map
 
 ```text
@@ -67,21 +82,40 @@ SOPHROSYNE/
 ├── README.md
 ├── GOVERNANCE.md
 ├── MK0_LOCKS.md
+├── RISK_REGISTER.md
+├── ROADMAP.md
+├── adr/
+│   └── README.md
 ├── docs/
 │   ├── product/
+│   │   ├── PRODUCT_THESIS.md
+│   │   ├── USER_TRUST_AND_GTM.md
+│   │   └── UX_PRINCIPLES.md
 │   ├── architecture/
+│   │   ├── DOMAIN_MODEL.md
+│   │   ├── SYSTEM_CONTRACTS.md
+│   │   ├── DECISION_RECORD.md
+│   │   └── MULTIMODAL_PIPELINE.md
 │   ├── quant/
+│   │   └── VALIDATION_PROTOCOL.md
 │   ├── regulatory/
+│   │   └── REGULATORY_BOUNDARY.md
 │   ├── data/
+│   │   └── DATA_RIGHTS.md
 │   ├── security/
+│   │   └── SECURITY_AND_AI_RISK.md
 │   ├── economics/
-│   ├── go-to-market/
+│   │   └── UNIT_ECONOMICS.md
 │   └── mvp/
-├── adr/
-├── mining-site/
-├── quarries/
+│       └── MK1_SPEC.md
 ├── experiments/
+│   └── FALSIFICATION_PLAN.md
+├── mining-site/
+│   └── README.md
+├── quarries/
+│   └── README.md
 └── sources/
+    └── SOURCE_REGISTER.md
 ```
 
 ## Planned MK1
@@ -96,6 +130,24 @@ The minimal product is intentionally narrow:
 - Learning/explanation layer.
 
 Explicitly out of scope for MK1: custody, copy trading, strategy marketplace, autonomous execution, personalized investment recommendations, leverage/options/futures workflows and claims that AI predicts future prices.
+
+## Research-to-truth flow
+
+```text
+raw source
+    ↓
+mining-site receipt
+    ↓
+quarry / experiment
+    ↓
+canonical document
+    ↓
+ADR when the decision changes an invariant
+    ↓
+implementation
+```
+
+Implementation never promotes itself to evidence.
 
 ## Motto
 
