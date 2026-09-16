@@ -73,17 +73,20 @@ Required primary/diagnostic dimensions:
 
 Randomization/counterbalancing and exact thresholds are frozen in the experiment manifest before the first outcome is inspected.
 
-### E03-C — Historical Decision Record review
+### E03-C — Repeat-use proxy
 
-Create true `as_of` records and review them later without rewriting historical reasoning.
+Run a fixed two-week briefing/prototype with qualified participants.
 
 Measure:
-- whether users can reconstruct why the system reached the historical state;
-- whether failed/invalidated scenarios remain understandable;
-- whether immutable history improves trust versus a mutable summary;
-- whether the feature is actually revisited.
+- active days / return sessions;
+- voluntary revisits without prompting;
+- evidence-view expansion;
+- revisit of previous Decision Records;
+- uncertainty/invalidation usage;
+- abandonment reason;
+- replacement vs complement of current workflow.
 
-This experiment supports Q03/Q05; it is not a performance backtest.
+One-session novelty does not count as repeat-use evidence.
 
 ### E03-D — Pricing / commitment
 
@@ -101,20 +104,17 @@ Distinguish:
 
 Survey willingness alone cannot close Q03.
 
-### E03-E — Repeat-use proxy
+### E03-E — Historical Decision Record review
 
-Run a fixed two-week briefing/prototype with qualified participants.
+Create true `as_of` records and review them later without rewriting historical reasoning.
 
 Measure:
-- active days / return sessions;
-- voluntary revisits without prompting;
-- evidence-view expansion;
-- revisit of previous Decision Records;
-- uncertainty/invalidation usage;
-- abandonment reason;
-- replacement vs complement of current workflow.
+- whether users can reconstruct why the system reached the historical state;
+- whether failed/invalidated scenarios remain understandable;
+- whether immutable history improves trust versus a mutable summary;
+- whether the feature is actually revisited.
 
-One-session novelty does not count as repeat-use evidence.
+This experiment supports Q03/Q05 as diagnostic/secondary evidence; it is not a performance backtest and is not a substitute for the required repeat-use experiment.
 
 ---
 
