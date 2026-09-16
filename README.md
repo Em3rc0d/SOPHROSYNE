@@ -47,7 +47,9 @@ The system must be able to say **NO CONCLUSION** or **NO TRADE**. Activity is no
 13. **Historical computation cannot use evidence that was not yet available at its `as_of` cutoff.**
 14. **A finalized Decision Record is immutable.**
 15. **Product code does not begin while a known open lock can materially change MK1 architecture or scope.**
-16. **A closed design decision and a passed implementation receipt are different things; neither may impersonate the other.**
+16. **A closed design decision, a closed evidence result and a passed implementation receipt are different things; none may impersonate another.**
+17. **Empirical promotion evidence is pre-registered before outcome inspection.**
+18. **Production MK1 builds against one approved immutable bootstrap profile, never an informal “latest” configuration.**
 
 ## Program state
 
@@ -57,48 +59,108 @@ The system must be able to say **NO CONCLUSION** or **NO TRADE**. Activity is no
 
 **Known internal design nodes remaining:** `0`
 
-**MK1 production implementation:** `BLOCKED BY EXTERNAL / EMPIRICAL LOCKS`
+**External/empirical validation method:** `CLOSED`
 
-The architecture is now closed enough that implementation must not invent major semantics while coding. Remaining blockers are intentionally external or empirical rather than hidden design ambiguity:
+**External/empirical outcomes:** `Q01–Q05 OPEN / PARTIAL`
 
-1. Peru regulatory opinion on exact product flows and copy — issue #2.
-2. Commercial data-rights confirmation for exact production sources/use — issue #3.
-3. Real willingness-to-pay and retention evidence — issue #4.
-4. Reproducible deterministic quant baseline and evidence for/against ML increment — issue #5.
-5. Moat/competitive durability evidence — issue #6.
+**MK1 production implementation:** `BLOCKED BY EXTERNAL / EMPIRICAL EVIDENCE`
+
+The project no longer needs to invent either core MK1 architecture or a validation methodology. What remains is to execute the frozen evidence program and determine which exact first production configuration—if any—earns the right to be built.
 
 Canonical internal-closure audit: [`docs/implementation/INTERNAL_CLOSURE_AUDIT.md`](docs/implementation/INTERNAL_CLOSURE_AUDIT.md).
+
+Canonical external-evidence protocol: [`docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`](docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md).
+
+Canonical experiment manifest: [`experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`](experiments/EXPERIMENT_MANIFEST_TEMPLATE.md).
+
+Canonical MK0 promotion packet: [`docs/validation/MK0_PROMOTION_PACKET.md`](docs/validation/MK0_PROMOTION_PACKET.md).
+
+Canonical MK1 bootstrap-profile contract: [`docs/validation/MK1_BOOTSTRAP_PROFILE.md`](docs/validation/MK1_BOOTSTRAP_PROFILE.md).
 
 Canonical implementation-proof schema: [`docs/implementation/ACCEPTANCE_RECEIPTS.md`](docs/implementation/ACCEPTANCE_RECEIPTS.md).
 
 Canonical promotion gate: [`docs/implementation/BUILD_READINESS.md`](docs/implementation/BUILD_READINESS.md).
 
-Until that gate is satisfied, production feature code must not outrun the evidence.
+Until the promotion packet is approved and an `MK1_BOOTSTRAP_PROFILE` reaches `APPROVED`, production feature code must not outrun the evidence.
+
+## External / empirical closure tracks
+
+```text
+Q01  Peru regulatory boundary          OPEN — FATAL_IF_FAILED
+Q02  Commercial market-data rights     OPEN — FATAL_IF_FAILED
+Q03  User value / WTP / repeat use     OPEN / PARTIAL
+Q04  Quant baseline / ML increment     OPEN
+Q05  Moat / competitive durability     PARTIAL
+```
+
+All remaining PARTIAL/OPEN product evidence rows in `MK0_LOCKS.md` map into these tracks; there is no hidden parallel evidence gate.
+
+## Evidence-to-build flow
+
+```text
+raw source / external authority / observed behavior
+                    |
+                    v
+           mining / quarry
+                    |
+                    v
+          PRE-REGISTERED plan
+                    |
+                    v
+       experiment / counsel review /
+       provider-rights verification
+                    |
+                    v
+           immutable EvidenceReceipt
+                    |
+                    v
+       cross-receipt contradiction review
+                    |
+                    v
+           MK0_PROMOTION_PACKET
+                    |
+                    v
+          MK1_BOOTSTRAP_PROFILE
+                    |
+                    v
+             BUILD_READINESS
+                    |
+                    v
+       production MK1 implementation
+                    |
+                    v
+        typed acceptance receipts
+                    |
+                    v
+          release / certification
+```
+
+A successful prototype is not legal clearance. A provider contract is not product demand. A strong backtest is not a moat. Built code is not evidence that the underlying decision was correct.
 
 ## Start here
 
 Read the repository in this order:
 
-1. [`GOVERNANCE.md`](GOVERNANCE.md) — how decisions, closure and MK promotion work.
-2. [`MK0_LOCKS.md`](MK0_LOCKS.md) — canonical lock registry and current project truth.
+1. [`GOVERNANCE.md`](GOVERNANCE.md) — the three classes of truth, closure and promotion rules.
+2. [`MK0_LOCKS.md`](MK0_LOCKS.md) — canonical lock registry and mapping of all evidence uncertainty to Q01–Q05.
 3. [`docs/implementation/INTERNAL_CLOSURE_AUDIT.md`](docs/implementation/INTERNAL_CLOSURE_AUDIT.md) — proof that known MK1 internal design nodes are closed.
-4. [`docs/product/PRODUCT_THESIS.md`](docs/product/PRODUCT_THESIS.md) — problem, JTBD, category and moat hypothesis.
-5. [`docs/architecture/DOMAIN_MODEL.md`](docs/architecture/DOMAIN_MODEL.md) — canonical vocabulary.
-6. [`docs/architecture/SYSTEM_CONTRACTS.md`](docs/architecture/SYSTEM_CONTRACTS.md) — evidence, scenario, risk, strategy, record and LLM contracts.
-7. [`docs/implementation/BUILD_READINESS.md`](docs/implementation/BUILD_READINESS.md) — objective implementation gate.
-8. [`docs/implementation/ACCEPTANCE_RECEIPTS.md`](docs/implementation/ACCEPTANCE_RECEIPTS.md) — how future implementation proves conformance without reopening closed design.
-9. [`docs/implementation/REFERENCE_ARCHITECTURE.md`](docs/implementation/REFERENCE_ARCHITECTURE.md) — runtime/deployable/module topology.
-10. [`docs/implementation/DATA_MODEL.md`](docs/implementation/DATA_MODEL.md) — point-in-time, lineage and persistence semantics.
-11. [`docs/implementation/MARKET_DATA_SEMANTICS.md`](docs/implementation/MARKET_DATA_SEMANTICS.md) — instrument, session, bar, correction, corporate-action and currency semantics.
-12. [`docs/implementation/API_CONTRACTS.md`](docs/implementation/API_CONTRACTS.md) — API/error/idempotency contract.
-13. [`docs/implementation/FAILURE_AND_DEGRADATION.md`](docs/implementation/FAILURE_AND_DEGRADATION.md) — how the system fails safely.
-14. [`docs/implementation/REPLAY_AND_REPRODUCIBILITY.md`](docs/implementation/REPLAY_AND_REPRODUCIBILITY.md) — historical truth and replay contract.
-15. [`docs/quant/VALIDATION_PROTOCOL.md`](docs/quant/VALIDATION_PROTOCOL.md) — scientific gate for strategies and ML.
-16. [`docs/implementation/QUANT_ENGINE_CONTRACT.md`](docs/implementation/QUANT_ENGINE_CONTRACT.md) — fills, costs, accounting, returns, drawdown and benchmark mechanics.
-17. [`docs/implementation/TEST_STRATEGY.md`](docs/implementation/TEST_STRATEGY.md) — correctness/security/failure gates.
-18. [`RISK_REGISTER.md`](RISK_REGISTER.md) and [`quarries/README.md`](quarries/README.md) — active risks and unresolved evidence workstreams.
-19. [`docs/mvp/MK1_SPEC.md`](docs/mvp/MK1_SPEC.md) and [`docs/implementation/IMPLEMENTATION_SEQUENCE.md`](docs/implementation/IMPLEMENTATION_SEQUENCE.md) — what MK1 contains and the only intended build order.
-20. [`ROADMAP.md`](ROADMAP.md) — promotion path beyond MK0.
+4. [`docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`](docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md) — exact lifecycle, authority and PASS/CONDITIONAL/PIVOT/STOP rules for Q01–Q05.
+5. [`experiments/FALSIFICATION_PLAN.md`](experiments/FALSIFICATION_PLAN.md) — concrete pre-build evidence workstreams.
+6. [`experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`](experiments/EXPERIMENT_MANIFEST_TEMPLATE.md) — pre-registration contract for empirical evidence.
+7. [`docs/validation/MK0_PROMOTION_PACKET.md`](docs/validation/MK0_PROMOTION_PACKET.md) — final MK0 review bundle.
+8. [`docs/validation/MK1_BOOTSTRAP_PROFILE.md`](docs/validation/MK1_BOOTSTRAP_PROFILE.md) — exact evidence-derived configuration production may build.
+9. [`docs/implementation/BUILD_READINESS.md`](docs/implementation/BUILD_READINESS.md) — objective implementation gate.
+10. [`docs/product/PRODUCT_THESIS.md`](docs/product/PRODUCT_THESIS.md) — problem, JTBD, category and moat hypothesis.
+11. [`docs/architecture/DOMAIN_MODEL.md`](docs/architecture/DOMAIN_MODEL.md) — canonical vocabulary.
+12. [`docs/architecture/SYSTEM_CONTRACTS.md`](docs/architecture/SYSTEM_CONTRACTS.md) — evidence, scenario, risk, strategy, record and LLM contracts.
+13. [`docs/implementation/ACCEPTANCE_RECEIPTS.md`](docs/implementation/ACCEPTANCE_RECEIPTS.md) — how future implementation proves conformance.
+14. [`docs/implementation/REFERENCE_ARCHITECTURE.md`](docs/implementation/REFERENCE_ARCHITECTURE.md) — runtime/deployable/module topology.
+15. [`docs/implementation/DATA_MODEL.md`](docs/implementation/DATA_MODEL.md) — point-in-time, lineage and persistence semantics.
+16. [`docs/implementation/MARKET_DATA_SEMANTICS.md`](docs/implementation/MARKET_DATA_SEMANTICS.md) — instrument, session, bar, correction, corporate-action and currency semantics.
+17. [`docs/quant/VALIDATION_PROTOCOL.md`](docs/quant/VALIDATION_PROTOCOL.md) — scientific gate for strategies and ML.
+18. [`docs/implementation/QUANT_ENGINE_CONTRACT.md`](docs/implementation/QUANT_ENGINE_CONTRACT.md) — fills, costs, accounting, returns, drawdown and benchmark mechanics.
+19. [`docs/implementation/TEST_STRATEGY.md`](docs/implementation/TEST_STRATEGY.md) — correctness/security/failure gates.
+20. [`RISK_REGISTER.md`](RISK_REGISTER.md), [`quarries/README.md`](quarries/README.md) and [`ROADMAP.md`](ROADMAP.md) — active risks, unresolved evidence workstreams and promotion path.
 
 ## MK1 implementation architecture
 
@@ -138,55 +200,28 @@ SOPHROSYNE/
 │   └── README.md
 ├── docs/
 │   ├── product/
-│   │   ├── PRODUCT_THESIS.md
-│   │   ├── USER_TRUST_AND_GTM.md
-│   │   └── UX_PRINCIPLES.md
 │   ├── architecture/
-│   │   ├── DOMAIN_MODEL.md
-│   │   ├── SYSTEM_CONTRACTS.md
-│   │   ├── DECISION_RECORD.md
-│   │   └── MULTIMODAL_PIPELINE.md
 │   ├── implementation/
 │   │   ├── INTERNAL_CLOSURE_AUDIT.md
 │   │   ├── BUILD_READINESS.md
 │   │   ├── ACCEPTANCE_RECEIPTS.md
-│   │   ├── REFERENCE_ARCHITECTURE.md
-│   │   ├── TECH_STACK.md
-│   │   ├── DATA_MODEL.md
-│   │   ├── MARKET_DATA_SEMANTICS.md
-│   │   ├── API_CONTRACTS.md
-│   │   ├── STATE_MACHINES.md
-│   │   ├── FAILURE_AND_DEGRADATION.md
-│   │   ├── REPLAY_AND_REPRODUCIBILITY.md
-│   │   ├── QUANT_ENGINE_CONTRACT.md
-│   │   ├── SECURITY_CONTROLS.md
-│   │   ├── CONFIGURATION_AND_SECRETS.md
-│   │   ├── OBSERVABILITY_AND_SLOS.md
-│   │   ├── TEST_STRATEGY.md
-│   │   ├── CI_CD_AND_ENVIRONMENTS.md
-│   │   ├── OPERATIONS_RUNBOOK.md
-│   │   └── IMPLEMENTATION_SEQUENCE.md
+│   │   └── ...
+│   ├── validation/
+│   │   ├── EVIDENCE_CLOSURE_PROTOCOL.md
+│   │   ├── MK0_PROMOTION_PACKET.md
+│   │   └── MK1_BOOTSTRAP_PROFILE.md
 │   ├── quant/
-│   │   └── VALIDATION_PROTOCOL.md
 │   ├── regulatory/
-│   │   └── REGULATORY_BOUNDARY.md
 │   ├── data/
-│   │   └── DATA_RIGHTS.md
 │   ├── security/
-│   │   └── SECURITY_AND_AI_RISK.md
 │   ├── economics/
-│   │   └── UNIT_ECONOMICS.md
 │   └── mvp/
-│       └── MK1_SPEC.md
 ├── experiments/
-│   └── FALSIFICATION_PLAN.md
+│   ├── FALSIFICATION_PLAN.md
+│   └── EXPERIMENT_MANIFEST_TEMPLATE.md
 ├── mining-site/
-│   └── README.md
 ├── quarries/
-│   └── README.md
 └── sources/
-    ├── SOURCE_REGISTER.md
-    └── IMPLEMENTATION_STACK_RECEIPTS.md
 ```
 
 ## Planned MK1
@@ -203,29 +238,7 @@ The minimal product is intentionally narrow:
 
 Explicitly out of scope for MK1: custody, copy trading, strategy marketplace, autonomous execution, unreviewed personalized investment recommendations, leverage/options/futures workflows and claims that AI predicts future prices.
 
-## Research-to-truth flow
-
-```text
-raw source
-    ↓
-mining-site receipt
-    ↓
-quarry / experiment
-    ↓
-canonical document
-    ↓
-ADR when the decision changes an invariant
-    ↓
-build-readiness gate
-    ↓
-implementation
-    ↓
-typed acceptance receipts
-    ↓
-MK promotion / certification
-```
-
-Implementation never promotes itself to evidence.
+The exact provider set, asset universe, interaction constraints, ML scope, pricing hypothesis and other evidence-sensitive values are not guessed here. They are frozen only when the final `MK1_BOOTSTRAP_PROFILE` is approved.
 
 ## Motto
 
