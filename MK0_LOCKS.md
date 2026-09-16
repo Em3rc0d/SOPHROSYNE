@@ -38,10 +38,12 @@
 | Runtime topology | CLOSED | `docs/implementation/REFERENCE_ARCHITECTURE.md` |
 | Technology stack / portability | CLOSED | `docs/implementation/TECH_STACK.md` |
 | Data model / point-in-time semantics | CLOSED | `docs/implementation/DATA_MODEL.md` |
+| Market-data semantics | CLOSED | `docs/implementation/MARKET_DATA_SEMANTICS.md` |
 | API / error / idempotency contracts | CLOSED | `docs/implementation/API_CONTRACTS.md` |
 | State machines | CLOSED | `docs/implementation/STATE_MACHINES.md` |
 | Failure / degradation / fallback | CLOSED | `docs/implementation/FAILURE_AND_DEGRADATION.md` |
 | Replay / reproducibility | CLOSED | `docs/implementation/REPLAY_AND_REPRODUCIBILITY.md` |
+| Quant / backtest engine mechanics | CLOSED | `docs/implementation/QUANT_ENGINE_CONTRACT.md` |
 | Observability / beta SLO targets | CLOSED_FOR_DESIGN | `docs/implementation/OBSERVABILITY_AND_SLOS.md` |
 | Test strategy / release gates | CLOSED | `docs/implementation/TEST_STRATEGY.md` |
 | CI/CD / migrations / rollback | CLOSED | `docs/implementation/CI_CD_AND_ENVIRONMENTS.md` |
