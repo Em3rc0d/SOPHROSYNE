@@ -185,8 +185,50 @@ Implementation proof is represented separately through immutable typed acceptanc
 
 Canonical detail: `docs/implementation/INTERNAL_CLOSURE_AUDIT.md`, `docs/implementation/ACCEPTANCE_RECEIPTS.md`, `docs/implementation/BUILD_READINESS.md`.
 
+---
+
+## ADR-0013 — Evidence Authorizes One Exact Bootstrap Configuration, Not a Generic Build
+
+**Status:** ACCEPTED
+
+### Context
+
+Closing Q01–Q05 produces evidence with scope: a legal opinion applies to reviewed flows, provider rights apply to exact data uses, user experiments apply to observed personas/workflows, quant evidence applies to frozen datasets/costs/benchmarks, and moat evidence applies to tested workflow components.
+
+Allowing “mostly positive MK0 evidence” to unlock an unconstrained MK1 build would destroy that scope. Implementation could silently choose a different provider, asset universe, personalization level, ML role or product wedge than the evidence actually validated.
+
+### Decision
+
+External/empirical evidence does not authorize production implementation directly.
+
+MK0 promotion requires:
+
+```text
+final Q01–Q05 EvidenceReceipts
+        -> contradiction review
+        -> approved MK0_PROMOTION_PACKET
+        -> approved immutable MK1_BOOTSTRAP_PROFILE
+        -> BUILD_READINESS
+        -> production implementation
+```
+
+Every empirical experiment that materially contributes to Q03/Q04/Q05 promotion must be pre-registered before outcome inspection. Final evidence receipts are immutable and scoped. Production work must identify the approved bootstrap profile it implements.
+
+Material drift from that profile reopens the relevant evidence and/or internal design boundary according to the profile's change-classification rules.
+
+### Consequences
+
+- one positive Q cannot average away a failed fatal Q;
+- no provider/asset/interaction/ML substitution is silently treated as equivalent;
+- `ML EXCLUDE` or `DEFER` can be successful evidence-derived MK1 outcomes;
+- the first production build becomes reproducibly traceable to the exact evidence that justified it;
+- implementation sunk cost cannot be used to lower an evidence gate after coding begins;
+- future release receipts prove conformance to a known evidence-backed configuration rather than to an informal moving target.
+
+Canonical detail: `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`, `docs/validation/MK0_PROMOTION_PACKET.md`, `docs/validation/MK1_BOOTSTRAP_PROFILE.md`, `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`, `docs/implementation/BUILD_READINESS.md`.
+
 ## ADR policy
 
-Create a new ADR whenever a change modifies product promise, execution authority, risk semantics, regulatory posture, data-rights assumptions, probability semantics, LLM authority, runtime topology, authoritative persistence, point-in-time semantics, design-closure semantics or another invariant listed in `GOVERNANCE.md`.
+Create a new ADR whenever a change modifies product promise, execution authority, risk semantics, regulatory posture, data-rights assumptions, probability semantics, LLM authority, runtime topology, authoritative persistence, point-in-time semantics, design-closure semantics, evidence-closure/promotion semantics or another invariant listed in `GOVERNANCE.md`.
 
 Accepted ADRs may be superseded, but not silently edited into the opposite decision. A reversal requires a new ADR identifying the superseded record and evidence motivating the change.
