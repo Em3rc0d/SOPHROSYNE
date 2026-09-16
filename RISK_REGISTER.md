@@ -14,16 +14,24 @@ Scoring: Probability (P), Impact (I), Detectability difficulty (D), each 1–5. 
 | News/social manipulation | 4 | 4 | 3 | 48 | Cross-source validation and bounded sentiment influence. |
 | Vendor price shock | 4 | 4 | 3 | 48 | Fallback providers and optional pass-through entitlements. |
 | Automation bias by users | 4 | 4 | 3 | 48 | Uncertainty UX, opposing evidence and no-oracle language. |
-| Privacy breach | 3 | 5 | 3 | 45 | Minimize data, encrypt, restrict access, incident response. |
-| LLM hallucinated confidence | 4 | 5 | 2 | 40 | LLM cannot create probabilities or risk scores. |
+| Privacy breach | 3 | 5 | 3 | 45 | Data minimization, least privilege, security controls and incident-response receipt. |
+| LLM hallucinated confidence | 4 | 5 | 2 | 40 | LLM cannot create probabilities or risk scores; explanation remains downstream-only. |
 | Low willingness-to-pay | 4 | 5 | 2 | 40 | Pricing and retention tests before substantial build. |
 | High beginner support burden | 3 | 4 | 3 | 36 | Guided UX, progressive disclosure and narrow scope. |
 | Geo restrictions / broker availability | 3 | 4 | 3 | 36 | Capability matrix and modular connectors. |
-| API/provider shutdown | 4 | 4 | 2 | 32 | Adapter layer, fallbacks and graceful degradation. |
-| Black swan / flash crash | 3 | 5 | 2 | 30 | Safe mode, stale-data detection, no-trade state, later circuit breakers. |
-| Credential compromise in future connected accounts | 3 | 5 | 2 | 30 | Least privilege, no withdrawal permission, revocation and rotation. |
-| Model drift / regime shift | 5 | 4 | 1 | 20 | Drift monitoring, retrain/retire gates and no forced signal. |
+| API/provider shutdown | 4 | 4 | 2 | 32 | Adapter layer, compatible fallbacks, circuit breakers and explicit degradation states. |
+| Black swan / flash crash | 3 | 5 | 2 | 30 | Safe mode, stale-data detection, `NO_TRADE`, risk separation and circuit-breaker semantics. |
+| Credential compromise in future connected accounts | 3 | 5 | 2 | 30 | Least privilege, no withdrawal permission, kill/revoke paths and secret-rotation receipt. |
+| Model drift / regime shift | 5 | 4 | 1 | 20 | Drift monitoring, retrain/retire gates, baseline fallback and no forced signal. |
 | Reflexivity at scale | 1 | 4 | 5 | 20 | Avoid universal mass signals; prefer user-defined strategy semantics. |
+
+## Treatment verification
+
+Internal treatments above are no longer architecture placeholders. Their semantics are owned by the corresponding canonical implementation documents.
+
+Where a treatment depends on implemented behavior, proof is carried by typed receipts in `docs/implementation/ACCEPTANCE_RECEIPTS.md` rather than by reopening the design node.
+
+External/empirical risks remain evidence-gated and may still force scope changes.
 
 ## Unknown-unknown discipline
 
