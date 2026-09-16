@@ -80,14 +80,16 @@ Read the repository in this order:
 6. [`docs/implementation/BUILD_READINESS.md`](docs/implementation/BUILD_READINESS.md) — objective implementation gate.
 7. [`docs/implementation/REFERENCE_ARCHITECTURE.md`](docs/implementation/REFERENCE_ARCHITECTURE.md) — runtime/deployable/module topology.
 8. [`docs/implementation/DATA_MODEL.md`](docs/implementation/DATA_MODEL.md) — point-in-time, lineage and persistence semantics.
-9. [`docs/implementation/API_CONTRACTS.md`](docs/implementation/API_CONTRACTS.md) — API/error/idempotency contract.
-10. [`docs/implementation/FAILURE_AND_DEGRADATION.md`](docs/implementation/FAILURE_AND_DEGRADATION.md) — how the system fails safely.
-11. [`docs/implementation/REPLAY_AND_REPRODUCIBILITY.md`](docs/implementation/REPLAY_AND_REPRODUCIBILITY.md) — historical truth and replay contract.
-12. [`docs/quant/VALIDATION_PROTOCOL.md`](docs/quant/VALIDATION_PROTOCOL.md) — scientific gate for strategies and ML.
-13. [`docs/implementation/TEST_STRATEGY.md`](docs/implementation/TEST_STRATEGY.md) — correctness/security/failure gates.
-14. [`RISK_REGISTER.md`](RISK_REGISTER.md) and [`quarries/README.md`](quarries/README.md) — active risks and unresolved workstreams.
-15. [`docs/mvp/MK1_SPEC.md`](docs/mvp/MK1_SPEC.md) and [`docs/implementation/IMPLEMENTATION_SEQUENCE.md`](docs/implementation/IMPLEMENTATION_SEQUENCE.md) — what MK1 contains and the only intended build order.
-16. [`ROADMAP.md`](ROADMAP.md) — promotion path beyond MK0.
+9. [`docs/implementation/MARKET_DATA_SEMANTICS.md`](docs/implementation/MARKET_DATA_SEMANTICS.md) — instrument, session, bar, correction, corporate-action and currency semantics.
+10. [`docs/implementation/API_CONTRACTS.md`](docs/implementation/API_CONTRACTS.md) — API/error/idempotency contract.
+11. [`docs/implementation/FAILURE_AND_DEGRADATION.md`](docs/implementation/FAILURE_AND_DEGRADATION.md) — how the system fails safely.
+12. [`docs/implementation/REPLAY_AND_REPRODUCIBILITY.md`](docs/implementation/REPLAY_AND_REPRODUCIBILITY.md) — historical truth and replay contract.
+13. [`docs/quant/VALIDATION_PROTOCOL.md`](docs/quant/VALIDATION_PROTOCOL.md) — scientific gate for strategies and ML.
+14. [`docs/implementation/QUANT_ENGINE_CONTRACT.md`](docs/implementation/QUANT_ENGINE_CONTRACT.md) — fills, costs, accounting, returns, drawdown and benchmark mechanics.
+15. [`docs/implementation/TEST_STRATEGY.md`](docs/implementation/TEST_STRATEGY.md) — correctness/security/failure gates.
+16. [`RISK_REGISTER.md`](RISK_REGISTER.md) and [`quarries/README.md`](quarries/README.md) — active risks and unresolved workstreams.
+17. [`docs/mvp/MK1_SPEC.md`](docs/mvp/MK1_SPEC.md) and [`docs/implementation/IMPLEMENTATION_SEQUENCE.md`](docs/implementation/IMPLEMENTATION_SEQUENCE.md) — what MK1 contains and the only intended build order.
+18. [`ROADMAP.md`](ROADMAP.md) — promotion path beyond MK0.
 
 ## MK1 implementation architecture
 
@@ -140,10 +142,12 @@ SOPHROSYNE/
 │   │   ├── REFERENCE_ARCHITECTURE.md
 │   │   ├── TECH_STACK.md
 │   │   ├── DATA_MODEL.md
+│   │   ├── MARKET_DATA_SEMANTICS.md
 │   │   ├── API_CONTRACTS.md
 │   │   ├── STATE_MACHINES.md
 │   │   ├── FAILURE_AND_DEGRADATION.md
 │   │   ├── REPLAY_AND_REPRODUCIBILITY.md
+│   │   ├── QUANT_ENGINE_CONTRACT.md
 │   │   ├── SECURITY_CONTROLS.md
 │   │   ├── CONFIGURATION_AND_SECRETS.md
 │   │   ├── OBSERVABILITY_AND_SLOS.md
