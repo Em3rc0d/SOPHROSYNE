@@ -11,6 +11,9 @@ A feature is not a moat because it is technically interesting or users say it lo
 
 Q05 may close conditionally as a **learning wedge** even if durable moat evidence is not yet strong enough for scale claims.
 
+Canonical semantic normalization: `docs/validation/CANONICAL_VALIDATION_SPEC.md`.
+Statistical computation contract: `docs/validation/STATISTICAL_DECISION_RULES.md`.
+
 ---
 
 # Candidate moat components
@@ -51,6 +54,8 @@ Record:
 - why it is a fair comparison;
 - any unavoidable asymmetry.
 
+The competitor snapshot receives an `evidence_as_of` date. A later material competitor change does not rewrite the historical result, but it may reopen the durability conclusion for future scale claims.
+
 ## Design
 
 Within-participant, counterbalanced use of SOPHROSYNE and comparator on matched scenarios/tasks.
@@ -66,9 +71,10 @@ Where practical:
 ```yaml
 target_usable_n: 44
 minimum_usable_n: 36
+promotion_geography: Peru primary or Q03-approved Peru cohort
 ```
 
-Primary participants should match the Q03 frozen persona definition.
+Primary participants must match the Q03 frozen promotable persona definition. Non-Peru participants may be exploratory but cannot silently authorize the Peru MK1 moat conclusion.
 
 ## Primary measures
 
@@ -114,7 +120,7 @@ Strong negative evidence when:
 
 ## INCONCLUSIVE
 
-Minimum sample not reached or results fall between declared regions.
+Minimum sample not reached, promotable Q03 persona/geography is unresolved, comparator is not materially comparable, or results fall between declared regions.
 
 ---
 
@@ -134,20 +140,43 @@ Do not use one-session interview praise as a substitute.
 
 A participant who was active on at least 3 distinct days during E03-C.
 
+## Exposure-aware denominator rule
+
+Progressive disclosure means not every repeat user necessarily has a fair opportunity to encounter every C01–C08 component.
+
+For each component, freeze before analysis:
+
+```yaml
+component_id:
+eligibility_rule:
+exposure_event_or_rule:
+minimum_valid_exposure:
+eligible_exposed_repeat_user_count:
+```
+
+Primary component-level rates use **eligible exposed repeat users** as the denominator, not all repeat users, unless the component is universally available by design and the manifest explicitly proves that condition.
+
+Users who were not eligible/exposed remain reported separately; they are not counted as non-adopters.
+
 ## Measures per component
 
 For each C01–C08:
 
 ```text
 U1 repeat_user_adoption_rate
- = repeat users who used component in >=2 sessions / repeat users
+ = eligible exposed repeat users who used component in >=2 sessions
+   / eligible exposed repeat users
 
 U2 stated_return_reason_rate
- = repeat users who independently cite the component/workflow effect as one reason for returning / repeat users
+ = eligible exposed repeat users who independently cite the component/workflow effect as one reason for returning
+   / eligible exposed repeat users
 
 U3 longitudinal_use_rate
- = repeat users who use the component after day 7 / repeat users
+ = eligible exposed repeat users who use the component after day 7
+   / eligible exposed repeat users
 ```
+
+Report numerator and denominator for every U1/U2/U3 value.
 
 ## Strong linkage threshold
 
@@ -155,24 +184,31 @@ A component has strong repeat-use linkage when all hold:
 - `U1 >= 60%`;
 - `U2 >= 40%`;
 - `U3 >= 40%`;
-- at least 12 repeat users exist in the denominator.
+- at least 12 eligible exposed repeat users exist in the denominator.
 
 This is an association signal, not proof that the component causally caused retention.
 
 ## Moderate linkage
 
 - `U1 >= 40%`; and
-- at least one of U2/U3 meets `30%`.
+- at least one of U2/U3 meets `30%`;
+- denominator is sufficient for the pre-registered analysis.
 
 Moderate linkage may support `CLOSED_CONDITIONAL`, not a strong moat claim.
 
 ## Negative evidence
 
-A component is not retention-supported when:
-- `U1 < 25%` with at least 12 repeat users; or
-- usage disappears almost entirely after day 7.
+A component is not retention-supported when, with at least 12 eligible exposed repeat users:
+- `U1 < 25%`; or
+- `U3 < 15%`.
 
-Preserve this result even if users praised the feature in interviews.
+`U3 < 15%` is the pre-registered interpretation of “usage disappears almost entirely after day 7”; do not replace it post-hoc with another qualitative threshold.
+
+Preserve negative evidence even if users praised the feature in interviews.
+
+## Insufficient denominator
+
+If fewer than 12 eligible exposed repeat users exist for a component, strong/negative linkage classification is `INCONCLUSIVE` for that component unless another minimum was pre-registered before outcome inspection.
 
 ---
 
@@ -202,9 +238,11 @@ mechanism_classes:
 
 requires_generic_llm_only: YES | NO
 requires_nontrivial_operational_history: YES | NO
-observed_repeat_use_linkage: NONE | MODERATE | STRONG
+observed_repeat_use_linkage: NONE | MODERATE | STRONG | INCONCLUSIVE
 key_competitor_counterexample:
 residual_copy_risk:
+evidence_as_of:
+reopen_triggers:
 ```
 
 ## Defensibility categories
@@ -235,6 +273,8 @@ No category is presumed permanent.
 
 An internal reviewer cannot classify a component above `SURFACE_ONLY` solely because its code is complex. The mechanism must be supported by actual workflow/data/history evidence.
 
+Rights/data access cannot be called defensible unless the applicable Q02 evidence actually supports the claimed constraint.
+
 ---
 
 # Q05 aggregate decision
@@ -243,9 +283,10 @@ An internal reviewer cannot classify a component above `SURFACE_ONLY` solely bec
 
 All must hold:
 - E05-A PASS;
-- at least one candidate component has `STRONG` E05-B repeat-use linkage;
+- at least one candidate component has `STRONG` E05-B repeat-use linkage using an exposure-valid denominator;
 - that component is classified as at least `WORKFLOW_EMBEDDED`, `STATE_COMPOUNDING`, `EVIDENCE_COMPOUNDING` or `RIGHTS_OR_DISTRIBUTION_CONSTRAINED` with documented evidence;
 - the advantage does not depend on a Q01-prohibited flow or Q02-unapproved data use;
+- the evidence applies to the promoted Q03 persona/geography;
 - no unresolved P0/P1 contradiction remains.
 
 This supports a **candidate durability thesis**, not a claim of permanent monopoly or uncopyability.
@@ -275,7 +316,7 @@ Use when repeated comparative evidence shows the product is interchangeable with
 
 ## INCONCLUSIVE
 
-Insufficient sample/repeat-user denominator or mixed results that do not satisfy the defined regions.
+Insufficient sample, exposure-aware repeat-user denominator, unresolved persona/geography compatibility, stale comparator evidence or mixed results that do not satisfy the defined regions.
 
 ---
 
@@ -299,8 +340,10 @@ Even after PASS, claims must remain scoped to the observed evidence and time per
 ```yaml
 moat_receipt_ref:
 moat_status: SUPPORTED | LEARNING_WEDGE
+promotion_geography: Peru
 supported_components:
   - component_id:
+    exposure_denominator:
     repeat_use_linkage:
     defensibility_category:
 unsupported_components:
@@ -309,6 +352,10 @@ claims_allowed:
 claims_forbidden:
 next_evidence_horizon:
 competitor_snapshot_ref:
+evidence_as_of:
+reopen_triggers:
 ```
+
+Reopen the affected durability conclusion when a material competitor/product change, promoted persona/workflow change, feature exposure model change, Q01/Q02 dependency change or new repeat-use evidence undermines the receipt's assumptions.
 
 These outputs feed `MK1_BOOTSTRAP_PROFILE`.
