@@ -12,6 +12,8 @@ The first can pass even when strategies perform poorly. The second can fail whil
 This is a research/paper-validation protocol. It does not authorize real-money deployment or live autonomous execution.
 
 Canonical scientific policy: `docs/quant/VALIDATION_PROTOCOL.md`.
+Semantic normalization: `docs/validation/CANONICAL_VALIDATION_SPEC.md`.
+Statistical computation contract: `docs/validation/STATISTICAL_DECISION_RULES.md`.
 
 ---
 
@@ -44,6 +46,8 @@ environment_lock_digest:
 ```
 
 No asset, interval, fee or benchmark substitution is allowed after outcome inspection without a new experiment version.
+
+Any provider/data-rights profile used for an MK1-promotable result must still be valid/reviewable under Q02; a scientifically valid result using unusable commercial data does not authorize that production profile.
 
 ---
 
@@ -137,17 +141,21 @@ The final test interval remains untouched by model/rule selection after it is fr
 
 ## E04-A result
 
-### PASS
+### CLOSED_PASS
 
 All G1–G8 pass.
 
-### FAIL / PIVOT_REQUIRED
+### PIVOT_REQUIRED
 
-Any hard gate fails for semantic reasons requiring a corrected dataset/provider/engine assumption.
+A hard gate fails because dataset/provider/engine semantics require a corrected research profile rather than simply more evidence.
+
+### STOP_CURRENT_CONFIGURATION
+
+The selected profile cannot support a reproducible point-in-time harness or a mandatory assumption is fundamentally incompatible with the intended MK1 quant surface.
 
 ### INCONCLUSIVE
 
-Evidence is incomplete because the required data/profile cannot yet be instantiated or independently reproduced.
+Evidence is incomplete because the required data/profile cannot yet be instantiated, independently reproduced, or validly assessed. This never promotes and E04-B may not begin for that profile.
 
 A negative-return strategy does **not** fail E04-A merely because it loses money.
 
@@ -157,7 +165,9 @@ A negative-return strategy does **not** fail E04-A merely because it loses money
 
 ## Entry condition
 
-E04-A must already PASS for the exact underlying data/cost/accounting profile used here.
+E04-A must already be `CLOSED_PASS` for the exact underlying data/cost/accounting profile used here.
+
+`INCONCLUSIVE`, `PIVOT_REQUIRED` or `STOP_CURRENT_CONFIGURATION` in E04-A blocks ML promotion for that profile.
 
 ## Question
 
@@ -279,14 +289,19 @@ This is a successful Q04 outcome, not project failure.
 ### DEFER
 
 Set `ml_scope: DEFER` when:
+- E04-A passes;
 - evidence is promising but sample/regime coverage is insufficient;
 - required features/data rights are not yet available for production;
-- complexity cost cannot yet be justified;
+- complexity cost cannot yet be justified; or
 - a later MK can revisit the question without changing MK1 core value.
 
 ### PIVOT_REQUIRED
 
 Use when the selected target/features/dataset formulation is invalid in a way that requires a new experiment profile rather than simply excluding ML.
+
+### INCONCLUSIVE
+
+Use for E04-B only when the question cannot validly be decided under the frozen manifest because required evidence failed for non-directional reasons such as material instrumentation/data corruption, incomplete prescribed evaluation, or an unresolved methodological contradiction. `INCONCLUSIVE` never becomes `DEFER` merely to permit promotion.
 
 ---
 
@@ -331,15 +346,15 @@ No single metric is allowed to stand in for the complete promotion gate.
 
 ## CLOSED_PASS — ML INCLUDE
 
-E04-A PASS plus every applicable ML INCLUDE gate passes.
+E04-A `CLOSED_PASS` plus every applicable ML INCLUDE gate passes.
 
 ## CLOSED_PASS — ML EXCLUDE
 
-E04-A PASS and ML does not justify added complexity.
+E04-A `CLOSED_PASS` and ML does not justify added complexity.
 
 ## CLOSED_PASS — ML DEFER
 
-E04-A PASS and the model question is explicitly postponed with no MK1 dependency.
+E04-A `CLOSED_PASS` and the model question is explicitly postponed with no MK1 dependency.
 
 ## PIVOT_REQUIRED
 
@@ -348,6 +363,10 @@ Research profile semantics/data formulation are invalid and must be redesigned.
 ## STOP_CURRENT_CONFIGURATION
 
 The selected data/profile cannot support reproducible research or the required rights/point-in-time semantics make the candidate quant surface infeasible.
+
+## INCONCLUSIVE
+
+E04-A is inconclusive, or a required aggregate decision cannot be made because evidence is incomplete/invalid without directional support for pass/pivot/stop. This blocks Q04 closure and MK1 promotion until rerun/resolution.
 
 ---
 
@@ -369,6 +388,10 @@ ml_scope: INCLUDE | EXCLUDE | DEFER
 promoted_model_family_if_any:
 model_receipt_if_any:
 known_regime_limitations:
+research_evidence_as_of:
+reopen_triggers:
 ```
+
+Reopen affected Q04 scope when dataset semantics, provider profile, transaction-cost model, benchmark/accounting rules, label/feature availability, model family (if promoted), or another build-defining research assumption materially changes.
 
 No Q04 receipt authorizes a profitability or future-performance marketing claim.
