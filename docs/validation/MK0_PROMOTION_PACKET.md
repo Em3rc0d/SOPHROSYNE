@@ -2,183 +2,301 @@
 
 ## Purpose
 
-This is the single review bundle that determines whether one exact evidence-backed configuration may become production MK1. It summarizes evidence; it does not reinterpret missing evidence or invent bootstrap values.
+This is the canonical shape of the evidence bundle required to promote SOPHROSYNE from MK0 validation into production MK1 implementation.
 
-## Identity
+It is intentionally incomplete until real external/empirical evidence exists. Missing sections remain `PENDING`; they are not inferred from design documents.
 
-```yaml
-promotion_packet_id:
-packet_version:
-candidate_configuration_id:
-created_at:
-owner:
-independent_reviewer:
+---
+
+## Packet identity
+
+```text
+packet_id: MK0-PROMOTION-<version>
 status: DRAFT | REVIEW_READY | APPROVED | REJECTED | SUPERSEDED
+created_at:
+reviewed_at:
+canonical_commit:
+bootstrap_profile_id:
 supersedes:
 ```
 
-## Required aggregate receipts
+The packet references immutable evidence receipts. It does not duplicate or rewrite their results.
 
-```yaml
-q01:
-  receipt_ref:
-  final_decision:
-q02:
-  aggregate_receipt_ref:
-  profile_receipt_refs: []
-  final_decision:
-q03:
-  receipt_ref:
-  experiment_receipt_refs: []
-  final_decision:
-q04:
-  receipt_ref:
-  baseline_receipt_ref:
-  ml_receipt_ref:
-  final_decision:
-q05:
-  receipt_ref:
-  final_decision:
-```
+---
 
-Every required aggregate decision must be `CLOSED_PASS` or `CLOSED_CONDITIONAL`. `INCONCLUSIVE`, `PIVOT_REQUIRED`, or `STOP_CURRENT_CONFIGURATION` blocks approval.
+## Section A — Internal-design baseline
 
-## Scope compatibility matrix
+Expected state before this packet can become `REVIEW_READY`:
 
-The packet records and verifies:
+- internal design graph = `CLOSED`;
+- known internal design nodes remaining = `0`;
+- no unresolved P0/P1 architecture contradiction;
+- accepted ADR set current;
+- `BUILD_READINESS.md` current;
+- `ACCEPTANCE_RECEIPTS.md` current.
 
-```yaml
+Current canonical source: `MK0_LOCKS.md` and `docs/implementation/BUILD_READINESS.md`.
+
+If evidence forces a material architecture change, the packet returns to `DRAFT` until the affected internal node is reopened, resolved and closed again.
+
+---
+
+## Section B — Q01 Regulatory receipt
+
+```text
+receipt_ref: PENDING
+receipt_status: PENDING
+regulatory_flow_profile: PENDING
 jurisdiction: Peru
-primary_promotion_geography:
-primary_study_language:
-primary_persona_version:
-product_or_prototype_digest:
-legal_flow_profile:
-data_use_profile_refs: []
-provider_semantics_profile_refs: []
-asset_universe:
-quant_profile_ref:
-pricing_surface_version:
+counsel_identity_or_firm_ref: PENDING
+reviewed_prototype_digest: PENDING
+approved_interaction_classes: PENDING
+forbidden_interaction_classes: PENDING
+required_copy_constraints: PENDING
+required_disclaimers: PENDING
+material_conditions: PENDING
 ```
 
-Evidence from another geography or language may be retained as exploratory evidence but cannot silently close the Peru MK1 scope.
+Promotion requirement:
+- final state must be `CLOSED_PASS` or `CLOSED_CONDITIONAL`;
+- every condition must be incorporated into canonical product/UX/API behavior before packet approval.
 
-## Conditions matrix
+---
 
-Every `CLOSED_CONDITIONAL` condition is copied verbatim into a structured matrix:
+## Section C — Q02 Data-rights receipts
 
-```yaml
-conditions:
-  - condition_id:
-    source_receipt_ref:
-    requirement:
-    canonical_destination:
-    bootstrap_field:
-    acceptance_or_regression_check:
+One receipt per initial production `DataUseProfile`.
+
+```text
+profiles:
+  - receipt_ref: PENDING
+    provider: PENDING
+    provider_product: PENDING
+    asset_universe: PENDING
+    data_family: PENDING
+    timing_profile: PENDING
+    geography: PENDING
+    display_rights: PENDING
+    non_display_rights: PENDING
+    redistribution_rights: PENDING
+    derived_use_rights: PENDING
+    retention_cache: PENDING
+    attribution: PENDING
+    entitlement_model: PENDING
+    cost_model: PENDING
+    fallback_group: PENDING
 ```
 
-No condition may remain only in prose.
+Promotion requirement:
+- all mandatory uses explicitly allowed;
+- unknown rights treated as denied;
+- cost assumptions propagated into `UNIT_ECONOMICS.md`;
+- fallback/degradation semantics compatible with architecture.
 
-## Unit-economics synchronization
+---
 
-Required before approval:
+## Section D — Q03 User-value / WTP bundle
 
-```yaml
-unit_economics_sync_ref:
-unit_economics_version:
-q02_provider_cost_refs: []
-q03_pricing_evidence_ref:
-legal_compliance_recurring_cost_assumptions_ref:
-infrastructure_workload_assumptions_ref:
-payment_fee_tax_assumptions_ref:
-support_burden_ref:
-status: PASS | PIVOT_REQUIRED | STOP_CURRENT_CONFIGURATION | INCONCLUSIVE
+```text
+behavioral_discovery_receipt: PENDING
+translator_comprehension_receipt: PENDING
+repeat_use_receipt: PENDING
+pricing_commitment_receipt: PENDING
+primary_persona_version: PENDING
+jtbd_version: PENDING
+wedge_version: PENDING
+initial_pricing_hypothesis: PENDING
+validated_trust_requirements: PENDING
+rejected_hypotheses: PENDING
 ```
 
-Optimistic TAM, conversion, or future scale assumptions cannot substitute for observed/authoritative unit-economics inputs.
+Promotion requirement:
+- problem observed in real workflows;
+- objective comprehension/workflow evidence supports the selected product representation;
+- repeat-use evidence exists;
+- pricing evidence is stronger than generic survey enthusiasm;
+- target persona/wedge is frozen from observed results, not preference of the team.
 
-## Contradiction review
+---
 
-```yaml
-contradiction_log_ref:
-items:
-  - contradiction_id:
-    initial_severity: P0 | P1 | P2 | P3
-    current_severity: P0 | P1 | P2 | P3
-    status: OPEN | MITIGATING | RESOLVED | ACCEPTED_LIMITATION | SUPERSEDED
-    bootstrap_constraint_ref:
+## Section E — Q04 Quant bundle
+
+```text
+baseline_harness_receipt: PENDING
+golden_fixture_receipt: PENDING
+anti_leakage_receipt: PENDING
+reproducibility_receipt: PENDING
+dataset_manifest: PENDING
+asset_universe: PENDING
+cost_model_version: PENDING
+benchmark_versions: PENDING
+primary_metrics: PENDING
+ml_decision: PENDING  # INCLUDE | EXCLUDE | DEFER
+ml_incremental_value_receipt: PENDING_IF_REQUIRED
 ```
 
-Approval requires every P0/P1 to be `RESOLVED` or `SUPERSEDED` by a resolved successor. `ACCEPTED_LIMITATION` is allowed only for P2/P3 and must appear in the bootstrap where relevant.
+Promotion requirement:
+- deterministic baseline harness reproducible;
+- no look-ahead violation;
+- exact cost/accounting semantics frozen;
+- explicit ML include/exclude/defer decision exists;
+- MK1 has no hidden dependency on unvalidated alpha.
 
-## Architecture-impact review
+A valid packet may explicitly contain `ml_decision: EXCLUDE`.
 
-For every frozen output, record whether it changes an existing internal design invariant.
+---
 
-```yaml
-architecture_impacts:
-  - source_receipt_ref:
-    output_key:
-    impact: NONE | CONFIGURATION_ONLY | DESIGN_REOPEN_REQUIRED
-    reopened_lock_or_adr_ref:
+## Section F — Q05 Moat bundle
+
+```text
+competitive_task_receipt: PENDING
+repeat_use_linkage_receipt: PENDING
+replicability_assessment: PENDING
+moat_hypothesis_version: PENDING
+supported_components: PENDING
+unsupported_components: PENDING
+scale_spend_constraint: PENDING
+next_evidence_horizon: PENDING
 ```
 
-A `DESIGN_REOPEN_REQUIRED` item blocks approval until canonical design is reconciled.
+Promotion requirement:
+- either a candidate durable advantage has supporting evidence;
+- or Q05 is `CLOSED_CONDITIONAL` with MK1 explicitly framed as a learning wedge and scale spend blocked.
 
-## Bootstrap derivation map
+Weak moat evidence does not necessarily kill MK1; it blocks pretending that defensibility has been proven.
 
-Every non-null bootstrap value has a source:
+---
 
-```yaml
-bootstrap_sources:
-  - bootstrap_path:
-    value_or_ref:
-    source_type: EVIDENCE_RECEIPT | CLOSED_DESIGN_CONTRACT | APPROVED_ADR
-    source_ref:
+## Section G — Cross-receipt contradiction log
+
+Every contradiction gets an ID.
+
+```text
+contradictions:
+  - id:
+    receipts_in_conflict:
+    description:
+    severity: P0 | P1 | P2 | P3
+    affected_docs:
+    resolution:
+    residual_risk:
+    status: OPEN | RESOLVED | ACCEPTED_LIMITATION
 ```
 
-Manual/unattributed values are forbidden.
+Packet cannot be approved while a P0/P1 contradiction remains `OPEN`.
 
-At minimum the map covers persona/JTBD/wedge/pricing, legal flow/copy/commercial constraints, portfolio-context scope, provider/data rights/freshness/fallback semantics, quant/ML scope, risk policy, moat status and scale constraints.
+Examples:
+- user preference depends on personalization prohibited by Q01;
+- preferred data source invalidates unit economics;
+- ML result depends on data use not allowed by Q02;
+- validated wedge conflicts with the currently frozen persona;
+- moat thesis depends on a feature removed during legal re-scope.
 
-## Required attachments
+---
 
-- final aggregate Q01–Q05 receipts;
-- experiment/review manifests and digests;
-- Q01 external-authority refs;
-- Q02 authoritative rights/quote/contract refs;
-- Q03 analysis and instrumentation receipts;
-- Q04 dataset/reproduction/anti-leakage artifacts;
-- Q05 comparator snapshot and linkage analysis;
-- contradiction log;
-- unit-economics synchronization artifact;
-- candidate `MK1_BOOTSTRAP_PROFILE`;
-- architecture-impact review;
-- build-readiness checklist.
+## Section H — MK1 Bootstrap Profile
+
+The exact implementation configuration is copied by reference from the final evidence outputs.
+
+```text
+profile_id: PENDING
+regulatory_flow_profile: PENDING
+primary_persona: PENDING
+jtbd: PENDING
+wedge: PENDING
+pricing_hypothesis: PENDING
+asset_universe: PENDING
+provider_set: PENDING
+data_use_profiles: PENDING
+fallback_groups: PENDING
+freshness_profiles: PENDING
+risk_policy_version: PENDING
+quant_baseline_receipt: PENDING
+ml_scope: PENDING
+moat_status: PENDING
+legal_copy_version: PENDING
+canonical_source_digests: PENDING
+```
+
+No production implementation is authorized against a vague “latest” configuration. It builds against this immutable profile version.
+
+---
+
+## Section I — Architecture impact review
+
+Required questions:
+
+1. Did any evidence introduce a new trust boundary?
+2. Did any provider requirement change storage/display/retention architecture?
+3. Did counsel impose a flow constraint that changes API/domain semantics?
+4. Did the validated persona require a new data family or authority level?
+5. Did Q04 add ML into an authoritative path?
+6. Did pricing/entitlements create a new authorization boundary?
+7. Did fallback selection introduce incompatible semantics?
+8. Did any change invalidate an accepted ADR?
+
+Output:
+
+```text
+architecture_impact: NONE | NON_MATERIAL | MATERIAL
+reopened_internal_nodes: []
+new_or_superseding_adrs: []
+review_status: PENDING
+```
+
+A `MATERIAL` result blocks promotion until affected internal nodes are closed again.
+
+---
+
+## Section J — Final promotion decision
+
+Only one final state is allowed.
+
+### APPROVED
+
+All MK0 promotion requirements are satisfied and production MK1 implementation may begin against the exact bootstrap profile.
+
+### REJECTED — RESEARCH CONTINUES
+
+One or more evidence gates remain insufficient. Research/prototype work continues; production implementation remains blocked.
+
+### PIVOT REQUIRED
+
+Evidence invalidates the current product configuration but supports a materially different candidate. Canonical docs are updated and affected evidence gates reopen.
+
+### STOP
+
+The current program thesis lacks a viable legal/data/commercial/scientific path after repeated falsification.
+
+---
 
 ## Approval checklist
 
-The packet may become `APPROVED` only when all are true:
-- Q01–Q05 final decisions are promotable and scope-compatible;
-- all applicable Q01 legal/commercial domains have authoritative closure or the corresponding commercial capability is explicitly disabled;
-- selected Q02 profiles are authoritative and current enough for the proposed activation;
-- Q03/Q05 promotion evidence matches the target geography/persona/language;
-- Q04 research outputs promoted to MK1 have production-semantics compatibility;
-- unit economics are not structurally invalid for the selected configuration;
-- no P0/P1 contradiction remains unresolved;
-- every conditional restriction has a canonical destination and acceptance/regression check;
-- bootstrap derivation contains no manual value;
-- any design reopen is resolved before build;
-- `docs/implementation/BUILD_READINESS.md` passes.
+A promotion reviewer must be able to answer **yes** to all:
 
-## Decision
+- Are all Q01–Q05 receipts final and promotable?
+- Are conditional constraints frozen into canonical specs?
+- Are required external authorities actually present where required?
+- Were experiment thresholds pre-registered before outcome inspection?
+- Is negative/conflicting evidence preserved?
+- Are data rights scoped to exact intended uses?
+- Is the quant baseline reproducible independently?
+- Is ML explicitly included, excluded or deferred?
+- Is the selected persona/wedge supported by observed behavior?
+- Are unit-economics assumptions synchronized with provider/pricing evidence?
+- Are all P0/P1 contradictions resolved?
+- Does the bootstrap profile identify one exact build configuration?
+- Does architecture impact review show no unresolved reopened node?
+- Does `BUILD_READINESS.md` pass?
 
-```yaml
-final_packet_decision: APPROVED | REJECTED
-rationale:
-bootstrap_profile_ref:
-reviewer_signoff:
-final_packet_digest:
-```
+If any answer is no, the packet is not approved.
 
-Approval means only: **this exact configuration has earned the right to be built**.
+---
+
+## Promotion statement
+
+An approved packet authorizes only the following statement:
+
+> **SOPHROSYNE MK1 has an evidence-backed, legally/data-rights-scoped, scientifically reproducible candidate configuration that is ready to be implemented and tested.**
+
+It does **not** authorize claims of profitability, investment performance, regulatory approval beyond the reviewed scope, product-market fit, durable moat or production reliability beyond the evidence actually contained in the receipts.

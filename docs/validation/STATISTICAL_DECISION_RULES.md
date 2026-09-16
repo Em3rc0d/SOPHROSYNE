@@ -2,86 +2,317 @@
 
 ## Purpose
 
-This contract defines how preregistered Q03/Q04/Q05 thresholds are computed so identical evidence yields the same numerical decision.
+This document removes implementation ambiguity from quantitative decision gates used by MK0 evidence experiments.
 
-## General rules
+It does not choose experiment-specific thresholds; those live in the pre-registered Q03/Q04/Q05 manifests. This document defines how those thresholds are computed and compared so two reviewers using the same evidence reach the same numerical result.
 
-1. Compute from full precision; round only for display.
-2. Record exact numerators/denominators.
-3. Freeze unit of analysis, eligibility/exposure denominator, missing-data method, statistical method and decision precedence before outcomes.
-4. Exploratory analyses cannot rescue failed primary gates.
-5. Sequential peeking/stopping is prohibited unless preregistered.
-6. Validity/instrumentation failure makes the affected result `INCONCLUSIVE` by default; it becomes STOP/PIVOT only if the failure itself demonstrates candidate infeasibility.
+---
 
-## Decision-region exhaustiveness
+## General principles
 
-Each experiment defines mutually exclusive PASS/CONDITIONAL/PIVOT/STOP/INCONCLUSIVE regions or a deterministic precedence. Every valid result must map to exactly one final decision. If no declared region applies, the result is `INCONCLUSIVE`.
+1. Compute from full-precision source values; round only for display.
+2. Record exact numerators and denominators for all rates/proportions.
+3. Never change the statistical method after observing outcomes unless the original method is invalid; if so, mark the original experiment inconclusive and create a new version.
+4. Do not use significance testing as a substitute for the pre-registered product decision rule.
+5. Missing data, exclusions and protocol deviations follow the pre-registered manifest, not analyst preference.
+6. Exploratory analyses remain labeled exploratory and cannot rescue a failed primary gate.
+7. Sequential peeking/stopping is prohibited unless the manifest pre-registers a sequential design.
 
-## Proportions / Wilson interval
+---
 
-`p_hat = successes / eligible_denominator`.
+# Proportions
 
-Where requested, use Wilson score interval without continuity correction. For the current two-sided 80% early-product interval use `z = 1.2815515655446004`. PASS/FAIL uses unrounded bounds. `n=0` is undefined/INCONCLUSIVE.
+## Point estimate
 
-## Paired means / completion time
+For a binary event:
 
-Repeated tasks are aggregated at participant level unless another dependence-aware unit is preregistered. Paired mean difference uses `d_i = treatment_i - control_i`. Median time ratio uses `median(treatment_ms)/median(control_ms)` on the same eligible paired set unless the missing-data rule says otherwise.
+```text
+p_hat = successes / eligible_denominator
+```
 
-## Calibration
+The denominator is determined by the pre-registered eligibility rule.
 
-For confidence/correctness on `[0,100]`:
+Do not remove participants from the denominator because they did not perform the desired behavior.
 
-`participant_gap = abs(confidence_percent - correctness_percent)` and `mean_calibration_gap = mean(participant_gap)`.
+## Wilson score interval
 
-Do not use `abs(mean(confidence)-mean(correctness))`.
+Where a pre-registered gate requests a Wilson interval, use the standard score interval without continuity correction.
 
-## Missing data
+Given:
 
-Allowed preregistered methods: `COMPLETE_CASE_PRIMARY`, `FAILURE_AS_FAILURE`, or an exact `PRE_REGISTERED_IMPUTATION`. Behavioral non-action remains a failure/non-event when the event itself is the outcome and telemetry integrity is valid.
+```text
+n = denominator
+x = successes
+p = x / n
+z = standard-normal quantile for requested two-sided coverage
+```
 
-## Threshold boundaries
+Center:
 
-Inclusive/exclusive operators are literal (`>=`, `>`, `<`, `<=`). Map percentage thresholds from exact ratios, not rounded display values.
+```text
+center = (p + z²/(2n)) / (1 + z²/n)
+```
 
-## Qualitative coding reliability
+Half-width:
 
-When coded qualitative evidence can satisfy a promotion threshold:
-- freeze the codebook/rubric before outcomes;
-- dual-code at least 25% of eligible primary items chosen under a preregistered sampling rule;
-- use Cohen's kappa `>= 0.60` for categorical coding unless a justified alternative reliability statistic/threshold is preregistered;
-- disagreements are adjudicated under a frozen rule;
-- if the required reliability threshold is not met, coding-derived primary metrics cannot support PASS and are `INCONCLUSIVE` until a new valid study/version is run;
-- do not rewrite the codebook after seeing which categories would improve the result.
+```text
+half = z/(1 + z²/n) * sqrt(p(1-p)/n + z²/(4n²))
+```
 
-## Q04 dependence-aware bootstrap
+Bounds:
 
-For market-return comparisons, ordinary i.i.d. bootstrap is not default. Freeze bootstrap family, block-length rule and seed before final-test inspection; use at least 10,000 resamples for promotion-grade intervals unless infeasible and justified; resample candidate/comparator in aligned blocks.
+```text
+lower = center - half
+upper = center + half
+```
 
-## Sharpe
+For the two-sided 80% interval used in current Q03/Q05 early-product gates:
 
-Unless the Q04 manifest freezes a justified alternative:
+```text
+z = 1.2815515655446004
+```
 
-`Sharpe = mean(net_period_return - matched_risk_free_period_return) / std_sample(...) * sqrt(periods_per_year)` with `ddof=1`.
+Evaluate PASS/FAIL using unrounded `lower`/`upper`; display rounding does not change the decision.
 
-Use identical conventions for candidate/comparator. Zero variance yields `UNDEFINED`, not infinity.
+If `n = 0`, the metric is undefined and the result is `INCONCLUSIVE`.
 
-## Drawdown / cost stress
+---
 
-`drawdown_t = W_t / running_peak_t - 1`; report positive magnitude only when labeled. “20% worse relative drawdown magnitude” means `candidate_mdd <= comparator_mdd * 1.20`.
+# Means / medians / paired comparisons
 
-For +50% cost stress, multiply all frozen variable transaction-cost components by 1.5 without reoptimizing signals unless separately preregistered.
+## Participant-level aggregation first
 
-## Multiple testing / seeds
+When a participant completes multiple tasks/cases, the manifest must state whether the unit of analysis is:
+- participant-level average;
+- participant-case observation;
+- another explicitly justified unit.
 
-Log every materially influential strategy/model variant, parameter/feature set, evaluation window and selection result. Failed variants do not disappear. Freeze seed set and aggregation before final test; report all frozen seeds.
+Do not treat repeated observations from the same participant as independent merely to inflate sample size.
 
-## Outliers / deviations
+## Mean difference
 
-Default: keep valid observations. Trimming/winsorization/exclusion requires preregistration, counts and sensitivity analysis where material.
+For paired treatment/control studies, default mean-difference reporting uses participant-level paired differences:
 
-Deviation classes:
-`MINOR` (no plausible primary effect), `MATERIAL` (may affect primary result; sensitivity/review), `FATAL` (primary result untrustworthy -> INCONCLUSIVE/re-run). A deviation cannot be downgraded because the desired result passed.
+```text
+d_i = treatment_i - control_i
+mean_delta = mean(d_i)
+```
 
-## Reproducibility receipt
+The sign convention must be documented because “higher is better” differs by metric.
 
-Promotion-grade analysis records raw export digest, normalized dataset digest, analysis code commit, environment lock digest, statistical-contract version, experiment-manifest digest and output-table digest. Primary numerators/denominators and decision must reproduce from those inputs.
+## Median time ratio
+
+For decision rules using median completion time:
+
+```text
+ratio = median(treatment_completion_ms) / median(control_completion_ms)
+```
+
+The same eligible participant set should be used on both sides unless the pre-registered missing-data rule says otherwise.
+
+---
+
+# Confidence calibration gap
+
+When confidence and correctness are both expressed on `[0,100]`:
+
+```text
+participant_gap = abs(confidence_percent - correctness_percent)
+mean_calibration_gap = mean(participant_gap)
+```
+
+Q03/Q05 compare treatment and control mean participant gaps.
+
+Do not compute `abs(mean(confidence) - mean(correctness))`; that can hide individual miscalibration.
+
+---
+
+# Missing data
+
+Before execution, each experiment declares one of:
+
+### COMPLETE_CASE_PRIMARY
+
+Primary metric uses only participants with all fields needed for that paired metric. The number/reason of removed participants is reported.
+
+### FAILURE_AS_FAILURE
+
+For behavioral events where non-action is itself the meaningful outcome, absence of the event remains in the denominator rather than being treated as missing.
+
+Example: a participant who does not return during E03-C is a non-returner, not missing data, assuming telemetry integrity is valid.
+
+### PRE_REGISTERED_IMPUTATION
+
+Allowed only when the exact imputation method is specified before outcomes are observed and is appropriate for the measure.
+
+Post-hoc imputation chosen to improve results is prohibited.
+
+---
+
+# Threshold boundaries
+
+Use exact inclusive/exclusive semantics as written.
+
+Examples:
+
+```text
+>= 50%  includes exactly 0.50
+> 50%   excludes exactly 0.50
+< 25%   excludes exactly 0.25
+<= 25%  includes exactly 0.25
+```
+
+When a percentage threshold maps to participant counts, calculate from the exact ratio rather than rounding the percentage first.
+
+---
+
+# Q04 time-series dependence
+
+Ordinary i.i.d. bootstrap is not the default for market-return comparisons because serial dependence may exist.
+
+For gates requiring a dependence-aware bootstrap:
+- block/bootstrap family is frozen before final-test inspection;
+- block-length rule is frozen in the experiment manifest;
+- number of resamples is at least `10,000` for promotion-grade intervals unless computationally infeasible and explicitly justified;
+- random seed(s) are recorded;
+- both strategy/comparator series are resampled in aligned blocks so their paired relationship is preserved.
+
+The final-test interval may not be repeatedly re-used to tune block length for a favorable result.
+
+---
+
+# Sharpe computation contract
+
+Unless an instantiated Q04 manifest freezes a justified alternative:
+
+```text
+period_return = net strategy return after modeled costs
+excess_period_return = period_return - matched risk_free_period_return
+Sharpe = mean(excess_period_return) / std_sample(excess_period_return) * sqrt(periods_per_year)
+```
+
+Rules:
+- sample standard deviation uses `ddof = 1`;
+- annualization factor matches the actual period/calendar semantics;
+- zero-variance series yields `UNDEFINED`, not infinite Sharpe;
+- comparator and candidate use identical risk-free/annualization conventions;
+- results with too few independent effective observations to interpret are flagged as a limitation.
+
+If the product research profile elects zero risk-free rate for a specific study, that assumption must be frozen before inspection and applied equally.
+
+---
+
+# Drawdown contract
+
+From an equity/wealth index `W_t`:
+
+```text
+peak_t = max(W_0 ... W_t)
+drawdown_t = W_t / peak_t - 1
+max_drawdown = min(drawdown_t)
+```
+
+Report magnitude as a positive percentage only when explicitly labeled `max_drawdown_magnitude`.
+
+When a guardrail says “20% worse relative drawdown magnitude”:
+
+```text
+candidate_mdd_magnitude <= comparator_mdd_magnitude * 1.20
+```
+
+Do not interpret this as +20 percentage points.
+
+---
+
+# Transaction-cost stress
+
+Cost-stress variants keep the same underlying trades/signals whenever the purpose is cost sensitivity.
+
+For `+50%` cost stress:
+
+```text
+stressed_cost_component = base_cost_component * 1.5
+```
+
+Apply to all variable transaction-cost components named in the frozen cost model unless the manifest explicitly excludes a component for a documented semantic reason.
+
+Do not re-optimize the model/strategy under stressed costs unless that is a separately pre-registered robustness experiment.
+
+---
+
+# Multiple testing
+
+Every strategy/model variant that materially influenced selection is logged.
+
+The multiple-testing log includes:
+- candidate ID;
+- hypothesis/model family;
+- parameters/features tried;
+- evaluation windows used;
+- primary metrics observed during selection;
+- reason rejected/promoted.
+
+A failed variant does not disappear because its code was deleted.
+
+Where DSR/PBO are used, record the exact implementation/reference and all inputs needed to reproduce them.
+
+---
+
+# Randomness and seeds
+
+For randomized experiments/models:
+- seed set is frozen before final-test inspection;
+- report every frozen seed, not only the best;
+- aggregation rule across seeds is pre-registered;
+- if a library/hardware path is non-deterministic, record that limitation and use repeated-run stability checks.
+
+---
+
+# Outlier handling
+
+Default: keep valid observations.
+
+Any trimming/winsorization/outlier exclusion requires:
+- a pre-registered rule based on data validity or an explicit robust-analysis design;
+- reporting both raw count and excluded count;
+- sensitivity analysis where material.
+
+“Looks extreme” is not an exclusion rule.
+
+---
+
+# Protocol deviations
+
+A deviation is classified before seeing whether it helps/hurts the hypothesis where possible:
+
+```text
+MINOR       no plausible effect on primary result
+MATERIAL    may affect primary result; sensitivity/review required
+FATAL       primary result cannot be trusted; experiment INCONCLUSIVE/re-run
+```
+
+A deviation cannot be downgraded because the desired result passed.
+
+---
+
+# Reproducible analysis receipt
+
+Promotion-grade empirical analysis references:
+
+```yaml
+raw_export_digest:
+normalized_dataset_digest:
+analysis_code_commit:
+environment_lock_digest:
+statistical_contract_version:
+experiment_manifest_digest:
+output_table_digest:
+```
+
+Primary numerators/denominators and decision status must reproduce from those inputs.
+
+---
+
+## Final invariant
+
+> The decision rule is part of the experiment before the result is known, not an interpretation layer added afterward.

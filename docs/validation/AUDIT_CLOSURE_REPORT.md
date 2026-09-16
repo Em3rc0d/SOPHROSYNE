@@ -1,49 +1,204 @@
-# MK0 Evidence Execution — Closure Audit
+# MK0 Evidence Execution — Audit Closure Report
 
-## Scope
+## Audit scope
 
-Audit of `docs/mk0-evidence-execution` against the MK0 design/promotion contracts already merged to `main`.
+This review audits the complete `docs/mk0-evidence-execution` design layer against `main` and against SOPHROSYNE's closed internal contracts.
 
-## Defects found and resolved
+The purpose is not to declare Q01–Q05 factually closed. It is to determine whether the **method for closing them** is internally coherent, non-regressive, reproducible, fail-closed and capable of generating one unambiguous MK1 bootstrap configuration.
 
-1. **Dual evidence-status taxonomies** — removed alias PASS/CONDITIONAL/PIVOT/STOP vocabulary in canonical governance; one final decision enum now applies everywhere.
-2. **Missing INCONCLUSIVE lifecycle state** — added as first-class final decision; never promotable.
-3. **Receipt state mixed with evidence decision** — separated `receipt_state` from `final_decision`.
-4. **Q02 could produce INCONCLUSIVE without representing it** — fixed profile/final-decision schema.
-5. **Q04 component could be INCONCLUSIVE but aggregate could not** — aggregate now covers it.
-6. **Q03 discovery sample could satisfy recruitment target while failing its own PASS minimum** — primary cohort now targets 24 with minimum 20; exploratory cohort is separate.
-7. **Q03-C decision regions overlapped** — regions and precedence are now deterministic/exhaustive.
-8. **Q05 component adoption denominator ignored progressive-disclosure exposure** — denominator is now eligible exposed repeat users with versioned exposure events.
-9. **Q05 qualitative negative rule was vague** — week-2 disappearance threshold is numeric (`U3 < 10%`, n>=12).
-10. **Qualitative coding could affect promotion without reliability proof** — frozen codebook + preregistered reliability gate added.
-11. **Human evidence geography was not tied to Peru bootstrap jurisdiction** — Peru/Spanish is explicit primary promotion scope; other cohorts are exploratory unless revalidated.
-12. **Participant compensation could manufacture repeat use** — incentives are decoupled from organic return/use frequency; prompted obligations cannot count as organic return.
-13. **Pre-counsel pricing could be confused with commercial activation** — research-only non-charging fake-door is separated from real payment activation.
-14. **Q01 covered securities law but not all commercial legal applicability** — privacy, consumer/subscription, claims, payments/invoicing/fiscal and e-contracting are recorded as Q01 applicability subdomains; no hidden Q06 is created.
-15. **Q01 reviewer authority could be over-generalized** — each domain now records reviewer scope/qualification and external authority refs.
-16. **Q02 authority evidence lacked explicit freshness/recheck semantics** — effective/retrieval/validity/recheck fields added.
-17. **Q02 rights and provider semantics could be conflated** — separate provider-semantics profile is required.
-18. **Research/production quant semantics could diverge silently** — Q04 now requires production-semantics compatibility to selected Q02 profiles.
-19. **ML DEFER semantics were ambiguous** — DEFER/EXCLUDE create no MK1 runtime ML dependency; later INCLUDE reopens evidence scope.
-20. **Contradiction severity could be downgraded opportunistically** — initial/current severity and independent-evidence review are required; P0/P1 cannot use ACCEPTED_LIMITATION for promotion.
-21. **Bootstrap fields lacked exact producer provenance** — Q03/Q04/Q05 aggregate refs, legal copy/commercial constraints, provider semantics and economics sync are explicit.
-22. **Unit economics lacked a mandatory synchronization artifact** — versioned evidence-linked sync is now a promotion requirement.
-23. **Build Readiness did not enforce geography/legal/semantic alignment** — explicit gates added.
-24. **Experiment manifest lacked inconclusive/precedence/denominator/statistical-contract fields** — all added.
-25. **Instrumentation validity could be repaired post-hoc into PASS** — >10% primary-metric defect now yields INCONCLUSIVE absent preregistered recovery.
+## Baseline preserved
 
-## Result
+The final audited tree deliberately restores the complete pre-audit detailed specification snapshot from commit:
 
-Known internal MK0 evidence-execution design defects found in this audit are closed by the audited contract set. This does **not** claim Q01–Q05 outcomes exist.
+`7f9edb803af54d0ef30cf29befa81bc80bd68ef8`
 
-Correct post-audit state:
+That snapshot contains the original long-form Q01/Q02 packets, Q03/Q04/Q05 preregistrations, evidence templates, participant protocol, instrumentation contract, execution sequence, validation index and statistical decision rules over the PR #9 `main` baseline.
+
+The earlier audit draft that compressed canonical documents is **not** used as the final normative tree. No detailed specification is intentionally discarded.
+
+## Findings closed by the canonical specification
+
+### A01 — Dual outcome taxonomies
+
+**Finding:** root and leaf documents used different words for equivalent evidence decisions.
+
+**Resolution:** one final outcome vocabulary is normative:
+
+`CLOSED_PASS | CLOSED_CONDITIONAL | PIVOT_REQUIRED | STOP_CURRENT_CONFIGURATION | INCONCLUSIVE`.
+
+Artifact lifecycle is separate from outcome.
+
+### A02 — `INCONCLUSIVE` not globally representable
+
+**Finding:** local protocols could produce `INCONCLUSIVE` while the root lifecycle did not formally include it.
+
+**Resolution:** `INCONCLUSIVE` is now a first-class result and never promotes MK1.
+
+### A03 — Q02 status mismatch
+
+**Finding:** Q02 described an inconclusive result without a universally representable final outcome.
+
+**Resolution:** canonical vocabulary applies to Q02; unknown rights remain denied.
+
+### A04 — Q04 aggregate ambiguity
+
+**Finding:** E04-A could be inconclusive while aggregate Q04 had no explicit corresponding state.
+
+**Resolution:** E04-A `INCONCLUSIVE` blocks aggregate Q04 and ML evaluation; ML INCLUDE/EXCLUDE/DEFER remains subordinate to a passed deterministic harness.
+
+### A05 — Q03 primary-sample inconsistency
+
+**Finding:** E03-A minimum usable primary sample was 20 while the planned primary target could be only 16.
+
+**Resolution:** promotable E03-A targets 20–24 primary participants, minimum 20 usable primary, plus 4–8 exploratory participants.
+
+### A06 — Geographic evidence leakage
+
+**Finding:** LATAM/global evidence could be mistakenly used to authorize a Peru-scoped product.
+
+**Resolution:** initial promotion geography is Peru. Non-Peru evidence is exploratory unless a preregistered Peru confirmation satisfies the gate.
+
+### A07 — Pricing/legal sequencing
+
+**Finding:** pricing experimentation could be interpreted as permission to charge before legal review.
+
+**Resolution:** before Q01 authorizes the exact paid flow, pricing testing is research-only/non-charge. Paid pilots require legal/operational authorization.
+
+### A08 — Research-compensation bias
+
+**Finding:** participant incentives could contaminate willingness-to-pay / commitment evidence.
+
+**Resolution:** compensation cannot depend on desired behavior and potentially biased paid-intent cohorts must be separately analyzed.
+
+### A09 — Q05 denominator bias
+
+**Finding:** component adoption could divide by repeat users who were never exposed to the component.
+
+**Resolution:** Q05 component metrics are exposure-aware. Only users with a valid opportunity to access the component enter that component's denominator.
+
+### A10 — Qualitative Q05 negative threshold
+
+**Finding:** “usage disappears almost entirely” was not executable.
+
+**Resolution:** default negative longitudinal threshold is `U3 < 15%` with the preregistered minimum denominator, unless superseded prospectively by a new manifest.
+
+### A11 — Legal review too securities-centric
+
+**Finding:** a commercial MK1 also creates potentially applicable privacy, consumer, subscription, billing and marketing surfaces.
+
+**Resolution:** Q01 remains one lock but its authority coverage must resolve every applicable MK1 commercial legal surface or mark it explicitly not applicable.
+
+### A12 — Bootstrap fields without explicit producers
+
+**Finding:** several build-defining fields could have required human interpretation during promotion.
+
+**Resolution:** `BOOTSTRAP_PROVENANCE_MATRIX.md` maps every field family to allowed evidence producers and fail-closed conflict behavior.
+
+### A13 — Contradiction severity ambiguity
+
+**Finding:** promotion could theoretically proceed while important cross-receipt conflicts remained.
+
+**Resolution:** P0/P1 contradictions block promotion; safe scope intersections may narrow configuration but cannot broaden evidence.
+
+### A14 — Instrumentation integrity
+
+**Finding:** telemetry defects could silently produce behavioral PASS results.
+
+**Resolution:** existing instrumentation rules remain; >10% defect impact on a primary metric prevents PASS absent a preregistered recovery rule/new experiment.
+
+### A15 — Regression introduced by audit itself
+
+**Finding:** the first correction pass improved consistency but compressed deep canonical documents.
+
+**Resolution:** rejected. Final tree restores the detailed pre-audit snapshot and layers normative corrections without deleting the original specification depth.
+
+## End-to-end promotion audit
+
+The only valid chain is:
 
 ```text
-Internal executable design             CLOSED
-Evidence methodology                   CLOSED
-Evidence execution contracts           CLOSED
-External/empirical Q01–Q05 outcomes    OPEN / PARTIAL
-Production MK1 build                   BLOCKED
+pre-registration
+  -> evidence collection
+  -> immutable EvidenceReceipt
+  -> cross-receipt contradiction review
+  -> MK0_PROMOTION_PACKET
+  -> MK1_BOOTSTRAP_PROFILE
+  -> BUILD_READINESS
+  -> implementation
 ```
 
-The remaining uncertainty is deliberately empirical/external, not an unmade internal design decision.
+No alternate route was accepted.
+
+## Evidence authority audit
+
+- Q01 requires qualified external authority for applicable legal classification/compliance surfaces.
+- Q02 requires authoritative provider terms/contracts/quotes/written confirmations for required commercial rights.
+- Q03 requires observed target-user behavior under preregistered gates.
+- Q04 requires reproducible point-in-time quantitative evidence and independent reproduction.
+- Q05 requires comparative/repeat-use evidence; interviews or technical complexity alone are insufficient.
+
+## Scientific integrity audit
+
+The retained statistical contract preserves:
+
+- exact numerator/denominator reporting;
+- Wilson interval rules;
+- participant-level aggregation;
+- calibration-gap semantics;
+- dependence-aware market bootstrap;
+- transaction-cost stress;
+- frozen seeds/search budget;
+- multiple-testing logging;
+- no final-test tuning;
+- protocol-deviation handling;
+- reproducible artifact digests.
+
+## Safety/trust audit
+
+Nothing in this validation layer changes the already closed internal invariants:
+
+- LLM is downstream explanation, not financial authority;
+- probabilities are not invented by an LLM;
+- no live autonomous trading in MK1;
+- no custody in MK1;
+- unknown data rights deny use;
+- risk remains independent from model conviction;
+- Decision Records remain immutable and point-in-time reproducible;
+- causal wording must respect OBSERVED / ATTRIBUTED / INFERRED / CORRELATED / UNKNOWN semantics.
+
+## Current project status
+
+### Closed
+
+- Internal MK1 design graph.
+- Method for collecting/reviewing Q01–Q05 evidence.
+- Statistical/instrumentation semantics for the currently designed experiments.
+- Promotion-chain architecture.
+- Bootstrap provenance architecture.
+- Contradiction handling semantics.
+
+### Intentionally not closed
+
+Actual external/empirical outcomes:
+
+- Q01 Peru legal/compliance evidence;
+- Q02 commercial data-rights evidence;
+- Q03 real user-value / retention / pricing evidence;
+- Q04 executed quant-harness / optional ML evidence;
+- Q05 executed moat/durability evidence.
+
+These cannot be truthfully marked PASS before the evidence exists.
+
+## Merge recommendation
+
+The evidence-execution design is suitable for merge **only if the final branch tree preserves the detailed pre-audit documents and includes the canonical validation specification plus bootstrap provenance matrix**.
+
+A diff that deletes/compresses the detailed original specifications fails this audit even if its semantics appear cleaner.
+
+## Final conclusion
+
+**DESIGN AUDIT: PASS — NON-REGRESSIVE, WITH EXTERNAL EVIDENCE STILL OPEN.**
+
+This PASS certifies the validation architecture, not the future commercial/scientific outcome of SOPHROSYNE.
+
+> The project is ready to execute MK0 evidence collection, but it is not yet authorized to treat Q01–Q05 as solved or to promote a production MK1 configuration.

@@ -1,109 +1,438 @@
-# Q03 Pre-Registration — User Value, Repeat Use and Pricing
+# Q03 Pre-Registration — User Value, Repeat Use and Willingness to Pay
 
-## Shared promotion scope
+## Purpose
 
-```yaml
-primary_promotion_geography: Peru
-primary_study_language: Spanish
-primary_persona: capable beginner / intermediate self-directed investor
-statistical_contract: docs/validation/STATISTICAL_DECISION_RULES.md
-participant_protocol: docs/validation/RESEARCH_PARTICIPANT_PROTOCOL.md
-instrumentation_contract: experiments/q03/Q03_INSTRUMENTATION_CONTRACT.md
-```
+Q03 asks whether the candidate SOPHROSYNE workflow solves a repeated problem strongly enough to justify an MK1 build and whether some target users show credible willingness to commit at a commercially plausible price.
 
-Spanish-speaking participants outside Peru may be exploratory but cannot silently close the Peru MK1 scope.
+This document freezes **product decision gates**, not population-level scientific claims. Small early-stage samples are used to decide whether to continue, narrow, pivot or stop. If the minimum usable sample is not reached, the result is `INCONCLUSIVE`.
+
+No participant is asked to place a real trade or make an investment decision because of the study.
+
+Primary target participants are adults (18+) who independently research or manage their own investments.
+
+Canonical experiment template: `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`.
+
+---
+
+# Shared qualification contract
+
+## Primary candidate cohort
+
+A participant qualifies for the primary cohort when all are true:
+- age 18+;
+- self-directed or materially involved in their own investment research;
+- has evaluated or managed at least one investment position in the previous 90 days;
+- uses at least two information sources/tools when researching decisions;
+- is not participating solely because they work on SOPHROSYNE or already know the intended hypothesis.
+
+## Secondary exploratory cohort
+
+May include more experienced systematic/technical users. Their evidence is reported separately unless the manifest explicitly pre-registers pooled analysis.
+
+## Exclusions
+
+- professional users whose workflow is institutionally mandated and not comparable to the target retail workflow, unless enrolled as a separate exploratory cohort;
+- participant cannot complete the study language/materials;
+- instrumentation failure prevents primary measures;
+- duplicate participant;
+- participant saw answer keys or internal scoring criteria before task completion.
+
+Post-hoc exclusion for inconvenient outcomes is prohibited.
+
+---
 
 # E03-A — Behavioral Discovery
+
+## Question
+
+Does the candidate target cohort show a repeated, behaviorally observable problem around turning fragmented market information into an understandable, reviewable decision context?
 
 ## Sample
 
 ```yaml
-target_primary_n: 24
-minimum_usable_primary_n: 20
-secondary_exploratory_target_n: 4-8
+target_n: 24
+minimum_usable_n: 20
+primary_cohort_target: 16-20
+secondary_exploratory_target: 4-8
 ```
 
-Primary and exploratory cohorts are reported separately.
+Recruit across more than one source/channel where practical to reduce single-community bias.
 
-## Measures
-Frozen coding rubric captures recurring research/decision task, current workaround, frequency, material friction/time/confusion/trust failure, current paid tool evidence and evidence that the problem is behavioral rather than hypothetical.
+## Interview rule
 
-Coding used for promotion follows the qualitative reliability rule in the statistical contract.
+Observe the participant's current workflow before showing SOPHROSYNE.
 
-## PASS
-At least 20 usable primary participants and the frozen threshold bundle in the instantiated manifest is met for recurring problem/workaround/friction evidence. The exact numeric rule is frozen before the first outcome is inspected.
+Do not lead with features such as “Would evidence graphs help you?”. Ask them to reconstruct a recent research task:
+- what triggered it;
+- sources/tools used;
+- sequence of actions;
+- time/effort;
+- what they found confusing;
+- how they reconciled conflicting information;
+- how they later remembered why they made a decision;
+- what they pay for now.
 
-## STOP / PIVOT / INCONCLUSIVE
-STOP only under the frozen strong-negative region; PIVOT when another persona/workflow consistently dominates; otherwise underpowered/mixed/coding-invalid evidence is INCONCLUSIVE.
+## Primary measures
 
-# E03-B — Translator / Evidence Representation
+For each participant code, using a pre-defined rubric:
 
-Within-participant, counterbalanced comparison of conventional representation versus the frozen SOPHROSYNE candidate on matched synthetic or true point-in-time cases.
+```text
+R1 recurring_information_synthesis_pain       YES/NO
+R2 observable_manual_workaround               YES/NO
+R3 conflicting_information_problem            YES/NO
+R4 difficulty_reconstructing_prior_reasoning   YES/NO
+R5 pays_or_spends_meaningful_time_on_workflow  YES/NO
+```
 
-Primary measures: objective comprehension, completion time, confidence-calibration gap, opposing-evidence recognition and staleness/missing-evidence recognition. Scoring rubric and exact PASS/CONDITIONAL/STOP boundaries are frozen in the instantiated manifest. Guardrail regression cannot be rescued by subjective preference.
+A “YES” requires concrete behavioral evidence/examples, not agreement with a hypothetical question.
 
-# E03-C — 14-Day Repeat Use
+## PASS rule
 
-## Sample / behavior
-Freeze target/minimum sample, reminder policy, timezone, qualifying activity and exclusion rules before start.
+`CLOSED_PASS` evidence contribution when, among the minimum 20 usable primary-cohort participants:
+- `R1 YES >= 60%`; and
+- `R2 YES >= 40%`; and
+- at least two of `R3/R4/R5` are `YES >= 35%`; and
+- no single alternative problem framing explains the observed pain more coherently in `> 50%` of usable primary participants.
 
-Primary metrics:
-- `M1`: proportion active on >=3 distinct days;
-- `M2`: proportion with >=1 unprompted revisit on study days 4–14;
-- `M3`: proportion with >=1 historical Decision Record revisit.
+These are continuation thresholds, not claims that 60% of all retail investors share the problem.
 
-## Decision regions
+## CONDITIONAL rule
 
-### PASS
-All hold: `M1 >= 50%`, `M2 >= 35%`, `M3 >= 30%`, minimum usable sample and telemetry quality gates pass.
+Use `CLOSED_CONDITIONAL`/narrowing evidence when the PASS pattern is strong in one identifiable cohort but not across the originally proposed cohort.
 
-### CONDITIONAL
-If not PASS and not STOP: `M1 >= 40%` and at least one of `M2 >= 35%` or `M3 >= 30%`, with no trust/validity stop condition.
+Required output: a narrower persona definition and new cohort-specific follow-up plan.
 
-### STOP
-`M1 < 25%`, or (`M1 < 40%` and `M2 < 15%`) with valid telemetry and no external disruption sufficient to invalidate the study.
+## STOP rule
 
-### INCONCLUSIVE
-Every remaining region, minimum sample failure, or material/FATAL instrumentation validity failure.
+Current persona/wedge receives stop evidence if:
+- `R1 YES < 35%`; and
+- `R2 YES < 25%`;
 
-Decision precedence: validity -> if invalid INCONCLUSIVE; otherwise STOP -> PASS -> CONDITIONAL -> INCONCLUSIVE.
+with at least 20 usable primary-cohort participants and no major recruitment/instrumentation failure.
 
-# E03-D — Pricing / Commitment
+## INCONCLUSIVE
 
-Before exposure freeze, per band: displayed amount/currency, billing period, tax/fee inclusion presentation, trial/refund semantics if shown, entitlement matrix, pricing copy digest, assignment method and commitment-friction definition.
+Anything between defined bands or below minimum sample.
 
-A pre-counsel fake-door may collect non-charging research intent only and must disclose that no charge occurs. Real payment/paid pilot occurs only after Q01 and operational requirements permit it.
+---
 
-For each band report qualified exposure, curiosity click, higher-friction commitment start and completed real commitment if legally/operationally valid. Survey WTP alone cannot pass.
+# E03-B — Translator Comprehension Test
 
-Exact PASS/CONDITIONAL/STOP thresholds by band are frozen before outcome inspection. Missing/ambiguous commitment semantics are INCONCLUSIVE.
+## Question
+
+Does the SOPHROSYNE Translator/Evidence representation improve decision-context comprehension or materially reduce workflow friction without increasing unjustified confidence?
+
+## Design
+
+Within-participant, counterbalanced comparison using the same underlying evidence represented in two formats:
+- `TREATMENT`: candidate SOPHROSYNE Translator/Evidence View;
+- `CONTROL`: conventional dense market-information presentation containing equivalent underlying facts.
+
+Use at least two matched cases with different evidence patterns so one scenario does not determine the result.
+
+Do not label one interface as “AI” or “improved”.
+
+## Sample
+
+```yaml
+target_usable_n: 36
+minimum_usable_n: 30
+allocation: counterbalanced order
+```
+
+## Primary measures
+
+### M1 — objective comprehension
+
+Score 0–100 using a frozen answer key covering:
+- observable market state;
+- supporting evidence;
+- contradicting evidence;
+- uncertainty/staleness;
+- what would invalidate the represented scenario.
+
+### M2 — task completion time
+
+Time from task start to final submitted answer, excluding documented technical interruption.
+
+### M3 — confidence calibration gap
+
+`abs(self_reported_confidence_percent - correctness_percent)`.
+
+Lower is better.
+
+## Secondary measures
+
+- detects at least one contradicting item;
+- detects stale/missing evidence;
+- correctly distinguishes observation from inference;
+- NASA-TLX-style workload subset or another pre-registered cognitive-effort measure if used;
+- qualitative failure reason.
+
+## PASS rule
+
+Pass if either path A or B is satisfied **and** the calibration guardrail passes.
+
+### Path A — comprehension gain
+
+- treatment mean comprehension is at least `+8 percentage points` versus control; and
+- treatment median completion time is no more than `110%` of control median.
+
+### Path B — efficiency gain with non-inferior comprehension
+
+- treatment mean comprehension difference is not worse than `-5 percentage points`; and
+- treatment median completion time is `<= 80%` of control median.
+
+### Calibration guardrail
+
+Treatment mean calibration gap may not worsen by more than `5 percentage points` versus control.
+
+## STOP rule
+
+Stop/rework the representation if either:
+- treatment mean comprehension is worse by `>= 10 percentage points`; or
+- mean confidence increases by `>= 10 percentage points` while mean correctness falls by `>= 5 percentage points`.
+
+## CONDITIONAL
+
+If only one major case type or one participant cohort passes, narrow the wedge/use case and re-register a targeted follow-up.
+
+## INCONCLUSIVE
+
+Minimum sample not reached, instrumentation invalid, or results fall between the declared decision regions.
+
+---
+
+# E03-C — 14-Day Repeat-Use Proxy
+
+## Question
+
+After initial novelty, do qualified users voluntarily return to the decision-intelligence workflow and use evidence/history features over multiple days?
+
+## Sample
+
+```yaml
+target_enrolled_n: 28
+minimum_instrumented_n: 20
+observation_window_days: 14
+```
+
+Participants may receive onboarding and neutral availability reminders. A session entered directly from a reminder within the pre-registered attribution window is **not** counted as an unprompted revisit.
+
+## Prototype boundary
+
+The prototype provides research/decision-context tasks and paper/historical material only. It does not instruct participants to make real-money trades.
+
+## Primary measures
+
+```text
+M1 multi_day_active_rate
+  = participants active on >=3 distinct days / instrumented participants
+
+M2 unprompted_revisit_rate
+  = participants with >=1 qualifying unprompted revisit after day 3 / instrumented participants
+
+M3 evidence_history_revisit_rate
+  = participants who revisit a prior Decision Record/evidence trail at least once / instrumented participants
+```
+
+## PASS rule
+
+All must hold:
+- `M1 >= 50%`;
+- `M2 >= 35%`;
+- `M3 >= 30%`.
+
+Additionally, no instrumentation defect may explain more than 10% of missing primary events.
+
+## CONDITIONAL rule
+
+Conditional/narrowing evidence when:
+- `M1 >= 40%`; and
+- at least one of M2/M3 meets its PASS threshold;
+
+but full PASS is not reached.
+
+Freeze which cohort/use-case generated the repeat use and do not generalize beyond it.
+
+## STOP rule
+
+Stop/rework the current repeat-use hypothesis if either:
+- `M1 < 25%`; or
+- `M2 < 15%`;
+
+with at least 20 valid instrumented participants.
+
+## Secondary measures
+
+- median active days;
+- evidence expansion actions;
+- uncertainty/invalidation interactions;
+- number of prior-record revisits;
+- self-reported replacement vs complement of existing workflow;
+- abandonment reason.
+
+These diagnose behavior; they do not override failed primary gates.
+
+---
+
+# E03-D — Pricing / Commitment Test
+
+## Question
+
+After users understand the product, does at least one plausible paid price produce non-trivial high-friction commitment evidence?
+
+## Safety/legal boundary
+
+Until Q01 permits the actual commercial flow, this experiment may stop before charging money. A high-friction checkout simulation/fake-door may be used if clearly non-deceptive and appropriately disclosed at the point no transaction occurs.
+
+Do not imply investment returns or personalized financial outcomes.
+
+## Price bands
+
+Initial hypotheses:
+- Free;
+- USD 12/month;
+- USD 19/month;
+- USD 39/month exploratory advanced tier.
+
+The exact currency/localized presentation used in an experiment must be frozen in its manifest.
+
+## Two-stage design
+
+### Stage 1 — signal screen
+
+Purpose: eliminate obviously weak price bands, not close Q03.
+
+```yaml
+minimum_qualified_exposures_per_paid_band: 40
+```
+
+Primary action = deliberate high-friction commitment event such as checkout initiation after viewing exact feature/price details.
+
+A simple pricing-page view or button curiosity click is insufficient.
+
+### Stage 2 — closure test
+
+Run only for one or two candidate paid bands selected by the Stage-1 rule defined before inspection.
+
+```yaml
+minimum_qualified_exposures_per_tested_band: 100
+```
+
+## Primary metric
+
+`qualified_commitment_rate = high_friction_commitments / qualified_price_exposures`.
+
+Report exact numerator/denominator and a Wilson confidence interval; do not report only percentages.
+
+## PASS contribution
+
+A paid band supplies promotable pricing evidence when:
+- observed qualified commitment rate is `>= 8%`; and
+- the lower bound of the two-sided 80% Wilson interval is `> 3%`;
+- the cohort matches the Q03 candidate persona;
+- no misleading investment-performance claim was used to obtain commitment.
+
+The 80% interval is a pragmatic early-product uncertainty check, not a claim of population certainty.
+
+## CONDITIONAL
+
+Observed rate `>= 5%` but fails the PASS uncertainty rule: retain price as a hypothesis, not a validated paid band.
+
+## STOP for a tested band
+
+Observed commitment rate `< 3%` with at least 100 qualified exposures: reject that band/offer configuration for the tested cohort unless a new materially different offer is pre-registered.
+
+## INCONCLUSIVE
+
+Anything else or insufficient qualified exposures.
+
+---
 
 # E03-E — Historical Decision Record Diagnostic
 
-Diagnostic/supportive study of whether users can reconstruct historical reasoning, understand invalidated scenarios and revisit immutable records. It supports Q03/Q05 but does not replace E03-C or count as a performance backtest.
+## Purpose
 
-# Aggregate Q03 decision
+This is supportive evidence for Q03/Q05, not an independent Q03 closure gate.
 
-- **CLOSED_PASS**: E03-A/B/C are CLOSED_PASS, E03-D has at least one CLOSED_PASS band, no unresolved P0/P1 contradiction.
-- **CLOSED_CONDITIONAL**: E03-A/B/C/D are each in `{CLOSED_PASS, CLOSED_CONDITIONAL}`, at least one is conditional, no required component is inconclusive, and no unresolved P0/P1 exists. Freeze the narrower persona/use/pricing constraints.
-- **PIVOT_REQUIRED**: strong evidence supports a materially different persona/workflow/distribution/pricing configuration.
-- **STOP_CURRENT_CONFIGURATION**: preregistered strong-negative evidence rejects the current candidate across mandatory value/repeat-use/commitment dimensions.
-- **INCONCLUSIVE**: any mandatory component remains inconclusive or the combined evidence falls outside declared promotable/pivot/stop regions.
+## Sample
 
-Final Q03 output is one aggregate EvidenceReceipt referencing all component receipts.
+At least 15 participants drawn from E03-C when possible.
 
-## Frozen outputs
+## Task
+
+Participants inspect a historical `as_of` Decision Record and later information without allowing the historical record to be rewritten.
+
+Measure:
+- correct reconstruction of why the original record said what it said;
+- recognition of later invalidation/new evidence;
+- whether immutable history helps audit/review;
+- whether the participant voluntarily revisits the history.
+
+## Support threshold
+
+Strong supportive evidence if:
+- `>= 70%` correctly reconstruct the original reasoning from the record; and
+- `>= 50%` report and behaviorally demonstrate at least one useful historical-review action.
+
+Failure here may weaken the Decision Ledger/moat hypothesis but cannot be hidden by passing other Q03 experiments.
+
+---
+
+# Q03 aggregate decision
+
+Q03 is reviewed only after E03-A, E03-B, E03-C and E03-D have final receipts. E03-E is diagnostic/supportive.
+
+## CLOSED_PASS
+
+All of:
+- E03-A PASS;
+- E03-B PASS;
+- E03-C PASS;
+- at least one paid band in E03-D contributes PASS evidence;
+- no unresolved P0/P1 contradiction with Q01/Q02;
+- no severe trust/calibration failure contradicts the product thesis.
+
+## CLOSED_CONDITIONAL
+
+May be used when evidence consistently supports a **narrower** persona/use case or a learning-wedge MK1, provided:
+- E03-A is at least conditional;
+- E03-B is not STOP;
+- E03-C is at least conditional;
+- E03-D provides at least non-trivial conditional commitment evidence;
+- the narrowing is explicitly frozen in the bootstrap profile.
+
+## PIVOT_REQUIRED
+
+Use when observed users repeatedly value a materially different workflow/persona than the candidate thesis.
+
+## STOP_CURRENT_CONFIGURATION
+
+Use when repeated behavior shows weak problem intensity, poor comprehension/trust outcome, poor repeat use and weak commitment under plausible tested variants.
+
+## INCONCLUSIVE
+
+Insufficient samples or mixed results that do not satisfy the declared aggregate rules.
+
+---
+
+## Q03 frozen outputs
+
+A promotable Q03 receipt must freeze:
 
 ```yaml
-q03_receipt_ref:
 primary_persona_version:
+qualified_cohort_definition:
 jtbd_version:
 wedge_version:
-primary_promotion_geography: Peru
-primary_study_language: Spanish
-required_trust_features: []
-pricing_hypothesis_band:
-pricing_surface_version:
-supported_workflow_constraints: []
-rejected_workflow_constraints: []
+required_trust_features:
+translator_representation_version:
+repeat_use_profile:
+initial_pricing_hypothesis:
+rejected_price_bands_or_offers:
+validated_failure_modes:
+experiment_receipt_refs:
 ```
+
+These values feed `MK1_BOOTSTRAP_PROFILE`.

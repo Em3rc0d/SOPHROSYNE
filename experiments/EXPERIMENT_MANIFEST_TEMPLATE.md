@@ -2,124 +2,313 @@
 
 ## Purpose
 
-Every empirical experiment capable of changing MK1 scope is pre-registered before outcome inspection. The manifest freezes the question, evidence scope, analysis and decision regions so results cannot move the goalposts.
+Every empirical MK0 experiment that may close or materially influence Q03, Q04 or Q05 must be pre-registered before outcome data are inspected.
 
-## Identity and scope
+This template is designed to prevent post-hoc metric changes, cherry-picking and ambiguous promotion decisions.
 
-```yaml
+Copy this file into a versioned experiment folder or receipt bundle before running the experiment.
+
+---
+
+## 1. Identity
+
+```text
 experiment_id:
-experiment_version:
-lock_id: Q03 | Q04 | Q05
-status: DRAFT | PRE_REGISTERED | RUNNING | REVIEW_READY | FINAL | SUPERSEDED
+version:
+status: DRAFT | PRE_REGISTERED | RUNNING | ANALYSIS | FINAL | SUPERSEDED
+lock_ids:
 owner:
 independent_reviewer:
 created_at:
 pre_registered_at:
 supersedes:
-
-question:
-hypothesis:
-failure_hypothesis:
-product_or_prototype_digest:
-primary_promotion_geography:
-study_language:
-population_or_market:
-asset_or_dataset_scope:
-time_window:
 ```
 
-For current MK1 human promotion studies, default `primary_promotion_geography: Peru` and `study_language: Spanish`. Other cohorts require explicit exploratory labels or a separately revalidated promotion scope.
+A manifest becomes immutable when status moves to `PRE_REGISTERED`.
 
-## Population / dataset plan
+Any material change after that point requires a new version.
 
-```yaml
-planned_sample_or_dataset:
-minimum_usable_sample:
-recruitment_or_source:
+---
+
+## 2. Question
+
+State the exact question in one sentence.
+
+```text
+question:
+```
+
+Examples of acceptable questions:
+- Does Translator View improve objective comprehension while preserving confidence calibration versus the comparison workflow?
+- Does the deterministic benchmark harness reproduce point-in-time results under the frozen cost model?
+- Does an ML candidate add robust out-of-sample value versus the strongest eligible transparent baseline?
+
+Do not use vague questions such as “Do users like it?” or “Does AI work?”.
+
+---
+
+## 3. Hypothesis and alternatives
+
+```text
+primary_hypothesis:
+null_or_failure_hypothesis:
+plausible_alternative_explanations:
+```
+
+A useful experiment must allow the primary hypothesis to fail.
+
+---
+
+## 4. Scope
+
+```text
+population_or_market:
+asset_universe_if_applicable:
+geography:
+interaction_or_product_version:
+dataset_version:
+time_window:
+provider_profile:
+```
+
+Results may not be generalized beyond this scope without a new evidence argument.
+
+---
+
+## 5. Inclusion / exclusion
+
+```text
 inclusion_criteria:
 exclusion_criteria:
-withdrawal_or_missing_data_rule:
-compensation_or_incentive_rule:
-unit_of_analysis:
-eligible_denominator_rule:
-exposure_eligibility_rule:
+withdrawal_or_abort_rules:
 ```
 
-Repeated observations from one participant are not independent unless the analysis explicitly models that dependence.
+Criteria must be chosen before outcome inspection.
 
-## Treatment / comparator / execution
+Excluding inconvenient observations after results are known requires explicit adverse-evidence disclosure.
 
-```yaml
-variants_or_candidates:
-comparator_selection_rule:
-assignment_or_counterbalancing:
-task_or_scenario_refs:
-moderator_or_execution_script_ref:
-reminder_or_contact_policy_ref:
-randomization_seed_policy:
+---
+
+## 6. Sample / dataset plan
+
+```text
+target_sample_size_or_dataset_size:
+minimum_usable_sample:
+recruitment_or_sampling_method:
+stratification_or_cohorts:
+randomization_or_counterbalancing:
+missing_data_policy:
 ```
 
-## Measures and analysis
+If sample size is feasibility-driven rather than powered statistically, state that limitation explicitly.
 
-```yaml
+---
+
+## 7. Primary measures
+
+Primary measures determine the experiment result.
+
+```text
 primary_measures:
-secondary_measures:
-qualitative_coding_rubric_ref:
-qualitative_reliability_rule:
-statistical_contract_ref: docs/validation/STATISTICAL_DECISION_RULES.md
-statistical_contract_version:
-analysis_plan:
-missing_data_method:
-outlier_rule:
-multiple_testing_rule:
+  - name:
+    definition:
+    unit:
+    direction_of_better:
+    aggregation:
 ```
 
-Any qualitative coding that can satisfy a promotion threshold must use a frozen codebook and pre-registered reliability rule.
+Every measure must be computable from the planned artifacts without subjective reinterpretation after the run.
 
-## Decision regions
+---
 
-```yaml
+## 8. Secondary / diagnostic measures
+
+```text
+secondary_measures:
+  - name:
+    purpose:
+```
+
+Secondary measures may explain a result but cannot rescue a failed primary decision rule unless a new experiment is registered.
+
+---
+
+## 9. Decision rule
+
+Freeze the exact rule before execution.
+
+```text
 pass_rule:
 conditional_pass_rule:
 pivot_rule:
 stop_rule:
-inconclusive_rule:
-decision_precedence:
 ```
 
-Regions must be mutually exclusive or have deterministic precedence frozen here. Every possible valid outcome must map to one final decision. Unclassified valid outcomes default to `INCONCLUSIVE`, never PASS.
+If numeric thresholds are appropriate, put them here now.
 
-## Known confounders / validity threats
+If a composite decision is required, define which measures are mandatory and which are supportive.
 
-```yaml
+Do not choose thresholds after seeing results.
+
+---
+
+## 10. Analysis plan
+
+```text
+statistical_or_comparison_method:
+confidence_interval_or_uncertainty_method:
+multiple_testing_control:
+subgroup_policy:
+sensitivity_analysis:
+```
+
+For quant experiments also define:
+- untouched test interval;
+- walk-forward method;
+- purge/embargo where needed;
+- transaction-cost assumptions;
+- benchmark comparator rule;
+- seed policy;
+- regime breakdown;
+- overfitting-control method.
+
+---
+
+## 11. Data / artifact provenance
+
+```text
+raw_artifacts_expected:
+normalized_artifacts_expected:
+source_provenance:
+rights_or_consent_constraints:
+retention_constraints:
+```
+
+Raw evidence must remain traceable to the final analysis.
+
+---
+
+## 12. Known confounders
+
+```text
 known_confounders:
-protocol_deviation_policy:
-instrumentation_quality_gates:
-external_authority_or_rights_constraints:
+expected_biases:
+measurement_limitations:
 ```
 
-A data/instrumentation validity failure normally makes the affected metric/experiment `INCONCLUSIVE`; it becomes STOP/PIVOT only if the failure itself proves the candidate configuration infeasible.
+Examples:
+- participants recruited from developer communities may not represent broader retail investors;
+- repeated briefings may create novelty effects;
+- historical market periods may overrepresent a regime;
+- provider corrections may change later research truth;
+- self-selected pricing-test traffic may inflate purchase intent.
 
-## Expected artifacts
+---
 
-```yaml
-raw_artifact_refs_expected:
-normalized_dataset_ref_expected:
-analysis_code_commit_expected:
-environment_lock_digest_expected:
-output_table_ref_expected:
-receipt_template_ref: docs/validation/EVIDENCE_RECEIPT_TEMPLATE.md
+## 13. Safety / legal / ethics constraints
+
+```text
+constraints:
 ```
 
-## Anti-gaming lock
+MK0 user research must not depend on real-money trading instructions or pressure participants to transact.
 
-After `PRE_REGISTERED`, do not change primary measures, thresholds, denominator/exposure eligibility, sample minimum, comparator, final-test interval, coding rubric, statistical method or precedence because observed outcomes are inconvenient. A material correction creates a new experiment version; the old version remains in history.
+Research prototypes must clearly remain non-production and within the currently permitted product boundary.
 
-## Final result
+---
 
-```yaml
-final_decision: CLOSED_PASS | CLOSED_CONDITIONAL | PIVOT_REQUIRED | STOP_CURRENT_CONFIGURATION | INCONCLUSIVE
-receipt_ref:
+## 14. Abort conditions
+
+```text
+abort_conditions:
 ```
 
-The manifest is not itself evidence; its paired EvidenceReceipt records what happened.
+Examples:
+- corrupted dataset;
+- rights uncertainty discovered mid-run;
+- experimental implementation differs materially from pre-registered version;
+- severe instrumentation failure;
+- participant cohort no longer matches inclusion criteria.
+
+An aborted experiment is preserved; it is not silently deleted.
+
+---
+
+## 15. Expected outputs
+
+```text
+raw_data_ref:
+analysis_ref:
+plots_or_tables_ref:
+experiment_receipt_ref:
+canonical_docs_potentially_affected:
+```
+
+---
+
+# Final result section
+
+Complete only after the experiment runs.
+
+## 16. Actual execution
+
+```text
+started_at:
+completed_at:
+actual_sample_or_dataset:
+protocol_deviations:
+missing_data:
+```
+
+## 17. Results
+
+```text
+primary_results:
+secondary_results:
+sensitivity_results:
+adverse_or_conflicting_evidence:
+```
+
+## 18. Decision
+
+```text
+result: PASS | CONDITIONAL_PASS | PIVOT_REQUIRED | STOP_CURRENT_CONFIGURATION | INCONCLUSIVE
+rationale:
+limitations:
+```
+
+`INCONCLUSIVE` is a valid result. It cannot be auto-promoted to PASS.
+
+## 19. Freeze outputs
+
+```text
+frozen_outputs:
+rejected_hypotheses:
+follow_up_required:
+locks_closed_or_reopened:
+```
+
+## 20. Review
+
+```text
+owner_signoff:
+independent_reviewer_signoff:
+reviewed_at:
+receipt_digest:
+```
+
+---
+
+## Anti-gaming checklist
+
+Before finalizing, confirm:
+
+- primary measures were not changed after seeing outcomes;
+- excluded observations follow the pre-registered rule;
+- failed variants remain in the experiment history;
+- negative evidence is included;
+- subgroup analysis was pre-specified or clearly marked exploratory;
+- no result is generalized outside its defined scope without qualification;
+- a prototype success is not represented as production evidence;
+- implementation effort already spent did not lower the gate;
+- the final decision follows the registered rule.
