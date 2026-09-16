@@ -11,6 +11,9 @@ No participant is asked to place a real trade or make an investment decision bec
 Primary target participants are adults (18+) who independently research or manage their own investments.
 
 Canonical experiment template: `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`.
+Semantic normalization: `docs/validation/CANONICAL_VALIDATION_SPEC.md`.
+
+Initial promotable MK1 geography is **Peru**. Evidence from other LATAM/global participants may be exploratory or supportive, but it cannot silently substitute for Peru evidence in the final promotion decision.
 
 ---
 
@@ -25,9 +28,23 @@ A participant qualifies for the primary cohort when all are true:
 - uses at least two information sources/tools when researching decisions;
 - is not participating solely because they work on SOPHROSYNE or already know the intended hypothesis.
 
+For promotion to the initial Peru MK1, the primary promotable cohort must be Peru-based/Peru-market-eligible under the frozen Q01 eligibility profile, or the manifest must pre-register a separate Peru confirmation gate before aggregate Q03 can close promotably.
+
 ## Secondary exploratory cohort
 
-May include more experienced systematic/technical users. Their evidence is reported separately unless the manifest explicitly pre-registers pooled analysis.
+May include more experienced systematic/technical users and/or non-Peru LATAM/global users. Their evidence is reported separately unless the manifest explicitly pre-registers pooled exploratory analysis.
+
+Exploratory participants do not count toward Peru primary minimums merely because their behavior appears favorable.
+
+## Compensation integrity
+
+Participant compensation:
+- may compensate time/participation;
+- must not depend on desired behavior, preference, return frequency, willingness-to-pay, commitment outcome or “correct” product sentiment;
+- must be frozen/disclosed by cohort before outcome inspection;
+- must be analyzed separately when its structure could plausibly distort economic-intent metrics.
+
+A pricing/commitment cohort whose incentive structure materially contaminates willingness-to-pay cannot be the sole basis for a promotable paid-band result.
 
 ## Exclusions
 
@@ -50,13 +67,16 @@ Does the candidate target cohort show a repeated, behaviorally observable proble
 ## Sample
 
 ```yaml
-target_n: 24
-minimum_usable_n: 20
-primary_cohort_target: 16-20
+target_n: 28-32
+minimum_usable_primary_n: 20
+primary_cohort_target: 20-24
 secondary_exploratory_target: 4-8
+promotion_geography: Peru
 ```
 
 Recruit across more than one source/channel where practical to reduce single-community bias.
+
+Exploratory/non-Peru participants are not used to fill the 20-participant primary minimum unless a different pooling rule was pre-registered before any outcome inspection and remains compatible with the promotion geography.
 
 ## Interview rule
 
@@ -88,7 +108,7 @@ A “YES” requires concrete behavioral evidence/examples, not agreement with a
 
 ## PASS rule
 
-`CLOSED_PASS` evidence contribution when, among the minimum 20 usable primary-cohort participants:
+`CLOSED_PASS` evidence contribution when, among at least 20 usable primary-cohort participants:
 - `R1 YES >= 60%`; and
 - `R2 YES >= 40%`; and
 - at least two of `R3/R4/R5` are `YES >= 35%`; and
@@ -98,7 +118,7 @@ These are continuation thresholds, not claims that 60% of all retail investors s
 
 ## CONDITIONAL rule
 
-Use `CLOSED_CONDITIONAL`/narrowing evidence when the PASS pattern is strong in one identifiable cohort but not across the originally proposed cohort.
+Use `CLOSED_CONDITIONAL`/narrowing evidence when the PASS pattern is strong in one identifiable promotable cohort but not across the originally proposed cohort.
 
 Required output: a narrower persona definition and new cohort-specific follow-up plan.
 
@@ -112,7 +132,7 @@ with at least 20 usable primary-cohort participants and no major recruitment/ins
 
 ## INCONCLUSIVE
 
-Anything between defined bands or below minimum sample.
+Anything between defined bands, below minimum primary sample, or materially contaminated by recruitment/compensation/instrumentation issues.
 
 ---
 
@@ -138,6 +158,7 @@ Do not label one interface as “AI” or “improved”.
 target_usable_n: 36
 minimum_usable_n: 30
 allocation: counterbalanced order
+promotion_geography: Peru primary or explicit Peru-confirmation stratum
 ```
 
 ## Primary measures
@@ -199,7 +220,7 @@ If only one major case type or one participant cohort passes, narrow the wedge/u
 
 ## INCONCLUSIVE
 
-Minimum sample not reached, instrumentation invalid, or results fall between the declared decision regions.
+Minimum sample not reached, instrumentation invalid, Peru confirmation absent for promotion, or results fall between the declared decision regions.
 
 ---
 
@@ -215,6 +236,7 @@ After initial novelty, do qualified users voluntarily return to the decision-int
 target_enrolled_n: 28
 minimum_instrumented_n: 20
 observation_window_days: 14
+promotion_geography: Peru primary or explicit Peru-confirmation stratum
 ```
 
 Participants may receive onboarding and neutral availability reminders. A session entered directly from a reminder within the pre-registered attribution window is **not** counted as an unprompted revisit.
@@ -284,7 +306,9 @@ After users understand the product, does at least one plausible paid price produ
 
 ## Safety/legal boundary
 
-Until Q01 permits the actual commercial flow, this experiment may stop before charging money. A high-friction checkout simulation/fake-door may be used if clearly non-deceptive and appropriately disclosed at the point no transaction occurs.
+Until Q01 permits the actual commercial charging flow, this experiment **must not execute a real charge**. A high-friction checkout simulation/fake-door may be used only if non-deceptive and appropriately disclosed at the point no transaction occurs, consistent with the Q01-reviewed research posture.
+
+A real paid pilot is stronger evidence only after the exact paid/subscription/payment flow is legally and operationally authorized.
 
 Do not imply investment returns or personalized financial outcomes.
 
@@ -326,13 +350,25 @@ minimum_qualified_exposures_per_tested_band: 100
 
 Report exact numerator/denominator and a Wilson confidence interval; do not report only percentages.
 
+## Compensation/economic-intent rule
+
+The participant must not receive compensation contingent on:
+- selecting a paid band;
+- initiating commitment;
+- saying they would pay;
+- completing a checkout-like action;
+- returning to the product.
+
+If general participation compensation could plausibly affect economic intent, report the cohort separately and do not use it as the sole promotable pricing evidence without an uncontaminated confirmation cohort.
+
 ## PASS contribution
 
 A paid band supplies promotable pricing evidence when:
 - observed qualified commitment rate is `>= 8%`; and
 - the lower bound of the two-sided 80% Wilson interval is `> 3%`;
-- the cohort matches the Q03 candidate persona;
-- no misleading investment-performance claim was used to obtain commitment.
+- the cohort matches the Q03 candidate persona and promotion geography;
+- no misleading investment-performance claim was used to obtain commitment;
+- the economic-intent evidence is not solely derived from a materially contaminated incentive structure.
 
 The 80% interval is a pragmatic early-product uncertainty check, not a claim of population certainty.
 
@@ -346,7 +382,7 @@ Observed commitment rate `< 3%` with at least 100 qualified exposures: reject th
 
 ## INCONCLUSIVE
 
-Anything else or insufficient qualified exposures.
+Anything else, insufficient qualified exposures, unresolved legal/research-flow ambiguity or materially contaminated economic-intent evidence.
 
 ---
 
@@ -384,13 +420,16 @@ Failure here may weaken the Decision Ledger/moat hypothesis but cannot be hidden
 
 Q03 is reviewed only after E03-A, E03-B, E03-C and E03-D have final receipts. E03-E is diagnostic/supportive.
 
+For initial MK1 promotion, the aggregate evidence must satisfy the Peru geography rule; non-Peru evidence may remain supportive but cannot close the Peru demand lock alone.
+
 ## CLOSED_PASS
 
 All of:
-- E03-A PASS;
-- E03-B PASS;
-- E03-C PASS;
+- E03-A `CLOSED_PASS` contribution;
+- E03-B PASS under its pre-registered rule;
+- E03-C PASS under its pre-registered rule;
 - at least one paid band in E03-D contributes PASS evidence;
+- required Peru promotion evidence exists;
 - no unresolved P0/P1 contradiction with Q01/Q02;
 - no severe trust/calibration failure contradicts the product thesis.
 
@@ -401,6 +440,7 @@ May be used when evidence consistently supports a **narrower** persona/use case 
 - E03-B is not STOP;
 - E03-C is at least conditional;
 - E03-D provides at least non-trivial conditional commitment evidence;
+- Peru promotion scope remains supported;
 - the narrowing is explicitly frozen in the bootstrap profile.
 
 ## PIVOT_REQUIRED
@@ -413,7 +453,7 @@ Use when repeated behavior shows weak problem intensity, poor comprehension/trus
 
 ## INCONCLUSIVE
 
-Insufficient samples or mixed results that do not satisfy the declared aggregate rules.
+Insufficient primary samples, missing Peru confirmation, contaminated/invalid measurement, unresolved material contradictions, or mixed results that do not satisfy the declared aggregate rules.
 
 ---
 
@@ -424,12 +464,14 @@ A promotable Q03 receipt must freeze:
 ```yaml
 primary_persona_version:
 qualified_cohort_definition:
+promotion_geography: Peru
 jtbd_version:
 wedge_version:
 required_trust_features:
 translator_representation_version:
 repeat_use_profile:
 initial_pricing_hypothesis:
+pricing_evidence_type: RESEARCH_INTENT | AUTHORIZED_PAID_PILOT
 rejected_price_bands_or_offers:
 validated_failure_modes:
 experiment_receipt_refs:
