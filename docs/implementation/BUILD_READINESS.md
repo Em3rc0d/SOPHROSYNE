@@ -18,10 +18,12 @@ The architecture is now specific enough to implement without choosing major syst
 | Runtime topology | CLOSED | `docs/implementation/REFERENCE_ARCHITECTURE.md` |
 | Technology stack | CLOSED | `docs/implementation/TECH_STACK.md` |
 | Data/time semantics | CLOSED | `docs/implementation/DATA_MODEL.md` |
+| Market-data semantics | CLOSED | `docs/implementation/MARKET_DATA_SEMANTICS.md` |
 | API/error/idempotency semantics | CLOSED | `docs/implementation/API_CONTRACTS.md` |
 | Domain state machines | CLOSED | `docs/implementation/STATE_MACHINES.md` |
 | Failure/degradation/fallback | CLOSED | `docs/implementation/FAILURE_AND_DEGRADATION.md` |
 | Replay/reproducibility | CLOSED | `docs/implementation/REPLAY_AND_REPRODUCIBILITY.md` |
+| Quant/backtest mechanics | CLOSED | `docs/implementation/QUANT_ENGINE_CONTRACT.md` |
 | Security controls | CLOSED_FOR_DESIGN | `docs/implementation/SECURITY_CONTROLS.md` |
 | Config/secrets | CLOSED | `docs/implementation/CONFIGURATION_AND_SECRETS.md` |
 | Observability/SLO model | CLOSED_FOR_BETA_TARGETS | `docs/implementation/OBSERVABILITY_AND_SLOS.md` |
@@ -30,6 +32,8 @@ The architecture is now specific enough to implement without choosing major syst
 | Operational incident model | CLOSED_FOR_DESIGN | `docs/implementation/OPERATIONS_RUNBOOK.md` |
 | Quant validation method | CLOSED | `docs/quant/VALIDATION_PROTOCOL.md` |
 | Data-rights architecture | CLOSED | `docs/data/DATA_RIGHTS.md` |
+| Build-readiness gate | CLOSED | this document |
+| Risk-minimizing implementation order | CLOSED | `docs/implementation/IMPLEMENTATION_SEQUENCE.md` |
 
 `CLOSED_FOR_DESIGN` means implementation must still produce the operational receipt/tests before beta.
 
@@ -101,10 +105,11 @@ All must be true:
 4. Q04 has a reproducible deterministic baseline; ML scope is either justified or explicitly removed.
 5. Q05 is either supported sufficiently for MK1 or explicitly downgraded to a hypothesis that does not alter the core build.
 6. Initial production provider set and fallback compatibility groups are named.
-7. Initial exact asset universe is frozen.
+7. Initial exact asset universe and corresponding market-data profile(s) are frozen.
 8. Initial freshness profiles and risk policy versions are frozen.
-9. Architecture/ADR review finds no unresolved P0/P1 design contradiction.
-10. `MK0_LOCKS.md` contains no OPEN/PARTIAL item whose outcome would materially change MK1 system boundaries.
+9. Corporate-action/session/currency semantics for every selected profile are confirmed against provider capabilities and fixtures.
+10. Architecture/ADR review finds no unresolved P0/P1 design contradiction.
+11. `MK0_LOCKS.md` contains no OPEN/PARTIAL item whose outcome would materially change MK1 system boundaries.
 
 If any item would materially change the architecture, implementation remains blocked.
 
@@ -115,7 +120,8 @@ In addition to implementation completion:
 - mandatory CI gates green;
 - golden replay 100% for deterministic corpus;
 - anti-leakage suite green;
-- provider contracts green;
+- provider contracts and market-data pathological fixtures green;
+- hand-computed quant/accounting/fill fixtures green;
 - rights configuration active/verified;
 - security readiness receipt complete;
 - backup restore and credential rotation drills passed;
