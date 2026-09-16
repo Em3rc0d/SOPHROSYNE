@@ -9,6 +9,7 @@ Each candidate provider/product/data-family combination receives one versioned `
 Unknown or contradictory rights default to `DENY` until resolved.
 
 Canonical policy: `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`.
+Semantic normalization: `docs/validation/CANONICAL_VALIDATION_SPEC.md`.
 
 ---
 
@@ -16,7 +17,7 @@ Canonical policy: `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`.
 
 ```yaml
 profile_id: Q02-DUP-<provider>-<family>-<version>
-status: DRAFT | EVIDENCE_COLLECTING | REVIEW_READY | CLOSED_PASS | CLOSED_CONDITIONAL | PIVOT_REQUIRED | STOP_CURRENT_CONFIGURATION | SUPERSEDED
+status: DRAFT | EVIDENCE_COLLECTING | REVIEW_READY | CLOSED_PASS | CLOSED_CONDITIONAL | PIVOT_REQUIRED | STOP_CURRENT_CONFIGURATION | INCONCLUSIVE | SUPERSEDED
 provider:
 provider_product:
 contract_or_plan:
@@ -24,11 +25,18 @@ provider_account_class:
 user_classification:
 geography:
 created_at:
+evidence_as_of:
 reviewed_at:
+review_by:
+reopen_triggers: []
 supersedes:
 ```
 
 A provider may have multiple profiles because rights can differ by product, data family, latency, user class or geography.
+
+`INCONCLUSIVE` is a valid final result for the profile version but never promotable.
+
+`evidence_as_of`, `review_by` and `reopen_triggers` are mandatory for any promotable profile. If an authoritative source has an effective/expiry date, that date must be represented here or in an authority record.
 
 ---
 
@@ -92,7 +100,7 @@ For every row record `ALLOW | ALLOW_WITH_CONDITIONS | DENY | UNKNOWN`.
 | content screenshots/social examples | UNKNOWN |  |  |
 | long-term audit/replay artifact | UNKNOWN |  |  |
 
-A required use with `UNKNOWN` prevents `CLOSED_PASS`.
+A required use with `UNKNOWN` prevents `CLOSED_PASS` and `CLOSED_CONDITIONAL` for any configuration that depends on that use.
 
 ---
 
@@ -112,6 +120,7 @@ authority_records:
     type:
     title:
     effective_date:
+    expiry_or_review_date:
     version_or_digest:
     source_ref:
     relevant_sections:
@@ -119,6 +128,8 @@ authority_records:
 ```
 
 If sources conflict, create a contradiction and obtain clarification before promotion.
+
+A provider source that is superseded, expires, changes materially, or ceases to apply to the promoted account/user class makes the dependent profile `STALE_PENDING_REVIEW` for new promotion/release decisions until reconciled.
 
 ---
 
@@ -226,6 +237,8 @@ Compute candidate product cost at explicit scales rather than one average:
 
 The profile should expose cost discontinuities that can invalidate pricing/unit economics.
 
+A quote past `quote_valid_until` may remain historical evidence but cannot be treated as a current commercial-cost commitment without a refresh or explicit provider confirmation.
+
 ---
 
 ## 10. Failure / revocation model
@@ -278,7 +291,7 @@ A fallback must never erase source lineage.
 
 ### CLOSED_PASS
 
-All mandatory MK1 uses are explicitly allowed under the exact profile, operational constraints are implementable, and provider economics are compatible with the candidate business model.
+All mandatory MK1 uses are explicitly allowed under the exact profile, operational constraints are implementable, authoritative evidence is current for the promotion review, and provider economics are compatible with the candidate business model.
 
 ### CLOSED_CONDITIONAL
 
@@ -303,7 +316,7 @@ No viable provider/profile combination supports a mandatory candidate MK1 surfac
 
 ### INCONCLUSIVE
 
-Required rights remain ambiguous. This never promotes.
+Required rights remain ambiguous, authoritative material is unavailable/stale, or the exact commercial use cannot be resolved from the evidence. This never promotes.
 
 ---
 
@@ -325,12 +338,33 @@ fallback_group:
 cost_assumptions:
 kill_switch_scope:
 source_authority_digests:
+evidence_as_of:
+review_by:
+reopen_triggers: []
 ```
 
 These fields feed the approved `MK1_BOOTSTRAP_PROFILE`.
 
 ---
 
+## 14. Mandatory reopen triggers
+
+At minimum, the affected profile must be re-reviewed when any of the following materially changes:
+- provider contract/terms/product or plan;
+- exchange/venue redistribution policy;
+- geography or user classification;
+- display/non-display/derived/model use;
+- storage/retention/cache semantics;
+- asset universe/data family;
+- entitlement model;
+- provider commercial quote where unit economics depend on it;
+- termination/revocation rights;
+- fallback-provider compatibility.
+
+Reopening one profile does not automatically invalidate unrelated profiles, but every bootstrap/release that depends on the affected profile becomes pending reconciliation.
+
+---
+
 ## Final invariant
 
-> Q02 closes on exact use rights and economics, never on “the API works.”
+> Q02 closes on exact, current, authoritative use rights and economics, never on “the API works.”
