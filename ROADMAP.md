@@ -4,28 +4,42 @@
 
 ### Internal design state
 
-**Executable architecture design: CLOSED for known MK1 decisions.**
+**Executable architecture design: CLOSED.**
+
+**Known internal design nodes remaining: 0.**
 
 The repository now freezes:
+- product promise and MK1 boundaries;
 - domain vocabulary and system contracts;
 - modular-monolith + isolated-worker topology;
 - production runtime lines and portability rules;
 - point-in-time data/time semantics;
+- market-data identity/session/correction/corporate-action/currency semantics;
 - API/error/idempotency contracts;
 - state machines;
 - failure/degradation/fallback behavior;
 - replay/reproducibility;
+- deterministic quant/backtest mechanics;
 - security controls and LLM isolation;
 - configuration/secrets;
-- observability/SLO targets;
+- observability/SLO targets and measurement contract;
 - test strategy;
 - CI/CD, migration and rollback rules;
 - operational incident runbooks;
+- typed acceptance receipts;
 - build-readiness and implementation sequence.
 
-Canonical index: `docs/implementation/BUILD_READINESS.md`.
+Canonical closure audit: `docs/implementation/INTERNAL_CLOSURE_AUDIT.md`.
+
+Canonical implementation-proof contract: `docs/implementation/ACCEPTANCE_RECEIPTS.md`.
+
+Canonical promotion gate: `docs/implementation/BUILD_READINESS.md`.
+
+A pending implementation test or operational drill does not make an MK0 design node open. It becomes a required MK1/beta receipt.
 
 ### MK0 remaining goals
+
+The remaining goals are external or empirical, not internal architecture design:
 
 - close legal/data/scientific/commercial unknowns;
 - validate target user and willingness-to-pay;
@@ -41,11 +55,11 @@ Canonical index: `docs/implementation/BUILD_READINESS.md`.
 - quant baseline harness reproduces simple benchmarks/costs and establishes whether ML belongs in MK1 at all;
 - moat/wedge evidence is sufficient or the thesis is explicitly pivoted;
 - initial asset universe, provider/fallback set, freshness profile and risk policy are frozen;
-- `MK0_LOCKS.md` has no OPEN/PARTIAL item whose outcome would materially change MK1 architecture or core scope.
+- `MK0_LOCKS.md` has no OPEN/PARTIAL evidence item whose outcome would materially change MK1 architecture or core scope.
 
 Research/prototype work may continue only under the allowances in `docs/implementation/BUILD_READINESS.md`. Production product-feature implementation remains blocked until the Definition of Ready is satisfied.
 
-## MK1 — Evidence MVP — BLOCKED UNTIL MK0 GATE
+## MK1 — Evidence MVP — BLOCKED UNTIL MK0 EVIDENCE GATE
 
 Scope:
 - Market Translator;
@@ -76,9 +90,15 @@ platform skeleton
 
 No live auto-trading.
 
+### MK1 implementation proof
+
+Completion claims use typed immutable receipts defined in `docs/implementation/ACCEPTANCE_RECEIPTS.md`.
+
+Design semantics are not silently changed to make a receipt pass. If implementation reveals a real design contradiction, the affected lock is explicitly reopened and an ADR is created when an invariant changes.
+
 ### MK1 beta gate
 
-Beta requires all implementation/test/security/restore/observability gates in `docs/implementation/BUILD_READINESS.md` and `docs/implementation/TEST_STRATEGY.md`.
+Beta requires all implementation/test/security/restore/observability/incident receipts in `docs/implementation/BUILD_READINESS.md`, `docs/implementation/ACCEPTANCE_RECEIPTS.md` and `docs/implementation/TEST_STRATEGY.md`.
 
 ## MK2 — Connected Intelligence — FUTURE
 
