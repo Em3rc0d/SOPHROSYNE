@@ -10,6 +10,28 @@ Internal MK1 architecture is already closed. Validation now answers a narrower q
 
 ---
 
+## Read this first — authority path
+
+The active authority chain is:
+
+1. `NORMATIVE_DOCUMENT_HIERARCHY.md` — defines which document wins when scopes overlap.
+2. `CANONICAL_VALIDATION_SPEC.md` — normalizes cross-document semantics found inconsistent during audit.
+3. `EVIDENCE_CLOSURE_PROTOCOL.md` — detailed Q01–Q05 closure protocol.
+4. Q-specific packets/preregistrations/statistical/instrumentation contracts — exact domain rules.
+5. immutable `EvidenceReceipt`s + contradiction log — observed evidence truth.
+6. `MK0_PROMOTION_PACKET.md` — aggregate promotion decision.
+7. `MK1_BOOTSTRAP_PROFILE.md` — exact configuration authorized to build.
+8. `BUILD_READINESS.md` — implementation authorization gate.
+
+Supporting provenance controls:
+- `BOOTSTRAP_PROVENANCE_MATRIX.md` — allowed producers for build-defining fields;
+- `AUDIT_TRACEABILITY_MATRIX.md` — field-by-field producer/authority/reopen mapping;
+- `AUDIT_CLOSURE_REPORT.md` — audit findings/history, **not** an authority source by itself.
+
+No other route may authorize production MK1.
+
+---
+
 ## Truth layers
 
 ```text
@@ -31,7 +53,9 @@ Do not substitute one layer for another.
 
 ### Governance / lifecycle
 
-- `EVIDENCE_CLOSURE_PROTOCOL.md` — Q01–Q05 lifecycle, authority, receipt semantics and closure states.
+- `NORMATIVE_DOCUMENT_HIERARCHY.md` — document authority and conflict-resolution order.
+- `CANONICAL_VALIDATION_SPEC.md` — lifecycle/outcome/geography/denominator/provenance normalization.
+- `EVIDENCE_CLOSURE_PROTOCOL.md` — Q01–Q05 lifecycle, authority, receipt semantics and detailed closure requirements.
 - `EVIDENCE_EXECUTION_SEQUENCE.md` — risk-minimizing order in which evidence should actually be collected.
 - `EVIDENCE_RECEIPT_TEMPLATE.md` — immutable final evidence record.
 - `CONTRADICTION_LOG_TEMPLATE.md` — cross-receipt conflict handling.
@@ -40,6 +64,8 @@ Do not substitute one layer for another.
 
 - `MK0_PROMOTION_PACKET.md` — final review bundle before implementation can begin.
 - `MK1_BOOTSTRAP_PROFILE.md` — exact evidence-derived configuration production MK1 may implement.
+- `BOOTSTRAP_PROVENANCE_MATRIX.md` — allowed producer/compatibility rules for bootstrap fields.
+- `AUDIT_TRACEABILITY_MATRIX.md` — end-to-end source and reopen rules.
 
 ### Human research
 
@@ -50,6 +76,7 @@ Do not substitute one layer for another.
 
 ### Quant research
 
+- `STATISTICAL_DECISION_RULES.md` — computation semantics shared by empirical/quant gates.
 - `../../experiments/q04/Q04_PREREGISTRATION.md` — deterministic harness gates and optional ML promotion gates.
 
 ### Competitive durability
@@ -58,7 +85,7 @@ Do not substitute one layer for another.
 
 ### External authority packets
 
-- `q01/REGULATORY_REVIEW_PACKET.md` — exact frozen product bundle/questions for qualified Peruvian counsel.
+- `q01/REGULATORY_REVIEW_PACKET.md` — exact frozen product bundle/questions for qualified Peruvian counsel and other applicable legal specialists.
 - `q02/DATA_USE_PROFILE_PACKET.md` — provider-by-provider rights/economics/semantics closure unit.
 
 ---
@@ -66,18 +93,23 @@ Do not substitute one layer for another.
 ## Current validation state
 
 ```text
-Validation method / machinery        CLOSED
+Internal MK1 design graph             CLOSED
+Validation method / machinery        CLOSED FOR DESIGN
+Validation authority hierarchy       CLOSED
+Bootstrap provenance contract        CLOSED
 
-Q01 legal outcome                    OPEN
-Q02 production data-rights outcome  OPEN
-Q03 user value / WTP / repeat use   OPEN / PARTIAL
-Q04 quant baseline / ML increment   OPEN
-Q05 moat / durability               PARTIAL
+Q01 legal/compliance outcome         OPEN
+Q02 production data-rights outcome   OPEN
+Q03 user value / WTP / repeat use    OPEN / PARTIAL
+Q04 quant baseline / ML increment    OPEN
+Q05 moat / durability                PARTIAL
 
-MK0_PROMOTION_PACKET                 NOT YET INSTANTIATED
-MK1_BOOTSTRAP_PROFILE                NOT YET APPROVED
-Production MK1 implementation        BLOCKED
+MK0_PROMOTION_PACKET                  NOT YET INSTANTIATED
+MK1_BOOTSTRAP_PROFILE                 NOT YET APPROVED
+Production MK1 implementation         BLOCKED
 ```
+
+`CLOSED FOR DESIGN` here means the validation method is specified; it does **not** mean the real-world outcome is positive.
 
 The files in this directory do not fabricate missing evidence. They make it difficult to close a gate without the evidence actually required.
 
@@ -123,16 +155,18 @@ Parallelism/dependency exceptions are defined in `EVIDENCE_EXECUTION_SEQUENCE.md
 
 ## Required status vocabulary
 
-### Evidence plans
+### Evidence artifact lifecycle
 
 ```text
 DRAFT
 PRE_REGISTERED
-RUNNING / EVIDENCE_RUNNING
-ANALYSIS / REVIEW_READY
+EVIDENCE_RUNNING
+REVIEW_READY
 FINAL
 SUPERSEDED
 ```
+
+Local execution labels such as `RUNNING` or `ANALYSIS` must map to the canonical lifecycle and cannot become final Q outcomes.
 
 ### Final evidence decisions
 
@@ -144,7 +178,9 @@ STOP_CURRENT_CONFIGURATION
 INCONCLUSIVE
 ```
 
-`INCONCLUSIVE` never auto-promotes.
+Only `CLOSED_PASS` and appropriately constrained `CLOSED_CONDITIONAL` are promotable.
+
+`INCONCLUSIVE` never auto-promotes and is not silently converted into negative or conditional evidence.
 
 ### Product lock registry
 
@@ -235,5 +271,7 @@ approved MK1 bootstrap profile
         +
 BUILD_READINESS pass
 ```
+
+Every non-null bootstrap value must be traceable through the provenance matrices to a valid evidence receipt, closed internal contract or accepted ADR.
 
 Until then, the correct state is still research/validation.
