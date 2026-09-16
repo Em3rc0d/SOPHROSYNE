@@ -2,11 +2,17 @@
 
 ## Current verdict
 
-**INTERNAL DESIGN: READY**
+**INTERNAL DESIGN: CLOSED**
+
+**KNOWN INTERNAL DESIGN NODES REMAINING: 0**
 
 **MK1 IMPLEMENTATION: BLOCKED BY EXTERNAL / EMPIRICAL LOCKS**
 
-The architecture is now specific enough to implement without choosing major system semantics during coding. That does **not** mean the product is guaranteed to work on the first implementation attempt; it means remaining uncertainty is intentionally exposed as evidence work rather than hidden design ambiguity.
+The architecture is specific enough to implement without choosing major system semantics during coding. Remaining implementation tests, drills and measured operational properties are acceptance evidence, not unresolved MK0 design decisions.
+
+Canonical internal-closure audit: `docs/implementation/INTERNAL_CLOSURE_AUDIT.md`.
+
+Canonical implementation-verification schema: `docs/implementation/ACCEPTANCE_RECEIPTS.md`.
 
 ## Internal design locks
 
@@ -24,18 +30,22 @@ The architecture is now specific enough to implement without choosing major syst
 | Failure/degradation/fallback | CLOSED | `docs/implementation/FAILURE_AND_DEGRADATION.md` |
 | Replay/reproducibility | CLOSED | `docs/implementation/REPLAY_AND_REPRODUCIBILITY.md` |
 | Quant/backtest mechanics | CLOSED | `docs/implementation/QUANT_ENGINE_CONTRACT.md` |
-| Security controls | CLOSED_FOR_DESIGN | `docs/implementation/SECURITY_CONTROLS.md` |
+| Security controls | CLOSED | `docs/implementation/SECURITY_CONTROLS.md` |
 | Config/secrets | CLOSED | `docs/implementation/CONFIGURATION_AND_SECRETS.md` |
-| Observability/SLO model | CLOSED_FOR_BETA_TARGETS | `docs/implementation/OBSERVABILITY_AND_SLOS.md` |
+| Observability/SLO contract | CLOSED | `docs/implementation/OBSERVABILITY_AND_SLOS.md` |
 | Test strategy | CLOSED | `docs/implementation/TEST_STRATEGY.md` |
 | CI/CD / migration / rollback | CLOSED | `docs/implementation/CI_CD_AND_ENVIRONMENTS.md` |
-| Operational incident model | CLOSED_FOR_DESIGN | `docs/implementation/OPERATIONS_RUNBOOK.md` |
+| Operational incident model | CLOSED | `docs/implementation/OPERATIONS_RUNBOOK.md` |
 | Quant validation method | CLOSED | `docs/quant/VALIDATION_PROTOCOL.md` |
 | Data-rights architecture | CLOSED | `docs/data/DATA_RIGHTS.md` |
+| Acceptance-receipt schema | CLOSED | `docs/implementation/ACCEPTANCE_RECEIPTS.md` |
+| Internal closure audit | CLOSED | `docs/implementation/INTERNAL_CLOSURE_AUDIT.md` |
 | Build-readiness gate | CLOSED | this document |
 | Risk-minimizing implementation order | CLOSED | `docs/implementation/IMPLEMENTATION_SEQUENCE.md` |
 
-`CLOSED_FOR_DESIGN` means implementation must still produce the operational receipt/tests before beta.
+Every known MK1 internal design node is closed.
+
+A future `SECURITY_READINESS`, `OBSERVABILITY_SLO`, `INCIDENT_DRILL`, `BACKUP_RESTORE`, `GOLDEN_REPLAY` or other receipt may still be pending because the implementation does not yet exist. That status belongs to MK1/beta verification, not to the MK0 design graph.
 
 ## External / empirical locks that still block MK1
 
@@ -84,7 +94,7 @@ Why it blocks scale architecture, not the research prototype itself:
 
 ## Allowed work before all locks close
 
-To preserve the docs-first discipline, **product feature implementation remains blocked**.
+To preserve the docs-first discipline, **production feature implementation remains blocked**.
 
 Allowed activities:
 - research scripts used strictly to close Q03/Q04/Q05;
@@ -108,16 +118,17 @@ All must be true:
 7. Initial exact asset universe and corresponding market-data profile(s) are frozen.
 8. Initial freshness profiles and risk policy versions are frozen.
 9. Corporate-action/session/currency semantics for every selected profile are confirmed against provider capabilities and fixtures.
-10. Architecture/ADR review finds no unresolved P0/P1 design contradiction.
-11. `MK0_LOCKS.md` contains no OPEN/PARTIAL item whose outcome would materially change MK1 system boundaries.
+10. Architecture/ADR review finds no unresolved P0/P1 contradiction introduced by the evidence-driven selections.
+11. `MK0_LOCKS.md` contains no OPEN/PARTIAL evidence item whose outcome would materially change MK1 system boundaries.
 
-If any item would materially change the architecture, implementation remains blocked.
+The internal design graph itself is not a remaining condition: it is already closed. If new evidence materially invalidates an internal decision, that node is explicitly reopened under the governance rule rather than silently changed in code.
 
 ## Definition of Ready — beta
 
 In addition to implementation completion:
 
 - mandatory CI gates green;
+- all required current acceptance receipts defined by `ACCEPTANCE_RECEIPTS.md` are `PASS`;
 - golden replay 100% for deterministic corpus;
 - anti-leakage suite green;
 - provider contracts and market-data pathological fixtures green;
@@ -141,6 +152,7 @@ A slice is done only when it has:
 - unit/integration/contract tests;
 - failure/degradation behavior;
 - user-visible stale/error semantics;
+- applicable acceptance receipt evidence;
 - documentation/ADR updates for semantic changes;
 - staging verification.
 
@@ -148,6 +160,6 @@ A UI screen backed by mock data is not a completed vertical slice.
 
 ## Stop rule
 
-If new evidence invalidates product, legal, data-rights or quant assumptions, **stop and update the graph before coding around the contradiction**.
+If new evidence invalidates product, legal, data-rights, quant or an internal architectural assumption, **stop and update the graph before coding around the contradiction**.
 
 The purpose of this gate is not to eliminate all uncertainty—impossible in a real system—but to ensure no known high-impact decision is deferred accidentally into implementation.
