@@ -1,16 +1,10 @@
-# Q03 Instrumentation Contract
+# Q03 / Q05 Instrumentation Contract
 
 ## Purpose
 
-Q03 decisions depend on behavior, not only interviews. This contract defines the minimum event model needed to reproduce E03-B, E03-C, E03-D and supportive E03-E measurements without collecting unnecessary financial data.
-
-Analytics events are experiment evidence. They must be versioned, attributable to the exact prototype variant and protected from post-hoc semantic changes.
-
----
+Behavioral evidence must be reproducible from versioned events without unnecessary financial data.
 
 ## Event envelope
-
-Every event contains:
 
 ```yaml
 event_id:
@@ -20,340 +14,74 @@ occurred_at_utc:
 received_at_utc:
 experiment_id:
 experiment_version:
-participant_id:        # pseudonymous
+participant_id:
 session_id:
 task_id:
 variant_id:
 prototype_digest:
 source: UI | MODERATOR | SYSTEM
 recruitment_cohort:
+primary_promotion_geography:
+study_language:
+study_timezone:
 ```
 
-Never use email/name/account credentials as `participant_id`.
+Never use name/email/account credentials as participant ID.
 
----
+## Core events
 
-## Common optional context
+Study/session: `study_consent_recorded`, `session_started`, `session_ended`.
 
-```yaml
-context:
-  case_id:
-  scenario_as_of:
-  reminder_id:
-  reminder_attribution_window_active:
-  comparator_id:
-  price_band_id:
-  component_id:
-  client_event_sequence:
-```
+Task/scoring: `task_started`, `task_answer_submitted`, `task_scored` with scoring-rubric version, confidence, completion time and objective comprehension flags.
 
-Do not place raw portfolio positions, account identifiers or credentials in generic context.
+Evidence/history: `evidence_item_opened`, `opposing_evidence_opened`, `uncertainty_opened`, `invalidation_opened`, `provenance_opened`, `decision_record_opened`, `decision_record_revisited`.
 
----
+Repeat use: `qualifying_activity`, `reminder_delivered`, `reminder_opened`, `revisit_classified` with `PROMPTED | UNPROMPTED | AMBIGUOUS` and attribution-rule version.
 
-# Required events
+Pricing: `pricing_exposure_started` with price, currency, billing period, tax/fee presentation, entitlement matrix/copy digest; `pricing_commitment_started`; optional `pricing_commitment_completed`; `pricing_fake_door_disclosed`. Commitment events carry `commitment_friction_rule_version`.
 
-## Study/session lifecycle
+Moat/exposure: `component_exposure_recorded` with `component_id` and `exposure_rule_version`; `workflow_preference_submitted`; `component_reason_coded` with coding-rubric version/reviewer.
 
-### `study_consent_recorded`
+## Derived metrics
 
-Fields:
-```yaml
-consent_version:
-consent_digest:
-```
+### Active day
+A frozen study-timezone day with at least one meaningful `qualifying_activity`; passive page load does not qualify.
 
-### `session_started`
+### Multi-day active
+Active on at least 3 distinct days in the 14-day E03-C window.
 
-### `session_ended`
+### Unprompted revisit
+A qualifying new session on study days 4–14 classified `UNPROMPTED` under the frozen reminder rule.
 
-Fields:
-```yaml
-end_reason: COMPLETED | USER_LEFT | TECHNICAL_FAILURE | MODERATOR_STOP | OTHER
-```
+### Historical revisit
+At least one valid `decision_record_revisited` during the observation window.
 
----
+### Qualified pricing exposure
+Participant meets cohort criteria, offer rendered successfully, assigned pricing/entitlement digest is correct, and no preregistered exclusion applied.
 
-## Task lifecycle
+### Qualified commitment
+A deliberate event beyond a curiosity click satisfying the frozen friction rule; automation/test accounts excluded by preregistered identifiers.
 
-### `task_started`
+### Component exposure denominator
+For each Q05 component, denominator is `eligible_exposed_repeat_users`: eligible repeat users who received a valid `component_exposure_recorded` before the behavior being measured. Participants never exposed because of progressive disclosure are not failures for that component; exposure exclusions remain traceable and reported.
 
-Fields:
-```yaml
-task_type:
-case_id:
-```
+## Data-quality gates
 
-### `task_answer_submitted`
+- DQ1: >=99.5% of events required for primary metrics pass schema validation.
+- DQ2: primary events use registered prototype digests or are documented deviations.
+- DQ3: retries/duplicates are deduplicated by event ID/idempotency rule.
+- DQ4: impossible ordering/material clock skew is quarantined.
+- DQ5: every primary denominator inclusion/exclusion has one traceable reason.
+- DQ6: no session is both prompted and unprompted.
+- DQ7: synthetic/test accounts are excluded under frozen identifiers.
+- DQ8: component exposure occurs before component-linked outcome for denominator eligibility.
 
-Fields:
-```yaml
-answer_ref:
-confidence_percent:
-completion_ms:
-```
+If an instrumentation defect affects >10% of observations required by a primary metric, that metric is `INCONCLUSIVE` unless a preregistered recovery rule resolves validity. It cannot PASS through post-hoc repair.
 
-Answers themselves may live in a separate research artifact rather than analytics payloads.
+## Privacy / versioning
 
-### `task_scored`
+Do not log secrets, raw auth headers, full account identifiers, payment-card data, generic free text, or exact holdings without approved necessity. Changing event meaning requires a new schema version. Historical events are interpreted under their generating version.
 
-Server/research-pipeline event only.
+## Reproducibility
 
-```yaml
-score_percent:
-scoring_rubric_version:
-contradiction_detected_correctly:
-staleness_detected_correctly:
-observation_inference_distinction_correct:
-```
-
-The scoring rubric is frozen before outcomes are inspected.
-
----
-
-## Evidence workflow
-
-### `evidence_item_opened`
-
-```yaml
-evidence_role: SUPPORTING | OPPOSING | NEUTRAL | UNKNOWN
-```
-
-### `opposing_evidence_opened`
-
-Explicit event for Q03/Q05 diagnostics.
-
-### `uncertainty_opened`
-
-### `invalidation_opened`
-
-### `provenance_opened`
-
-### `decision_record_opened`
-
-```yaml
-record_age_class: CURRENT | HISTORICAL
-```
-
-### `decision_record_revisited`
-
-Emitted only when the participant has previously opened the same logical record in an earlier qualifying session.
-
----
-
-## Repeat-use events
-
-### `qualifying_activity`
-
-Derived/server-side event identifying activity that counts toward an active day.
-
-Rules:
-- passive page load alone does not qualify;
-- at least one meaningful research action is required;
-- exact qualifying action set is frozen before E03-C starts.
-
-### `reminder_delivered`
-
-```yaml
-reminder_id:
-channel:
-```
-
-### `reminder_opened`
-
-```yaml
-reminder_id:
-```
-
-### `revisit_classified`
-
-Server/analysis event.
-
-```yaml
-classification: PROMPTED | UNPROMPTED | AMBIGUOUS
-attribution_rule_version:
-```
-
-`AMBIGUOUS` is excluded from the primary unprompted-revisit numerator but remains reported.
-
----
-
-## Pricing events
-
-### `pricing_exposure_started`
-
-```yaml
-price_band_id:
-price_displayed:
-currency:
-feature_matrix_version:
-pricing_copy_digest:
-```
-
-One participant may not silently count as multiple independent exposures to different paid bands unless the experiment explicitly uses and models repeated exposure.
-
-### `pricing_details_viewed`
-
-Diagnostic only.
-
-### `pricing_commitment_started`
-
-Primary high-friction intent event.
-
-Must represent a deliberate action beyond a curiosity click.
-
-### `pricing_commitment_completed`
-
-Use only when a legally/operationally appropriate real transaction or equivalent validated commitment exists.
-
-### `pricing_fake_door_disclosed`
-
-Records the point where the participant is told no charge/transaction will occur in a non-deceptive fake-door design.
-
----
-
-## Competitive/moat events
-
-### `workflow_preference_submitted`
-
-```yaml
-selected_workflow:
-reason_text_ref:
-```
-
-### `component_reason_coded`
-
-Research-pipeline event.
-
-```yaml
-component_id:
-coding_rubric_version:
-reviewer_id:
-```
-
-Free-text preference reasons are stored separately with appropriate privacy controls.
-
----
-
-# Derived metric definitions
-
-Metric definitions are versioned analysis code/contracts, never ad-hoc dashboard calculations.
-
-## Active day
-
-A UTC/local-study day containing at least one `qualifying_activity` event under the frozen experiment rule.
-
-The study manifest must freeze timezone/day-boundary semantics before start.
-
-## Multi-day active participant
-
-Participant with active days `>= 3` during the E03-C 14-day observation window.
-
-## Unprompted revisit
-
-A qualifying new session after day 3 classified `UNPROMPTED` by the frozen reminder-attribution rule.
-
-The default rule should conservatively classify sessions near reminder delivery as prompted rather than inflating organic return.
-
-## Evidence/history revisit
-
-Participant emits `decision_record_revisited` at least once during the observation window.
-
-## Qualified pricing exposure
-
-A `pricing_exposure_started` event where:
-- participant meets the pre-registered Q03 cohort definition;
-- page/offer rendered successfully;
-- price/feature matrix matches the assigned band digest;
-- participant had not already been invalidated by experiment exclusion criteria.
-
-## Qualified commitment
-
-A valid `pricing_commitment_started` event satisfying the pre-registered friction requirement and not generated by automation/test accounts.
-
----
-
-# Data quality gates
-
-Before a receipt uses telemetry:
-
-### DQ1 — event schema validity
-
-`>= 99.5%` of events required for primary metrics must pass schema validation.
-
-### DQ2 — prototype integrity
-
-No primary-metric event may come from an unregistered `prototype_digest` unless explicitly treated as a protocol deviation.
-
-### DQ3 — duplicate control
-
-Duplicate/retry events must be deduplicated by `event_id` or documented idempotency logic.
-
-### DQ4 — clock sanity
-
-Events with impossible ordering or material clock skew are quarantined and reported.
-
-### DQ5 — participant denominator integrity
-
-Every participant included/excluded from a primary denominator has one explicit reason traceable to the pre-registered rules.
-
-### DQ6 — reminder attribution integrity
-
-A participant/session cannot be counted as both prompted and unprompted.
-
-### DQ7 — test-account exclusion
-
-Synthetic/test events are marked and excluded through pre-registered identifiers, never by eyeballing results later.
-
-If an instrumentation defect affects more than 10% of observations needed by an E03-C primary metric, that metric cannot PASS without a new experiment version or a pre-registered recovery rule.
-
----
-
-# Privacy / logging rules
-
-Analytics payloads must not contain:
-- passwords/tokens/secrets;
-- raw auth headers;
-- broker/exchange account numbers;
-- exact portfolio holdings unless a dedicated approved study field requires them;
-- free-text notes copied into generic logs;
-- payment-card data.
-
-Experiment logs use participant IDs and event metadata only.
-
----
-
-# Event-versioning rule
-
-Changing the meaning of an event requires a new `event_schema_version`.
-
-Examples requiring a new version:
-- what counts as `qualifying_activity`;
-- reminder attribution window;
-- commitment friction definition;
-- component coding rubric;
-- scoring rubric semantics.
-
-Historical events are interpreted under the version that generated them, not silently reclassified under new semantics.
-
----
-
-# Analysis reproducibility
-
-Every Q03/Q05 receipt relying on telemetry references:
-
-```yaml
-event_export_digest:
-event_schema_versions:
-analysis_code_commit:
-metric_contract_version:
-participant_inclusion_manifest_digest:
-```
-
-Given the same exported event corpus and analysis code, primary metric numerators/denominators must reproduce exactly.
-
----
-
-## Final invariant
-
-> If we cannot reconstruct exactly why a participant counted in a numerator or denominator, the metric is not promotion-grade evidence.
+Receipts using telemetry reference event-export digest, schema versions, analysis-code commit, metric-contract version and participant-inclusion/exposure manifest digest.
