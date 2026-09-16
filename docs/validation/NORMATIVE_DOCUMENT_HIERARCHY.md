@@ -18,13 +18,36 @@ Authoritative sources:
 
 These define project-wide invariants and change-control rules. No lower-level artifact may override them.
 
-### L1 — Lock and lifecycle truth
+### L1A — Validation semantic normalization
+
+Authoritative source:
+- `docs/validation/CANONICAL_VALIDATION_SPEC.md`
+
+This file exists only to normalize cross-document semantics that were found inconsistent during the MK0 evidence-execution audit, including:
+- evidence lifecycle vocabulary;
+- terminal decision vocabulary;
+- promotion eligibility;
+- Peru promotion geography;
+- Q01 legal/compliance breadth;
+- Q03 cohort/geography corrections;
+- Q04 aggregate `INCONCLUSIVE` semantics;
+- Q05 exposure-aware denominators;
+- bootstrap provenance requirements;
+- contradiction severity.
+
+It does **not** replace detailed experiment thresholds, packets, statistical formulas or implementation contracts.
+
+When and only when a lower validation artifact conflicts with `CANONICAL_VALIDATION_SPEC.md` on one of the normalization topics above, the canonical normalization governs until the lower artifact is explicitly revised/superseded.
+
+### L1B — Lock and lifecycle detail
 
 Authoritative sources:
 - `MK0_LOCKS.md`
 - `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`
 
-These define what remains open, the closure lifecycle, terminal evidence decisions and promotion eligibility.
+These define what remains open, detailed evidence requirements, closure workflow and promotion structure.
+
+They remain fully authoritative except for a normalization conflict explicitly covered by L1A.
 
 ### L2 — Domain validation contracts
 
@@ -38,7 +61,7 @@ Authoritative sources:
 - `docs/validation/RESEARCH_PARTICIPANT_PROTOCOL.md`
 - `experiments/q03/Q03_INSTRUMENTATION_CONTRACT.md`
 
-These may be more specific than L1 but may not redefine the lifecycle or invent terminal states.
+These may be more specific than L1 but may not redefine lifecycle vocabulary, promotion eligibility, jurisdictional promotion scope or other L1 normalization rules.
 
 ### L3 — Evidence instances
 
@@ -56,8 +79,12 @@ A finalized receipt can close only the scoped question registered by its governi
 Authoritative sources:
 - instantiated `docs/validation/MK0_PROMOTION_PACKET.md`
 - approved `docs/validation/MK1_BOOTSTRAP_PROFILE.md`
+- `docs/validation/BOOTSTRAP_PROVENANCE_MATRIX.md`
+- `docs/validation/AUDIT_TRACEABILITY_MATRIX.md`
 
 Promotion artifacts may aggregate and freeze evidence-derived values. They may not reinterpret evidence or fill missing fields by convenience.
+
+The provenance/traceability matrices constrain where bootstrap values may come from; they do not create evidence themselves.
 
 ### L5 — Build and release conformance
 
@@ -76,13 +103,14 @@ When two active documents conflict:
 
 1. identify the exact overlapping scope;
 2. apply the highest authority level that actually governs that scope;
-3. if two documents at the same level conflict, **do not choose one silently**;
-4. create a contradiction-log entry;
-5. block promotion if severity is P0/P1;
-6. update/supersede the losing artifact explicitly;
-7. preserve historical versions.
+3. apply L1A only to its explicitly enumerated normalization topics;
+4. if two documents at the same effective authority conflict, **do not choose one silently**;
+5. create a contradiction-log entry;
+6. block promotion if severity is P0/P1;
+7. update/supersede the losing artifact explicitly;
+8. preserve historical versions.
 
-“Newest file wins” and “implementation chose this behavior” are prohibited conflict-resolution mechanisms.
+“Newest file wins”, “implementation chose this behavior”, and “the stricter one probably wins” are prohibited conflict-resolution mechanisms unless the governing contract explicitly defines such an intersection rule.
 
 ---
 
@@ -91,7 +119,7 @@ When two active documents conflict:
 Specificity is allowed only inside the bounds of higher-level authority.
 
 Example:
-- L1 says empirical locks may end in `CLOSED_PASS`, `CLOSED_CONDITIONAL`, `PIVOT_REQUIRED`, `STOP_CURRENT_CONFIGURATION` or `INCONCLUSIVE`.
+- L1A says empirical final decisions are `CLOSED_PASS`, `CLOSED_CONDITIONAL`, `PIVOT_REQUIRED`, `STOP_CURRENT_CONFIGURATION` or `INCONCLUSIVE`.
 - Q03 may define exact numeric criteria for those outcomes.
 - Q03 may **not** invent another promotable terminal state.
 
@@ -120,6 +148,7 @@ Therefore:
 - legal review packet != legal opinion;
 - DataUseProfile template != licensed right;
 - bootstrap schema != approved bootstrap profile;
+- provenance matrix != populated bootstrap;
 - acceptance-receipt schema != passing implementation receipt.
 
 ---
@@ -132,6 +161,14 @@ Evidence collected outside Peru may be exploratory or supportive, but cannot by 
 
 ---
 
+## Audit-report rule
+
+`docs/validation/AUDIT_CLOSURE_REPORT.md` records audit findings and the design-audit verdict. It is **not** itself an authority source for product/legal/data/scientific truth.
+
+If the audit report describes a rule that is not represented in an authoritative L0–L5 contract, the report is incomplete and the rule is not considered frozen until the authoritative contract is updated.
+
+---
+
 ## Final invariant
 
-> There is exactly one active authority path from governance to evidence to promotion to implementation. Historical detail is preserved, but historical drafts do not compete with current truth.
+> There is exactly one active authority path from governance to normalized validation semantics to evidence to promotion to implementation. Historical detail is preserved, but historical drafts and audit prose do not compete with current truth.
