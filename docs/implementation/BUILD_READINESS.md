@@ -14,6 +14,16 @@ Canonical internal-closure audit: `docs/implementation/INTERNAL_CLOSURE_AUDIT.md
 
 Canonical implementation-verification schema: `docs/implementation/ACCEPTANCE_RECEIPTS.md`.
 
+Canonical external/empirical closure protocol: `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`.
+
+Canonical pre-build experiment template: `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`.
+
+Canonical MK0 promotion packet: `docs/validation/MK0_PROMOTION_PACKET.md`.
+
+Canonical evidence-derived implementation profile: `docs/validation/MK1_BOOTSTRAP_PROFILE.md`.
+
+---
+
 ## Internal design locks
 
 | Lock | Status | Canonical artifact |
@@ -40,88 +50,144 @@ Canonical implementation-verification schema: `docs/implementation/ACCEPTANCE_RE
 | Data-rights architecture | CLOSED | `docs/data/DATA_RIGHTS.md` |
 | Acceptance-receipt schema | CLOSED | `docs/implementation/ACCEPTANCE_RECEIPTS.md` |
 | Internal closure audit | CLOSED | `docs/implementation/INTERNAL_CLOSURE_AUDIT.md` |
+| External-evidence closure protocol | CLOSED | `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md` |
+| Experiment pre-registration contract | CLOSED | `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md` |
+| MK0 promotion packet contract | CLOSED | `docs/validation/MK0_PROMOTION_PACKET.md` |
+| MK1 bootstrap-profile contract | CLOSED | `docs/validation/MK1_BOOTSTRAP_PROFILE.md` |
 | Build-readiness gate | CLOSED | this document |
 | Risk-minimizing implementation order | CLOSED | `docs/implementation/IMPLEMENTATION_SEQUENCE.md` |
 
-Every known MK1 internal design node is closed.
+Every known MK1 internal design node remains closed.
 
-A future `SECURITY_READINESS`, `OBSERVABILITY_SLO`, `INCIDENT_DRILL`, `BACKUP_RESTORE`, `GOLDEN_REPLAY` or other receipt may still be pending because the implementation does not yet exist. That status belongs to MK1/beta verification, not to the MK0 design graph.
+A future `SECURITY_READINESS`, `OBSERVABILITY_SLO`, `INCIDENT_DRILL`, `BACKUP_RESTORE`, `GOLDEN_REPLAY` or other implementation receipt may still be pending because the implementation does not yet exist. That status belongs to MK1/beta verification, not to the MK0 design graph.
+
+---
 
 ## External / empirical locks that still block MK1
 
+The authoritative closure semantics for Q01–Q05 are defined by `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`.
+
 ### Q01 — Peru regulatory boundary — FATAL_IF_FAILED
+
 Issue #2.
 
-Requires written qualified Peruvian securities counsel review of concrete product flows/copy.
+Requires written qualified Peruvian securities counsel review of the exact frozen product flows/copy.
 
-Why it blocks build promotion:
-- exact UX/copy and some API behavior may change depending on whether a flow is considered generalized information, personalized recommendation, intermediation or another regulated activity;
-- building around an unverified interpretation creates expensive rework and liability.
+Closure authority is external. Self-certification is not allowed.
 
 ### Q02 — Commercial market-data rights — FATAL_IF_FAILED
+
 Issue #3.
 
-Requires provider-by-provider written rights matrix.
+Requires authoritative evidence for every initial production `DataUseProfile` covering the intended commercial use.
 
-Why it blocks build promotion:
-- a technically valid API source can still be unusable for display, derived data, retention or redistribution;
-- the production data model already supports rights, but production provider selection cannot be frozen without this receipt.
+Unknown rights default to denied.
 
-### Q03 — Willingness to pay / retention
+### Q03 — Willingness to pay / repeat use
+
 Issue #4.
 
-Requires behavioral interviews, comprehension comparison, pricing/fake-door and retention evidence.
+Requires pre-registered behavioral, comprehension, repeat-use and pricing/commitment evidence.
 
-Why it blocks full product build:
-- prevents engineering a technically elegant product users do not repeatedly value.
+Statements of enthusiasm alone do not close the lock.
 
 ### Q04 — Quant baseline / ML incremental value
+
 Issue #5.
 
-Requires reproducible benchmark experiment.
+Requires a reproducible deterministic baseline harness before any ML promotion decision.
 
-Why it blocks predictive/ML scope:
-- deterministic baseline must exist before ML complexity;
-- no ML/alpha claim enters implementation requirements until evidence exists.
+A valid closure may explicitly exclude ML from MK1.
 
 ### Q05 — Moat / competitive durability
+
 Issue #6.
 
-Requires preference/retention/trust evidence and competitive refresh.
+Requires preference/repeat-use evidence and a replicability assessment.
 
-Why it blocks scale architecture, not the research prototype itself:
-- prevents optimizing for a moat that may be only localization or thin LLM wrapping.
+A valid conditional closure may authorize MK1 only as a learning wedge while scale architecture/large GTM spend remain blocked.
+
+---
+
+## Evidence lifecycle requirement
+
+Each external / empirical lock must move through the canonical lifecycle:
+
+```text
+OPEN
+  -> PRE_REGISTERED
+  -> EVIDENCE_RUNNING
+  -> REVIEW_READY
+  -> CLOSED_PASS
+     or CLOSED_CONDITIONAL
+     or PIVOT_REQUIRED
+     or STOP_CURRENT_CONFIGURATION
+```
+
+No Q may move directly from `OPEN` to a promotable state without the required immutable `EvidenceReceipt`.
+
+Empirical Q03/Q04/Q05 experiments use `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md` before outcome inspection.
+
+---
 
 ## Allowed work before all locks close
 
-To preserve the docs-first discipline, **production feature implementation remains blocked**.
+To preserve docs-first discipline, **production feature implementation remains blocked**.
 
 Allowed activities:
 - research scripts used strictly to close Q03/Q04/Q05;
-- throwaway/prototype UX used for behavioral tests, clearly outside the production architecture;
+- throwaway/prototype UX used for behavioral/legal review, clearly outside production architecture;
 - provider/legal discovery;
 - infrastructure spikes whose output is evidence/measurement, not production code;
-- test fixture/schema prototyping needed to validate a design assumption.
+- test fixture/schema prototyping needed to validate a design assumption;
+- generation of evidence receipts, contradiction logs and candidate bootstrap profiles.
 
-These artifacts do not become MK1 production code unless promoted through the normal gate.
+These artifacts do not become MK1 production code merely because they are useful.
+
+---
 
 ## Definition of Ready — start production MK1 implementation
 
 All must be true:
 
-1. Q01 closed with written legal receipt or product scope explicitly redesigned to satisfy counsel.
-2. Q02 closed for the exact initial instrument/data families chosen for MK1.
-3. Q03 has enough evidence to justify the chosen wedge and repeat-use hypothesis, or the product thesis has been explicitly pivoted and docs updated.
-4. Q04 has a reproducible deterministic baseline; ML scope is either justified or explicitly removed.
-5. Q05 is either supported sufficiently for MK1 or explicitly downgraded to a hypothesis that does not alter the core build.
-6. Initial production provider set and fallback compatibility groups are named.
-7. Initial exact asset universe and corresponding market-data profile(s) are frozen.
-8. Initial freshness profiles and risk policy versions are frozen.
-9. Corporate-action/session/currency semantics for every selected profile are confirmed against provider capabilities and fixtures.
-10. Architecture/ADR review finds no unresolved P0/P1 contradiction introduced by the evidence-driven selections.
-11. `MK0_LOCKS.md` contains no OPEN/PARTIAL evidence item whose outcome would materially change MK1 system boundaries.
+1. Q01 has a final `CLOSED_PASS` or `CLOSED_CONDITIONAL` evidence receipt from the required external authority.
+2. Q02 has a final promotable evidence receipt for every initial production `DataUseProfile`.
+3. Q03 has final promotable evidence supporting the selected persona/JTBD/wedge or canonical product docs have been explicitly pivoted to the supported result.
+4. Q04 baseline-harness validity is reproducibly closed; ML is explicitly `INCLUDE`, `EXCLUDE` or `DEFER`.
+5. Q05 is `CLOSED_PASS` or an explicit `CLOSED_CONDITIONAL` learning-wedge state whose scale constraints are frozen.
+6. Every empirical experiment used for closure was pre-registered before outcome inspection.
+7. Failed/inconclusive evidence remains preserved in the experiment/evidence history.
+8. Initial production provider set and fallback compatibility groups are frozen by Q02 evidence.
+9. Initial exact asset universe and corresponding market-data profile(s) are frozen.
+10. Initial freshness profiles and risk policy version are frozen.
+11. Corporate-action/session/currency semantics for every selected profile are confirmed against actual provider capabilities/fixtures.
+12. Unit-economics assumptions are synchronized with observed pricing evidence and actual provider/compliance cost assumptions.
+13. Cross-receipt contradiction log has no unresolved P0/P1 item.
+14. Architecture impact review finds no unresolved P0/P1 internal contradiction introduced by evidence-driven selections.
+15. `MK0_LOCKS.md` contains no OPEN/PARTIAL evidence item whose outcome would materially change MK1 system boundaries.
+16. One `MK1_BOOTSTRAP_PROFILE` is `APPROVED` and identifies the exact configuration to build.
+17. `docs/validation/MK0_PROMOTION_PACKET.md` is instantiated for the candidate and receives final `APPROVED` status.
 
-The internal design graph itself is not a remaining condition: it is already closed. If new evidence materially invalidates an internal decision, that node is explicitly reopened under the governance rule rather than silently changed in code.
+The internal design graph itself is not a remaining condition: it is already closed. If new evidence materially invalidates an internal decision, that node is explicitly reopened under governance rather than silently changed in code.
+
+---
+
+## Build authorization rule
+
+Every production implementation PR after MK0 promotion must identify:
+
+```text
+bootstrap_profile_id:
+affected_profile_sections:
+semantic_change: YES | NO
+requires_revalidation: YES | NO
+requires_adr: YES | NO
+acceptance_receipts_required: []
+```
+
+Production work that cannot identify its governing bootstrap profile is not ready.
+
+---
 
 ## Definition of Ready — beta
 
@@ -139,12 +205,17 @@ In addition to implementation completion:
 - measured DB/service recovery meets approved beta RPO/RTO targets;
 - production synthetic checks and dashboards live;
 - no unresolved P0/P1 defects;
-- user-facing legal copy/terms match counsel-approved flow;
-- no uncalibrated probability or unsupported performance claim exposed.
+- user-facing legal copy/terms match the Q01-approved flow profile;
+- production data use matches Q02-approved `DataUseProfile`s;
+- no uncalibrated probability or unsupported performance claim exposed;
+- released semantics still match the approved `MK1_BOOTSTRAP_PROFILE`.
+
+---
 
 ## Definition of Done — one vertical slice
 
 A slice is done only when it has:
+- bootstrap-profile traceability;
 - domain/API contract;
 - persistence migration where required;
 - authorization;
@@ -158,8 +229,10 @@ A slice is done only when it has:
 
 A UI screen backed by mock data is not a completed vertical slice.
 
+---
+
 ## Stop rule
 
 If new evidence invalidates product, legal, data-rights, quant or an internal architectural assumption, **stop and update the graph before coding around the contradiction**.
 
-The purpose of this gate is not to eliminate all uncertainty—impossible in a real system—but to ensure no known high-impact decision is deferred accidentally into implementation.
+The purpose of this gate is not to eliminate all uncertainty—impossible in a real system—but to ensure no known high-impact decision is deferred accidentally into implementation and no validated configuration is silently replaced during build.
