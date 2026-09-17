@@ -1,4 +1,4 @@
-# SOPHROSYNE Research Prototype v1.1
+# SOPHROSYNE Research Prototype v1.2
 
 ## Status
 
@@ -39,7 +39,7 @@ Formal Q00 execution must freeze the assigned arm before observation; the UAT sw
 
 ## Version
 
-`research-prototype-v1.1.0`
+`research-prototype-v1.2.0`
 
 ## Verification
 
@@ -47,3 +47,9 @@ Formal Q00 execution must freeze the assigned arm before observation; the UAT sw
 - JavaScript syntax: PASS
 - no external JavaScript dependencies
 - no backend/API dependencies
+
+## UAT v1.2
+
+- Spanish-facing copy normalized.
+- Active depth is explicit and states that more detail does not imply more certainty.
+- Canonical internal event/field names remain stable for research export compatibility.
