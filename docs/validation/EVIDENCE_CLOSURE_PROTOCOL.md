@@ -2,59 +2,68 @@
 
 ## Purpose
 
-The internal MK1 design graph is closed. MK0 now advances by closing the remaining **external / empirical** locks without fabricating evidence and without allowing implementation to silently decide product, legal, data-rights, commercial or scientific questions.
+The internal MK1 design graph is structurally closed for pre-build. MK0 now advances by closing the remaining **external / empirical** locks without fabricating evidence and without allowing implementation to silently decide product, legal, data-rights, commercial or scientific questions.
 
-This document defines the canonical protocol for closing **Q00–Q05**:
+This document defines the canonical closure protocol for **Q00–Q05**:
 
 - Q00 — core causal value against simple baselines;
 - Q01 — Peru regulatory boundary;
 - Q02 — commercial market-data rights;
 - Q03 — willingness-to-pay / repeat-use evidence;
-- Q04 — deterministic quant baseline / ML incremental value;
+- Q04 — deterministic quant baseline / optional ML increment;
 - Q05 — moat / competitive durability.
 
-The protocol closes the **method of validation**, not the result. A Q remains open until its required evidence exists and passes review.
+This protocol closes the **method of validation**, not any lock result. A Q remains open until its required evidence exists, survives review and produces an immutable receipt.
 
-Detailed experiment/review artifacts remain authoritative for execution:
+Detailed execution authority remains in:
+
 - `experiments/q00/Q00_PREREGISTRATION.md`;
 - `quarries/q01/Q01_COUNSEL_REVIEW_PACKET.md`;
 - `quarries/q02/Q02_DATA_RIGHTS_REVIEW_PACKET.md`;
 - `experiments/q03/Q03_PREREGISTRATION.md`;
 - `experiments/q03/Q03_INSTRUMENTATION_CONTRACT.md`;
 - `experiments/q04/Q04_PREREGISTRATION.md`;
-- `experiments/q05/Q05_PREREGISTRATION.md`.
+- `experiments/q05/Q05_PREREGISTRATION.md`;
+- `docs/validation/CANONICAL_VALIDATION_SPEC.md`;
+- `docs/validation/STATISTICAL_DECISION_RULES.md`.
+
+If this protocol conflicts with `CANONICAL_VALIDATION_SPEC.md` on lifecycle vocabulary, aggregate outcomes, geography, evidence authority or promotion eligibility, the canonical validation specification wins.
 
 ---
 
 ## Governing distinction
 
-SOPHROSYNE has three different kinds of truth:
+SOPHROSYNE keeps three truth classes separate:
 
-1. **Design truth** — an internal contract or architecture decision.
-2. **Evidence truth** — an external fact or empirical result that must be observed, contracted, measured or reviewed.
+1. **Design truth** — internal architecture, contracts and bounded decisions.
+2. **Evidence truth** — external facts or empirical results that must be observed, contracted, measured or reviewed.
 3. **Implementation truth** — proof that built software conforms to closed design, represented by acceptance receipts.
 
-These classes must never be collapsed.
+They must never be collapsed.
 
 ```text
 closed design
     |
     +--> external / empirical evidence gate
     |        |
-    |        +--> PASS / CONDITIONAL_PASS / PIVOT / STOP / INCONCLUSIVE
+    |        +--> CLOSED_PASS
+    |        +--> CLOSED_CONDITIONAL
+    |        +--> PIVOT_REQUIRED
+    |        +--> STOP_CURRENT_CONFIGURATION
+    |        +--> INCONCLUSIVE
     |
     +--> implementation
              |
              +--> typed acceptance receipts
 ```
 
-A successful prototype is not legal clearance. A signed provider contract is not user demand. A strong backtest is not proof of a moat. A passing user study is not proof that production code is secure. A sophisticated downstream experiment cannot rescue a failed core causal-value gate.
+A successful prototype is not legal clearance. A signed provider contract is not user demand. A strong backtest is not proof of a moat. A passing user study is not proof that production code is secure. A sophisticated downstream experiment cannot rescue a failed causal or fatal upstream gate.
 
 ---
 
-## Evidence lock lifecycle
+## Evidence lifecycle
 
-Every external / empirical lock follows this lifecycle:
+Every external / empirical lock follows one lifecycle:
 
 ```text
 OPEN
@@ -74,23 +83,25 @@ The question exists but exact evidence collection is not yet frozen.
 
 ### PRE_REGISTERED
 
-Before observing outcome data, the evidence plan freezes:
-- hypothesis / question;
-- scope;
+Before outcome inspection, freeze as applicable:
+
+- question / hypothesis;
+- scope and geography;
 - authority required;
 - sample or dataset;
 - primary and secondary measures;
-- decision thresholds or decision rule;
-- exclusion criteria;
+- decision thresholds / rule;
+- inclusion and exclusion criteria;
+- analysis plan;
 - expected artifacts;
 - known confounders;
 - version/digest.
 
-Post-hoc material changes require a new evidence-plan version. Old plans remain immutable.
+A material change after preregistration requires a new version. The prior version remains immutable.
 
 ### EVIDENCE_RUNNING
 
-Data, legal opinion, contract terms or experiment observations are being collected. The decision rule cannot be rewritten to rescue the hypothesis.
+Evidence is being collected. Decision rules cannot be rewritten to rescue the hypothesis.
 
 ### REVIEW_READY
 
@@ -98,31 +109,29 @@ Required artifacts exist and can be independently checked.
 
 ### CLOSED_PASS
 
-Evidence supports the exact scoped claim strongly enough for MK1 promotion.
+Evidence supports the exact scoped claim strongly enough for promotion.
 
 ### CLOSED_CONDITIONAL
 
-The scoped configuration may proceed only with explicit constraints. Those constraints become frozen MK1 requirements.
+Only a constrained configuration may proceed. Every constraint becomes a frozen MK1 requirement and graph/profile restriction.
 
 ### PIVOT_REQUIRED
 
-The current hypothesis is not supported, but a narrower or materially different product configuration remains plausible. Affected canonical docs must be updated before a replacement experiment starts.
+The current configuration is unsupported, but a materially narrower or different configuration remains plausible. Affected canonical docs and graph reachability must change before a replacement evidence version begins.
 
 ### STOP_CURRENT_CONFIGURATION
 
-The exact proposed configuration cannot proceed. This is fatal to the configuration, not automatically fatal to SOPHROSYNE as a program.
+The exact proposed configuration cannot proceed.
 
 ### INCONCLUSIVE
 
-Required evidence is insufficient, underpowered, corrupted, materially confounded or otherwise unable to support a terminal decision. `INCONCLUSIVE` never auto-promotes to PASS.
+Evidence is insufficient, underpowered, corrupted, materially confounded or otherwise unable to support a terminal promotional decision. `INCONCLUSIVE` never auto-promotes.
 
 ---
 
-## Evidence receipt schema
+## Evidence receipt contract
 
-Every closure decision must produce an immutable `EvidenceReceipt`.
-
-Required fields:
+Every final evidence decision produces an immutable `EvidenceReceipt` with at least:
 
 ```text
 receipt_id
@@ -159,26 +168,26 @@ Finalized receipts are not edited in place. Corrections or new evidence create s
 
 Evidence provenance remains explicit: `OFFICIAL`, `ACADEMIC`, `OBSERVED`, `INFERRED`, `HYPOTHESIS`.
 
-Contradictory evidence is first-class and cannot be omitted merely because the final decision is favorable.
+Negative and contradictory evidence is first-class and cannot be omitted because the aggregate decision is favorable.
 
 ---
 
 ## Authority matrix
 
-| Lock | Evidence authority | Internal reviewer | Self-certification allowed? |
+| Lock | Required evidence authority | Internal review | Self-certification |
 |---|---|---|---|
-| Q00 causal value | pre-registered comparative/ablation evidence under frozen tasks, baselines and scoring | product research + validation reviewer | No terminal promotion from a single unreviewed favorable run |
-| Q01 regulatory | qualified Peruvian securities counsel for exact flows/copy | product + architecture | No |
-| Q02 data rights | provider contract/terms/quote or written provider confirmation | data architecture + product | No for rights not explicit in authoritative text |
-| Q03 WTP / repeat-use | observed target-user behavior and pre-registered experiment output | product research reviewer | Yes for measurement, not for inventing missing observations |
-| Q04 quant / ML | reproducible experiment corpus + independent rerun | quant reviewer | No single-run self-certification |
-| Q05 moat | observed preference/repeat use + competitor evidence | product strategy reviewer | No claim from interviews alone |
+| Q00 causal value | preregistered comparative/ablation evidence under frozen tasks, baselines and scoring | product research + validation reviewer | no terminal promotion from one unreviewed favorable run |
+| Q01 regulatory | qualified Peruvian securities counsel for exact frozen flows/copy | product + architecture | no |
+| Q02 data rights | authoritative provider terms/contract/quote or written provider confirmation | data architecture + product | no for rights not explicit in authoritative evidence |
+| Q03 WTP/repeat-use | observed target-user behavior + preregistered experiment output | product research reviewer | measurement may be internal; observations may not be invented |
+| Q04 quant/ML | reproducible experiment corpus + independent rerun/review | quant reviewer | no single-run promotion |
+| Q05 moat | observed preference/repeat use + competitive evidence | product strategy reviewer | interviews alone are insufficient |
 
-If an external authority is required, silence or ambiguity is **not** PASS.
+Where external authority is required, silence or ambiguity is **not `CLOSED_PASS`**.
 
 ---
 
-# Q00 — Core causal value against simple baselines
+# Q00 — Core causal value
 
 ## Question
 
@@ -186,56 +195,44 @@ Does the full candidate SOPHROSYNE intervention create material incremental deci
 
 ## Required evidence
 
-The promotable experiment must follow `experiments/q00/Q00_PREREGISTRATION.md` and preserve destructive comparison against, where applicable:
+Follow `experiments/q00/Q00_PREREGISTRATION.md` and preserve destructive comparison against applicable arms:
+
 - raw-information control;
 - stateless structured assistance;
-- five-question friction checklist;
+- five-question deliberate-friction baseline;
 - simple feedback;
 - short-memory SOPHROSYNE;
 - full candidate SOPHROSYNE;
-- strongest realistic cheap/free substitute.
+- strongest realistic cheap/free substitute frozen before outcome inspection.
 
-Required analyses include simple-friction, memory, outcome-blind, hidden-rubric, assisted-vs-unassisted transfer, regime/context transfer, dependence correction, cognitive/time cost, cheap-substitute comparison and the economic bridge to Q03.
+Required analyses include simple-friction ablation, memory ablation, outcome-blind evaluation, hidden-rubric evaluation, assisted-vs-unassisted transfer, regime/context transfer, dependence correction, cognitive/time-cost comparison, cheap-substitute comparison and the economic bridge to Q03.
 
-The study evaluates decision-process quality, not live investment performance. No real-money trading is required.
+The study evaluates decision-process quality, not live investment performance. It does not require real-money trading.
 
-## Decision rule
+## Decision rules
 
-### CLOSED_PASS
+- `CLOSED_PASS` — material incremental value survives the preregistered baselines and cognitive/time-cost boundary.
+- `CLOSED_CONDITIONAL` — only a narrower intervention or subset of components earns support; unsupported complexity is excluded/deferred.
+- `PIVOT_REQUIRED` — most value is explained by a materially simpler intervention or different workflow/configuration.
+- `STOP_CURRENT_CONFIGURATION` — the current full-product configuration fails to establish meaningful incremental value.
+- `INCONCLUSIVE` — sample, instrumentation, independence, validity or evidence quality is insufficient.
 
-The candidate intervention demonstrates preregistered, material incremental value beyond competent simple baselines while remaining within the allowed cognitive/time-cost boundary.
-
-### CLOSED_CONDITIONAL
-
-Only a narrower intervention or subset of components earns causal support. Unsupported complexity is excluded or deferred and those exclusions become frozen MK1 constraints.
-
-### PIVOT_REQUIRED
-
-Most value is explained by a materially simpler intervention, different workflow or different product configuration.
-
-### STOP_CURRENT_CONFIGURATION
-
-The current full-product configuration fails to establish meaningful incremental value against competent simple/cheap substitutes.
-
-### INCONCLUSIVE
-
-The preregistered minimum sample, instrumentation, independence, validity or evidence quality is insufficient for a terminal decision.
-
-Q03 willingness-to-pay, Q04 modeling sophistication or Q05 defensibility evidence **cannot rescue a failed Q00 result**.
+Q03 willingness-to-pay, Q04 modeling sophistication and Q05 defensibility **cannot rescue a failed Q00 configuration**.
 
 ## Frozen outputs
 
-A passing/conditional receipt freezes:
+A promotable receipt freezes:
+
 - validated intervention scope;
 - component inclusion/exclusion decisions;
 - simple-friction result;
 - memory result;
-- transfer scope (`ASSISTED_ONLY` where applicable);
+- transfer scope such as `ASSISTED_ONLY` where applicable;
 - cognitive/time-cost boundary;
 - cheap-substitute result;
 - minimum meaningful effect rule/result;
 - implications for Q03/Q04/Q05;
-- exact constraints propagated into `MK1_BOOTSTRAP_PROFILE` and graph reachability.
+- constraints propagated into graph reachability and `MK1_BOOTSTRAP_PROFILE`.
 
 ---
 
@@ -243,28 +240,25 @@ A passing/conditional receipt freezes:
 
 ## Question
 
-Can the exact proposed MK1 product flows, copy, personalization level and commercial model operate within the intended non-custodial decision-support posture under applicable Peruvian securities-law constraints?
+Can the exact proposed MK1 flows, copy, personalization level and commercial model operate within the intended non-custodial decision-support posture under applicable Peruvian legal/regulatory constraints?
 
-## Required review bundle
+## Required authority
 
-Counsel receives frozen representations of onboarding, profile/portfolio context, Market Translator, Evidence View, scenario cards, alerts, Strategy Sandbox, paper-validation flows, pricing, marketing claims, disclaimers/terms and future connector language exposed in MK1 UI.
+Follow `quarries/q01/Q01_COUNSEL_REVIEW_PACKET.md`. Qualified counsel must review the exact frozen interaction model and applicable commercial legal surfaces. Text-only descriptions are insufficient where interaction semantics matter.
 
-Text-only descriptions are insufficient where interaction semantics matter. Screens or clickable prototypes should be provided.
+## Decision rules
 
-The review must explicitly classify whether each flow is generalized information, personalized recommendation, advisory activity, intermediation, discretionary activity, solicitation/distribution issue or another relevant regulated behavior, and identify prohibited/required wording and constraints.
-
-## Decision rule
-
-- `CLOSED_PASS`: written review states the exact frozen MK1 flow can proceed under the intended posture without material redesign.
-- `CLOSED_CONDITIONAL`: counsel permits the flow only with explicit product/copy restrictions; each restriction is promoted into MK1 specification and regression checks.
-- `PIVOT_REQUIRED`: a central flow must materially change, but the product thesis survives under a narrower interaction model.
-- `STOP_CURRENT_CONFIGURATION`: the proposed configuration would require a regulatory posture the project is not prepared to assume.
+- `CLOSED_PASS` — written review permits the exact frozen configuration under the intended posture without material redesign.
+- `CLOSED_CONDITIONAL` — only explicit product/copy/legal constraints make the configuration permissible; each becomes a frozen requirement.
+- `PIVOT_REQUIRED` — a central flow must materially change, but a narrower product posture remains viable.
+- `STOP_CURRENT_CONFIGURATION` — the proposed configuration requires a posture the project is not prepared to assume.
+- `INCONCLUSIVE` — required authority, scope coverage or exact-flow review is incomplete or ambiguous.
 
 ## Frozen outputs
 
-A passing/conditional receipt freezes the `RegulatoryFlowProfile`, approved/forbidden interaction classes, approved/forbidden claim lexicon, required disclaimers/terms constraints, jurisdiction = Peru, and the exact reviewed prototype/screens digest.
+A promotable receipt freezes the `RegulatoryFlowProfile`, approved/forbidden interaction classes, approved/forbidden claim lexicon, required disclaimers/terms/consent constraints, jurisdiction, eligibility constraints and exact reviewed artifact digest.
 
-Any material UX/copy change that changes recommendation/personalization semantics reopens Q01 for the affected flow.
+A material interaction/copy change that changes recommendation, personalization or regulated semantics reopens the affected scope.
 
 ---
 
@@ -272,11 +266,11 @@ Any material UX/copy change that changes recommendation/personalization semantic
 
 ## Question
 
-Can the exact initial production data profile be stored, transformed, displayed, cached and commercially used in the intended product under documented provider rights and costs?
+Can the exact initial production data profile be stored, transformed, displayed, cached and commercially used under documented provider rights and feasible costs?
 
 ## Unit of closure
 
-Q02 is scoped to a `DataUseProfile`, not globally to a provider:
+Q02 closes per versioned `DataUseProfile`, never “for a provider in general”. At minimum the profile covers:
 
 ```text
 provider
@@ -296,98 +290,100 @@ derived_use
 model_or_embedding_use
 retention
 attribution
+entitlements
 cost_model
+termination_or_revocation
 fallback_compatibility
 ```
 
-For every material field, authoritative public terms, contract, quote or written provider confirmation must exist, with effective date/version where available, conflict notes, cost/entitlement assumptions, termination implications and fallback constraints.
+Unknown rights default to **DENY**.
 
-Unknown rights default to **denied**.
+## Decision rules
 
-## Decision rule
+- `CLOSED_PASS` — every required use is explicitly allowed and economically compatible with the candidate MK1 profile.
+- `CLOSED_CONDITIONAL` — use is allowed only with explicit rights/entitlement/cache/attribution/geography/user-class restrictions that become executable policy.
+- `PIVOT_REQUIRED` — the provider/data family is commercially incompatible; choose another provider, derived-only surface or narrower profile.
+- `STOP_CURRENT_CONFIGURATION` — no viable provider/profile combination supports the mandatory MK1 data surface within feasible economics/rights constraints.
+- `INCONCLUSIVE` — authoritative evidence is missing, contradictory or insufficient for a required use.
 
-- `CLOSED_PASS`: every required use in the exact initial profile is explicitly allowed and economically compatible.
-- `CLOSED_CONDITIONAL`: allowed only with explicit rights/entitlement/cache/attribution/geography/user-class constraints that become executable policy.
-- `PIVOT_REQUIRED`: the provider/data family is commercially incompatible; choose another provider, derived-only surface or narrower profile.
-- `STOP_CURRENT_CONFIGURATION`: no viable provider/profile combination supports the mandatory MK1 data surface within feasible economics or rights constraints.
+Technical API accessibility never proves commercial-use rights.
 
 ## Frozen outputs
 
-A passing/conditional receipt freezes provider set, asset universe, data families, fallback compatibility groups, `DataRightsRecord` versions, entitlement assumptions, unit-economics cost assumptions, retention/cache limits and user-visible attribution obligations.
+A promotable receipt freezes provider set, exact asset universe, data families, fallback compatibility groups, `DataRightsRecord` versions, entitlement assumptions, cost assumptions, retention/cache limits and attribution obligations.
 
-Any provider contract/terms change reopens only affected profiles.
+Provider contract/terms changes reopen only affected profiles, but any bootstrap depending on them remains blocked until reconciliation completes.
 
 ---
 
-# Q03 — Willingness-to-pay and repeat-use
+# Q03 — User value, repeat use and willingness to pay
 
 ## Question
 
-Do target users repeatedly value the decision-intelligence workflow enough to justify building the surviving MK1 wedge, and is there credible evidence that some will pay at a commercially plausible price?
+Do target users repeatedly value the Q00-surviving decision-intelligence workflow enough to justify building the MK1 wedge, and is there credible evidence that some will pay at a commercially plausible price?
 
-## Evidence hierarchy
+Execution authority: `experiments/q03/Q03_PREREGISTRATION.md` and `experiments/q03/Q03_INSTRUMENTATION_CONTRACT.md`.
 
-Strongest to weakest:
-1. repeated observed use with meaningful task completion;
-2. behavior that carries friction/cost;
-3. repeated return to a prototype/briefing;
-4. observed preference in blinded/comparative task;
-5. interview statements;
-6. generic survey enthusiasm.
+Statements alone cannot close Q03. Promotable evidence must include observed workflow/problem evidence, objective comprehension/friction evidence, repeat-use beyond novelty, qualified pricing/commitment evidence and no severe trust failure contradicting the thesis.
 
-Statements alone cannot close Q03.
+## Decision rules
 
-Required experiments and exact thresholds are governed by `experiments/q03/Q03_PREREGISTRATION.md` and `experiments/q03/Q03_INSTRUMENTATION_CONTRACT.md`.
-
-## Decision rule
-
-A promotable closure must show that the target problem appears repeatedly in observed workflows, the representation improves or preserves objective comprehension while reducing meaningful workflow friction, repeat-use exists beyond novelty, at least one commercially plausible price band has non-trivial qualified intent, and no severe trust failure contradicts the thesis.
-
-- `CLOSED_PASS`: evidence supports the current capable-beginner wedge and continued B2C MK1 build.
-- `CLOSED_CONDITIONAL`: value exists only for a narrower persona/use case/price surface; freeze that narrower wedge.
-- `PIVOT_REQUIRED`: users value a materially different workflow, persona or distribution mode.
-- `STOP_CURRENT_CONFIGURATION`: repeated evidence shows weak problem intensity, poor repeat use and weak commitment across plausible variants.
-- `INCONCLUSIVE`: minimum usable evidence is not reached.
+- `CLOSED_PASS` — evidence supports the current promotable persona/wedge and continued B2C MK1 build.
+- `CLOSED_CONDITIONAL` — value exists only for a narrower persona/use case/price surface.
+- `PIVOT_REQUIRED` — users value a materially different workflow, persona or distribution model.
+- `STOP_CURRENT_CONFIGURATION` — repeated evidence shows weak problem intensity, poor repeat use and weak commitment across plausible variants.
+- `INCONCLUSIVE` — minimum usable evidence is not reached or primary instrumentation is not promotion-grade.
 
 ## Frozen outputs
 
-Primary persona, JTBD, wedge, required trust features, initial pricing-hypothesis band, validated/rejected channel hypotheses and experiment corpus/analysis receipt. All must remain compatible with the Q00-surviving intervention scope.
+Primary persona, JTBD, wedge, trust requirements, pricing-hypothesis band, permitted channel hypotheses and experiment corpus/analysis receipt. These outputs may not reintroduce Q00-rejected components.
 
 ---
 
-# Q04 — Deterministic quant baseline and ML incremental value
+# Q04 — Deterministic quant baseline and optional ML increment
 
 ## Question
 
-Can the research harness reproduce transparent deterministic baselines under point-in-time semantics and realistic costs, and does ML earn any place in MK1 beyond those baselines?
+Can the research harness reproduce transparent deterministic baselines under point-in-time semantics and realistic costs, and does any ML component earn a place beyond those baselines?
 
-Q04 contains two decisions that must not be conflated.
+Execution authority: `experiments/q04/Q04_PREREGISTRATION.md`.
 
-### Q04-A — baseline harness validity
+Q04-A and Q04-B are separate decisions and must not be conflated.
 
-Must close before any ML promotion decision. Required proof includes point-in-time dataset manifest, deterministic rerun, hand-computed accounting/fill fixtures, transparent benchmark ladder, cost-model version, untouched temporal test interval, walk-forward/equivalent temporal validation, multiple-testing log and independent reproduction.
+## Q04-A — Baseline harness validity
 
-A baseline can lose money and still validate the harness. Harness validity is not alpha proof.
+Required proof includes point-in-time dataset manifest, deterministic rerun, hand-computed accounting/fill fixtures, transparent benchmark ladder, cost-model version, untouched temporal test interval, temporal/walk-forward validation, multiple-testing log and independent reproduction.
 
-### Q04-B — ML incremental value
+A baseline may lose money and still validate the harness. Harness validity is not alpha proof.
 
-ML remains optional. Before evaluation, target/label, feature-availability semantics, splits, deterministic comparator rule, primary and risk metrics, costs, complexity budget, promotion threshold and failure/retirement rule must be preregistered.
+Q04-A uses only canonical aggregate outcomes:
 
-ML is promoted only if it adds robust out-of-sample value versus the strongest eligible transparent baseline after realistic costs without dependence on one regime, one seed or one cherry-picked window.
+- `CLOSED_PASS` — harness and deterministic benchmark corpus are reproducible and leakage controls pass.
+- `PIVOT_REQUIRED` — chosen data/asset/research formulation requires a material redesign.
+- `STOP_CURRENT_CONFIGURATION` — research semantics cannot be made reproducible or the selected path is unusable.
+- `INCONCLUSIVE` — evidence is insufficient to validate the harness.
 
-## Decision rule
+Q04-B cannot authorize ML promotion unless Q04-A is `CLOSED_PASS`.
 
-- `CLOSED_PASS — baseline`: harness and deterministic benchmark corpus are reproducible and leakage controls pass.
-- `CLOSED_PASS — ML included`: ML demonstrates preregistered incremental OOS value sufficient to justify added complexity.
-- `CLOSED_PASS — ML excluded`: deterministic harness passes but ML does not justify itself; MK1 proceeds without an alpha-ML dependency.
-- `PIVOT_REQUIRED`: chosen data/asset/label formulation is invalid or too weak.
-- `STOP_CURRENT_CONFIGURATION`: research semantics cannot be made reproducible or required data rights make the path unusable.
+## Q04-B — ML scope
 
-Q04 complexity cannot override Q00 causal-value conclusions.
+After Q04-A passes, record a separate field:
+
+```text
+ml_scope = INCLUDE | EXCLUDE | DEFER
+```
+
+- `INCLUDE` only when a preregistered candidate adds robust out-of-sample value versus the strongest eligible transparent baseline after realistic costs and complexity penalties.
+- `EXCLUDE` when ML fails to justify its added complexity; this does not invalidate a successful deterministic Q04 closure.
+- `DEFER` when the deterministic harness is valid but optional ML evidence is intentionally postponed or insufficient for inclusion.
+
+The aggregate Q04 receipt still uses the canonical outcome vocabulary. `ml_scope` is a frozen output, not an alternative outcome vocabulary.
+
+Q04 complexity cannot override Q00 conclusions or reintroduce Q00-excluded product complexity without a superseding evidence path.
 
 ## Frozen outputs
 
-Baseline dataset manifest, asset universe, cost model, benchmark versions, validation plan, approved metrics, explicit ML include/exclude/defer decision, and model family only if actually promoted. No performance-marketing claim is created by this receipt.
+Dataset manifest, asset universe, cost model, benchmark versions, validation plan, approved metrics, explicit `ml_scope`, and model family only if `ml_scope = INCLUDE`. No performance-marketing claim is created by this receipt.
 
 ---
 
@@ -395,26 +391,25 @@ Baseline dataset manifest, asset universe, cost model, benchmark versions, valid
 
 ## Question
 
-Does the proposed trust/evidence/audit workflow create a user preference or workflow advantage deeper than localization, generic LLM summarization or cosmetic UI?
+Does the Q00-surviving trust/evidence/audit workflow create repeatable preference or workflow advantage deeper than localization, generic LLM summarization or cosmetic UI?
 
-Candidate components are evaluated independently: evidence graph/opposing evidence, immutable Decision Ledger, point-in-time replay/provenance, progressive disclosure, explicit uncertainty/invalidation, reproducible strategy validation, longitudinal decision history and rights-aware derived intelligence.
+Execution authority: `experiments/q05/Q05_PREREGISTRATION.md`.
 
-No component is declared a moat by design.
+Candidate components are evaluated independently. Competitive task comparison, retention linkage and replicability assessment are required; feature-count comparisons and interview enthusiasm alone are insufficient.
 
-Required evidence is governed by `experiments/q05/Q05_PREREGISTRATION.md` and must include competitive task comparison, retention linkage and replicability assessment.
+## Decision rules
 
-## Decision rule
+- `CLOSED_PASS` — at least one candidate advantage shows repeat-use/preference evidence and a defensibility mechanism deeper than surface presentation.
+- `CLOSED_CONDITIONAL` — the product remains worth building as a learning wedge, but scale architecture/large GTM spend stay blocked.
+- `PIVOT_REQUIRED` — durable advantage appears in another persona/workflow/distribution layer.
+- `STOP_CURRENT_CONFIGURATION` — the product remains a thin interchangeable wrapper after repeated comparative evidence.
+- `INCONCLUSIVE` — competitive, longitudinal or exposure-aware evidence is insufficient.
 
-- `CLOSED_PASS`: at least one candidate advantage shows repeat-use/preference evidence and a defensibility mechanism deeper than surface presentation.
-- `CLOSED_CONDITIONAL`: product is worth building as a learning wedge but moat evidence remains weak; scale architecture/large GTM spend stay blocked.
-- `PIVOT_REQUIRED`: durable advantage appears in another persona/workflow/distribution layer.
-- `STOP_CURRENT_CONFIGURATION`: product remains a thin interchangeable wrapper after repeated comparative evidence and no deeper workflow asset emerges.
-
-No component removed or weakened by Q00 may remain represented as moat evidence.
+A component excluded or materially weakened by Q00 cannot remain a promotable moat claim without a new/superseding evidence path.
 
 ## Frozen outputs
 
-Moat-hypothesis version, supported/unsupported components, claims permitted in strategy docs, scale-spend constraint and next evidence horizon.
+Moat-hypothesis version, supported/unsupported components, allowed strategy claims, scale-spend constraint and next evidence horizon.
 
 ---
 
@@ -435,12 +430,13 @@ Q03 repeat-use ----> Q05 moat -----+
 ```
 
 Parallel work is allowed where evidence is independent, but closure dependencies are strict:
-- Q00 independently gates promotion; Q03/Q04/Q05 cannot compensate for a failed Q00 configuration;
-- Q03/Q04/Q05 must describe only the intervention/components that survived Q00 where that dependency is material;
-- Q05 cannot be considered strong without Q03 repeat-use evidence;
-- Q04 research may run before Q02 commercial closure only on data legally/contractually usable for that research purpose;
-- Q01 counsel must review the actual interaction model surviving Q00 and validated by Q03, not a materially different mock;
-- Q02 must close on the exact data profile intended for MK1, not a generic provider claim.
+
+- Q00 independently gates promotion; Q03/Q04/Q05 cannot compensate for a failed Q00 configuration.
+- Q03/Q04/Q05 must describe only the intervention/components that survived Q00 where that dependency is material.
+- Q05 cannot be considered strong without Q03 repeat-use evidence.
+- Q04 research may run before Q02 commercial closure only on data legally/contractually usable for that research purpose.
+- Q01 counsel must review the actual interaction model surviving Q00 and validated by Q03, not a materially different mock.
+- Q02 must close on the exact data profile intended for MK1, not a generic provider statement.
 
 ---
 
@@ -468,36 +464,38 @@ ml_scope
 moat_status
 legal_copy_version
 canonical_source_digests
+graph_version
+graph_digest_when_available
 created_at
 ```
 
-The bootstrap profile is the exact evidence-derived configuration that production implementation is allowed to build.
+The profile is the exact evidence-derived configuration production implementation is allowed to build.
 
 Implementation may not silently substitute another intervention scope, provider, asset universe, flow, price-sensitive capability, risk policy or ML scope.
 
-Material change requires impact analysis, reopening affected locks where necessary, superseding evidence receipt(s) and a new bootstrap-profile version.
+Material change requires impact analysis, reopening affected locks where necessary, superseding evidence receipt(s), graph impact analysis and a new bootstrap-profile version.
 
 ---
 
 ## Promotion review packet
 
-Before production MK1 begins, the review packet must contain:
+Before production MK1 begins, the canonical packet must contain:
 
 1. finalized Q00 causal-value receipt;
 2. finalized Q01 regulatory receipt;
 3. finalized Q02 receipt(s) for every initial production data profile;
 4. finalized Q03 experiment bundle;
-5. finalized Q04 baseline receipt and explicit ML include/exclude/defer decision;
+5. finalized Q04 baseline receipt and explicit `ml_scope`;
 6. finalized Q05 receipt;
 7. contradiction log across all receipts;
 8. updated `MK0_LOCKS.md`;
 9. updated canonical product/data/quant/regulatory docs;
 10. candidate `MK1_BOOTSTRAP_PROFILE`;
-11. architecture/graph impact review confirming no unresolved reachable P0/P1 internal node or required edge.
+11. architecture/graph impact review confirming no unresolved reachable P0/P1 node or required edge.
 
-No “overall green” may conceal a failed fatal or causal gate.
+The exact packet shape is governed by `docs/validation/MK0_PROMOTION_PACKET.md`.
 
-The canonical packet shape is `docs/validation/MK0_PROMOTION_PACKET.md`.
+No aggregate “green” may conceal a failed causal or fatal lock.
 
 ---
 
@@ -506,50 +504,53 @@ The canonical packet shape is `docs/validation/MK0_PROMOTION_PACKET.md`.
 Evidence can close one question while reopening another.
 
 Examples:
-- Q03 willingness-to-pay depends on complexity rejected by Q00;
-- users strongly prefer personalization, but Q01 counsel rejects that flow;
-- the best data provider is legally usable but destroys unit economics;
-- a quant model works only with a data family whose commercial rights are unavailable;
-- the validated persona values the product but not at a viable price;
-- moat evidence depends on a component removed by Q00 or a workflow removed by regulatory constraints.
 
-When this occurs:
-1. record the contradiction explicitly;
+- Q03 willingness-to-pay depends on complexity rejected by Q00;
+- users prefer personalization that Q01 counsel rejects;
+- the best data provider is legally usable but destroys unit economics;
+- Q04 depends on a data family Q02 does not authorize commercially;
+- the validated persona values the product but not at a viable price;
+- Q05 depends on a component removed by Q00 or Q01 constraints.
+
+When contradiction occurs:
+
+1. record it explicitly;
 2. identify affected locks/docs/nodes/edges;
-3. do not average incompatible results into PASS;
-4. pivot/re-scope and issue new evidence-plan versions;
-5. regenerate the bootstrap profile only after contradictions are resolved.
+3. do not average incompatible results into a favorable decision;
+4. pivot/re-scope and version the affected evidence plan(s);
+5. regenerate the bootstrap only after blocking contradictions are resolved.
 
 ---
 
 ## Anti-gaming rules
 
-- no changing primary metrics after results are visible;
-- no deleting failed experiment versions;
+- no changing primary metrics after outcomes are visible;
+- no deleting failed or inconclusive experiment versions;
 - no substituting survey intent for observed repeat use;
-- no treating a provider salesperson statement as overriding contradictory contract text;
+- no treating provider sales language as overriding contradictory authoritative terms;
 - no treating legal silence as clearance;
 - no promoting ML from in-sample or single-window superiority;
 - no calling localization alone a moat;
 - no using implementation effort already spent as evidence to lower a gate;
 - no using Q03/Q04/Q05 success to rescue a failed Q00 configuration;
-- no retaining a Q00-rejected component in moat, pricing, architecture or bootstrap claims without a new/superseding evidence path;
-- no merging mixed cohorts until cohort definitions are documented;
-- no performance or regulatory claim beyond the exact scope of the receipt.
+- no retaining a Q00-rejected component in moat, pricing, architecture or bootstrap claims without a new evidence path;
+- no mixing cohorts without a preregistered pooling rule;
+- no performance, rights or regulatory claim beyond the exact scope of its receipt.
 
 ---
 
 ## Closure criterion for MK0
 
 MK0 can promote to production MK1 implementation only when:
-- Q00–Q05 have promotable final receipts;
+
+- Q00–Q05 have promotable immutable final receipts;
 - all constraints/exclusions from conditional receipts are frozen into canonical specs and graph reachability;
 - the `MK1_BOOTSTRAP_PROFILE` exists;
-- no cross-receipt contradiction capable of materially changing MK1 boundaries remains unresolved;
+- no unresolved P0/P1 cross-receipt contradiction can materially change MK1 boundaries;
 - the `MK0_PROMOTION_PACKET` is approved for the exact graph/profile snapshot;
-- `BUILD_READINESS.md` is satisfied;
-- no external/empirical result was silently converted into an internal assumption.
+- `docs/implementation/BUILD_READINESS.md` passes;
+- no external/empirical result has been silently converted into an internal assumption.
 
-At that point MK0 is not claiming that the product will succeed. It is claiming something narrower and defensible:
+At that point MK0 does not claim that the product will succeed. It claims something narrower and defensible:
 
 > **The first production configuration has earned the right to be built.**
