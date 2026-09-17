@@ -4,9 +4,9 @@
 
 This directory is the canonical entry point for SOPHROSYNE's MK0 external/empirical validation system.
 
-Internal MK1 architecture is already closed. Validation now answers a narrower question:
+Internal MK1 architecture is already closed. Validation now answers:
 
-> Which exact first-production configuration, if any, has enough legal, data-rights, user-value, scientific and competitive evidence to deserve implementation?
+> Which exact first-production configuration, if any, has enough **causal-value, legal, data-rights, user-value, scientific and competitive evidence** to deserve implementation?
 
 ---
 
@@ -16,12 +16,14 @@ The active authority chain is:
 
 1. `NORMATIVE_DOCUMENT_HIERARCHY.md` — defines which document wins when scopes overlap.
 2. `CANONICAL_VALIDATION_SPEC.md` — normalizes cross-document semantics found inconsistent during audit.
-3. `EVIDENCE_CLOSURE_PROTOCOL.md` — detailed Q01–Q05 closure protocol.
-4. Q-specific packets/preregistrations/statistical/instrumentation contracts — exact domain rules.
-5. immutable `EvidenceReceipt`s + contradiction log — observed evidence truth.
-6. `MK0_PROMOTION_PACKET.md` — aggregate promotion decision.
-7. `MK1_BOOTSTRAP_PROFILE.md` — exact configuration authorized to build.
-8. `BUILD_READINESS.md` — implementation authorization gate.
+3. `../product/THESIS_STACK.md` — separates problem, causal, product, economic and defensibility claims.
+4. `Q00_CORE_CAUSAL_VALUE.md` — destructive baseline/ablation gate for incremental product value.
+5. `EVIDENCE_CLOSURE_PROTOCOL.md` — detailed Q01–Q05 closure protocol.
+6. Q-specific packets/preregistrations/statistical/instrumentation contracts — exact domain rules.
+7. immutable `EvidenceReceipt`s + contradiction log — observed evidence truth.
+8. `MK0_PROMOTION_PACKET.md` — aggregate promotion decision including Q00.
+9. `MK1_BOOTSTRAP_PROFILE.md` — exact configuration authorized to build.
+10. `../implementation/BUILD_READINESS.md` — implementation authorization gate.
 
 Supporting provenance controls:
 - `BOOTSTRAP_PROVENANCE_MATRIX.md` — allowed producers for build-defining fields;
@@ -39,7 +41,7 @@ DESIGN TRUTH
   closed internal contracts / ADRs
 
 EVIDENCE TRUTH
-  Q01–Q05 receipts
+  Q00–Q05 receipts
 
 IMPLEMENTATION TRUTH
   acceptance receipts after build
@@ -50,6 +52,11 @@ Do not substitute one layer for another.
 ---
 
 ## Canonical validation stack
+
+### Thesis / causal value
+
+- `../product/THESIS_STACK.md` — T0–T5 layered claims and scoped kill rules.
+- `Q00_CORE_CAUSAL_VALUE.md` — simple-friction, memory-ablation, transfer, outcome-blind, cognitive-cost and cheap-substitute tests.
 
 ### Governance / lifecycle
 
@@ -62,7 +69,7 @@ Do not substitute one layer for another.
 
 ### Promotion
 
-- `MK0_PROMOTION_PACKET.md` — final review bundle before implementation can begin.
+- `MK0_PROMOTION_PACKET.md` — final review bundle; Q00 is mandatory before build authorization.
 - `MK1_BOOTSTRAP_PROFILE.md` — exact evidence-derived configuration production MK1 may implement.
 - `BOOTSTRAP_PROVENANCE_MATRIX.md` — allowed producer/compatibility rules for bootstrap fields.
 - `AUDIT_TRACEABILITY_MATRIX.md` — end-to-end source and reopen rules.
@@ -96,60 +103,50 @@ Do not substitute one layer for another.
 Internal MK1 design graph             CLOSED
 Validation method / machinery        CLOSED FOR DESIGN
 Validation authority hierarchy       CLOSED
+Thesis layering / Q00 method          CLOSED FOR DESIGN
 Bootstrap provenance contract        CLOSED
 
-Q01 legal/compliance outcome         OPEN
-Q02 production data-rights outcome   OPEN
-Q03 user value / WTP / repeat use    OPEN / PARTIAL
-Q04 quant baseline / ML increment    OPEN
-Q05 moat / durability                PARTIAL
+Q00 core causal value                 OPEN
+Q01 legal/compliance outcome          OPEN
+Q02 production data-rights outcome    OPEN
+Q03 user value / WTP / repeat use     OPEN / PARTIAL
+Q04 quant baseline / ML increment     OPEN
+Q05 moat / durability                 PARTIAL
 
-MK0_PROMOTION_PACKET                  NOT YET INSTANTIATED
-MK1_BOOTSTRAP_PROFILE                 NOT YET APPROVED
-Production MK1 implementation         BLOCKED
+MK0_PROMOTION_PACKET                   NOT YET INSTANTIATED
+MK1_BOOTSTRAP_PROFILE                  NOT YET APPROVED
+Production MK1 implementation          BLOCKED
 ```
 
-`CLOSED FOR DESIGN` here means the validation method is specified; it does **not** mean the real-world outcome is positive.
+`CLOSED FOR DESIGN` means the validation method is specified; it does **not** mean the real-world outcome is positive.
 
 The files in this directory do not fabricate missing evidence. They make it difficult to close a gate without the evidence actually required.
 
 ---
 
-## Execution map
+## Core falsification order
+
+Before interpreting WTP, ML sophistication or moat as proof that the product deserves to exist, Q00 asks whether the intervention beats simpler/cheaper substitutes.
 
 ```text
-Stage 0  preregistration / evidence environment
-   |
-Stage 1  E03-A behavioral discovery
-   |
-Stage 2  E03-B Translator comprehension
-   |
-   +---------------------------+
-   |                           |
-Stage 3A E03-C repeat use   Stage 3B Q04-A harness
-   |                           |
-   +------------+--------------+
-                |
-Stage 4  pricing signal + Q02 candidate profiles
-                |
-Stage 5  Q01 counsel review
-                |
-Stage 6  Q02 exact production rights closure
-                |
-Stage 7  Q04-B optional ML
-                |
-Stage 8  Q05 durability
-                |
-Stage 9  unit economics sync
-                |
-Stage 10 contradiction review
-                |
-Stage 11 promotion packet + bootstrap profile
-                |
-Stage 12 production MK1 authorization
+simple/raw baselines
+      ↓
+Q00 causal value
+      ↓
+Q03 product/WTP evidence
+Q04 optional complexity
+Q05 defensibility
+      ↓
+Q01/Q02 still independently fatal where applicable
+      ↓
+promotion packet
+      ↓
+bootstrap profile
+      ↓
+build readiness
 ```
 
-Parallelism/dependency exceptions are defined in `EVIDENCE_EXECUTION_SEQUENCE.md`.
+Q00 may narrow the product. A valid `CLOSED_CONDITIONAL` can explicitly remove long memory, ML or other complexity while preserving a smaller causal intervention.
 
 ---
 
@@ -166,8 +163,6 @@ FINAL
 SUPERSEDED
 ```
 
-Local execution labels such as `RUNNING` or `ANALYSIS` must map to the canonical lifecycle and cannot become final Q outcomes.
-
 ### Final evidence decisions
 
 ```text
@@ -180,7 +175,7 @@ INCONCLUSIVE
 
 Only `CLOSED_PASS` and appropriately constrained `CLOSED_CONDITIONAL` are promotable.
 
-`INCONCLUSIVE` never auto-promotes and is not silently converted into negative or conditional evidence.
+`INCONCLUSIVE` never auto-promotes.
 
 ### Product lock registry
 
@@ -211,6 +206,7 @@ experiments/
     receipt.md|yaml
 
 validation-receipts/
+  q00/
   q01/
   q02/
   q03/
@@ -228,19 +224,6 @@ Instance directories should be created when evidence execution begins; the repos
 
 ---
 
-## Reviewer separation
-
-Where the protocol requires an independent reviewer, the reviewer must not merely approve a narrative summary. They should be able to reconstruct the relevant decision from:
-- pre-registration/authority;
-- raw or lawful audit evidence;
-- analysis code/artifacts;
-- decision rule;
-- limitations/adverse evidence.
-
-For Q01/Q02, internal review never replaces the required external/provider authority.
-
----
-
 ## No-outcome-fabrication rule
 
 Never create a receipt marked PASS just to exercise the workflow.
@@ -252,8 +235,6 @@ SYNTHETIC_TEST_ONLY
 NOT_PROMOTION_EVIDENCE
 ```
 
-Synthetic receipts must be impossible to mistake for production promotion evidence.
-
 ---
 
 ## Promotion invariant
@@ -261,7 +242,9 @@ Synthetic receipts must be impossible to mistake for production promotion eviden
 A production build is authorized only when:
 
 ```text
-Q01–Q05 promotable final receipts
+Q00 promotable final receipt
+        +
+Q01–Q05 applicable promotable final receipts
         +
 no unresolved P0/P1 contradiction
         +
@@ -272,6 +255,8 @@ approved MK1 bootstrap profile
 BUILD_READINESS pass
 ```
 
-Every non-null bootstrap value must be traceable through the provenance matrices to a valid evidence receipt, closed internal contract or accepted ADR.
+Every non-null bootstrap value must be traceable to a valid evidence receipt, closed internal contract or accepted ADR.
+
+No positive WTP, ML result or moat narrative may override failed Q00 causal value for the current configuration.
 
 Until then, the correct state is still research/validation.

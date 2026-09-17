@@ -14,7 +14,7 @@ The hierarchy applies to MK0 evidence closure and MK1 promotion. It does not rep
 
 Authoritative sources:
 - `GOVERNANCE.md`
-- accepted ADRs
+- accepted ADRs, including ADR-0014
 
 These define project-wide invariants and change-control rules. No lower-level artifact may override them.
 
@@ -23,31 +23,34 @@ These define project-wide invariants and change-control rules. No lower-level ar
 Authoritative source:
 - `docs/validation/CANONICAL_VALIDATION_SPEC.md`
 
-This file exists only to normalize cross-document semantics that were found inconsistent during the MK0 evidence-execution audit, including:
-- evidence lifecycle vocabulary;
-- terminal decision vocabulary;
-- promotion eligibility;
-- Peru promotion geography;
-- Q01 legal/compliance breadth;
-- Q03 cohort/geography corrections;
-- Q04 aggregate `INCONCLUSIVE` semantics;
-- Q05 exposure-aware denominators;
-- bootstrap provenance requirements;
-- contradiction severity.
+This file normalizes cross-document semantics including lifecycle vocabulary, terminal decisions, promotion eligibility, geography, contradiction severity and provenance rules.
 
 It does **not** replace detailed experiment thresholds, packets, statistical formulas or implementation contracts.
 
-When and only when a lower validation artifact conflicts with `CANONICAL_VALIDATION_SPEC.md` on one of the normalization topics above, the canonical normalization governs until the lower artifact is explicitly revised/superseded.
-
-### L1B — Lock and lifecycle detail
+### L1B — Thesis / causal-value authority
 
 Authoritative sources:
+- `docs/product/THESIS_STACK.md`
+- `docs/validation/Q00_CORE_CAUSAL_VALUE.md`
 - `MK0_LOCKS.md`
+
+These define:
+- the separation between problem, causal, product, economic and defensibility claims;
+- the rule that passing one layer never proves the next;
+- the destructive baselines required before complexity can count as product value;
+- the scoped kill/pivot behavior of a failed causal-value configuration.
+
+Q03 willingness-to-pay, Q04 sophistication or Q05 moat evidence cannot override a failed Q00 current configuration.
+
+### L1C — Detailed evidence lifecycle
+
+Authoritative sources:
 - `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`
+- `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`
 
-These define what remains open, detailed evidence requirements, closure workflow and promotion structure.
+These define evidence workflow, preregistration, immutable receipts and detailed Q01–Q05 closure requirements.
 
-They remain fully authoritative except for a normalization conflict explicitly covered by L1A.
+They remain fully authoritative except where L0/L1A/L1B explicitly constrains the same scope.
 
 ### L2 — Domain validation contracts
 
@@ -61,18 +64,19 @@ Authoritative sources:
 - `docs/validation/RESEARCH_PARTICIPANT_PROTOCOL.md`
 - `experiments/q03/Q03_INSTRUMENTATION_CONTRACT.md`
 
-These may be more specific than L1 but may not redefine lifecycle vocabulary, promotion eligibility, jurisdictional promotion scope or other L1 normalization rules.
+These may be more specific than L1 but may not redefine lifecycle vocabulary, promotion eligibility, Q00 causal-value conclusions, jurisdictional scope or other higher-level rules.
 
 ### L3 — Evidence instances
 
 Authoritative sources:
 - frozen experiment manifests;
+- Q00 experiment manifests/receipts;
 - provider rights profiles;
 - counsel review packets;
 - finalized `EvidenceReceipt`s;
 - contradiction-log entries.
 
-A finalized receipt can close only the scoped question registered by its governing L1/L2 contracts.
+A finalized receipt can close only the scoped question registered by its governing contracts.
 
 ### L4 — Promotion truth
 
@@ -84,7 +88,7 @@ Authoritative sources:
 
 Promotion artifacts may aggregate and freeze evidence-derived values. They may not reinterpret evidence or fill missing fields by convenience.
 
-The provenance/traceability matrices constrain where bootstrap values may come from; they do not create evidence themselves.
+The Q00-approved intervention scope and exclusions are build-defining promotion truth.
 
 ### L5 — Build and release conformance
 
@@ -93,7 +97,7 @@ Authoritative sources:
 - `docs/implementation/ACCEPTANCE_RECEIPTS.md`
 - implementation/release receipts.
 
-These verify that software conforms to an approved bootstrap profile. They cannot change product, legal, data-rights, scientific or commercial truth.
+These verify that software conforms to an approved bootstrap profile. They cannot reintroduce components excluded by Q00 or change product/legal/data/scientific truth.
 
 ---
 
@@ -103,12 +107,11 @@ When two active documents conflict:
 
 1. identify the exact overlapping scope;
 2. apply the highest authority level that actually governs that scope;
-3. apply L1A only to its explicitly enumerated normalization topics;
-4. if two documents at the same effective authority conflict, **do not choose one silently**;
-5. create a contradiction-log entry;
-6. block promotion if severity is P0/P1;
-7. update/supersede the losing artifact explicitly;
-8. preserve historical versions.
+3. if two documents at the same effective authority conflict, **do not choose one silently**;
+4. create a contradiction-log entry;
+5. block promotion if severity is P0/P1;
+6. update/supersede the losing artifact explicitly;
+7. preserve historical versions.
 
 “Newest file wins”, “implementation chose this behavior”, and “the stricter one probably wins” are prohibited conflict-resolution mechanisms unless the governing contract explicitly defines such an intersection rule.
 
@@ -118,10 +121,10 @@ When two active documents conflict:
 
 Specificity is allowed only inside the bounds of higher-level authority.
 
-Example:
-- L1A says empirical final decisions are `CLOSED_PASS`, `CLOSED_CONDITIONAL`, `PIVOT_REQUIRED`, `STOP_CURRENT_CONFIGURATION` or `INCONCLUSIVE`.
-- Q03 may define exact numeric criteria for those outcomes.
-- Q03 may **not** invent another promotable terminal state.
+Examples:
+- Q00 may conclude `SHORT_MEMORY_SUFFICIENT`; Q03/Q05 may test that narrowed product but cannot silently restore full persistent memory as a required core feature.
+- Q03 may define exact WTP thresholds, but positive WTP cannot convert failed Q00 causal value into a promotable configuration.
+- Q05 may identify defensibility only among components that survived Q00/Q01/Q02 constraints.
 
 ---
 
@@ -143,8 +146,9 @@ Every archive root must contain a README that states that archived files do not 
 A document may define how evidence will be evaluated without claiming the evidence exists.
 
 Therefore:
+- thesis stack != validated causal effect;
+- Q00 schema != Q00 PASS;
 - preregistration != result;
-- schema != receipt;
 - legal review packet != legal opinion;
 - DataUseProfile template != licensed right;
 - bootstrap schema != approved bootstrap profile;
@@ -171,4 +175,4 @@ If the audit report describes a rule that is not represented in an authoritative
 
 ## Final invariant
 
-> There is exactly one active authority path from governance to normalized validation semantics to evidence to promotion to implementation. Historical detail is preserved, but historical drafts and audit prose do not compete with current truth.
+> There is exactly one active authority path from governance to layered thesis and causal-value validation to evidence to promotion to implementation. No later commercial, technical or moat evidence can rescue a causal-value configuration that the higher-level gate rejected.

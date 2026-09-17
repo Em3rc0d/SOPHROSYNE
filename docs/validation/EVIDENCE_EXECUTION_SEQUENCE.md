@@ -10,31 +10,36 @@ Production MK1 implementation remains blocked throughout this sequence.
 
 Canonical semantic normalization: `docs/validation/CANONICAL_VALIDATION_SPEC.md`.
 Authority hierarchy: `docs/validation/NORMATIVE_DOCUMENT_HIERARCHY.md`.
+Layered thesis: `docs/product/THESIS_STACK.md`.
+Core causal-value gate: `docs/validation/Q00_CORE_CAUSAL_VALUE.md`.
 
 ---
 
 ## Execution principles
 
 1. **Run cheap falsification before expensive validation.**
-2. **Do not send external legal reviewers a product flow that user evidence is likely to replace immediately.**
-3. **Do not buy/commit to data before exact product/data needs are sufficiently constrained.**
-4. **Do not test ML before the deterministic harness is valid.**
-5. **Do not claim moat before repeat use exists.**
-6. **Do not average contradictions away.**
-7. **Every empirical threshold is frozen before outcome inspection.**
-8. **Every final result produces an immutable EvidenceReceipt.**
-9. **Initial promotable geography is Peru; external evidence cannot silently broaden jurisdiction.**
-10. **An `INCONCLUSIVE` result never advances a stage that requires a promotable result.**
+2. **A competent simple baseline must be allowed to defeat SOPHROSYNE.**
+3. **Do not collect WTP as if it proves value before Q00 shows incremental causal/product value.**
+4. **Do not send external legal reviewers a product flow that Q00/Q03 is likely to replace immediately.**
+5. **Do not buy/commit to data before exact product/data needs are sufficiently constrained.**
+6. **Do not test ML before the deterministic harness is valid.**
+7. **Do not claim moat before core causal value and repeat use exist.**
+8. **Do not average contradictions away.**
+9. **Every empirical threshold is frozen before outcome inspection.**
+10. **Every final result produces an immutable EvidenceReceipt.**
+11. **Initial promotable geography is Peru; external evidence cannot silently broaden jurisdiction.**
+12. **An `INCONCLUSIVE` result never advances a stage that requires a promotable result.**
 
 ---
 
 # Stage 0 — Evidence environment bootstrap
 
-## Required before any Q03/Q04/Q05 outcome collection
+## Required before any Q00/Q03/Q04/Q05 outcome collection
 
 - instantiate `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md` per experiment;
 - assign experiment ID/version;
 - freeze primary measures/decision rules;
+- freeze minimum practically meaningful effects;
 - freeze recruitment/dataset inclusion/exclusion;
 - freeze promotion geography/eligible population where applicable;
 - freeze compensation/incentive rules for human research;
@@ -57,8 +62,9 @@ No outcome data should be inspected before this stage is complete.
 ## Run first
 
 Why:
-- cheapest way to falsify the persona/wedge;
-- prevents polishing a Translator for a problem users do not repeatedly experience;
+- cheapest way to falsify the persona/problem;
+- prevents building a causal-value experiment for a problem users do not repeatedly experience;
+- constrains the tasks used by Q00;
 - informs which interaction model Q01 should eventually review.
 
 ## Gate
@@ -67,18 +73,17 @@ Run `E03-A` from `experiments/q03/Q03_PREREGISTRATION.md`.
 
 ### If STOP_CURRENT_CONFIGURATION
 
-- stop Translator/UX validation for the current persona;
-- create Q03 evidence receipt for the stopped configuration;
+- stop Q00/Translator validation for the current persona;
+- preserve the stopped configuration receipt;
 - update persona/JTBD hypotheses;
-- reopen affected product-evidence rows;
 - do not continue to Q01 with the old flow.
 
 ### If CLOSED_CONDITIONAL
 
 - narrow persona;
 - update prototype targeting;
-- continue only with the narrowed cohort;
-- preserve the original evidence as historical scope, not as a generic pass.
+- run Q00 only with the narrowed cohort;
+- preserve original evidence as historical scope.
 
 ### If CLOSED_PASS
 
@@ -90,46 +95,92 @@ Resolve sample/recruitment/instrumentation validity and rerun/review as pre-regi
 
 ---
 
-# Stage 2 — Q03-B Translator / Evidence Representation
+# Stage 2 — Q00-A Early causal-value falsification + Q03-B representation
 
-Run the objective comprehension/efficiency comparison against the frozen candidate representation.
+This stage deliberately tries to kill unnecessary product complexity before repeat-use, pricing, legal review or provider commitment.
+
+## Q00-A required comparison
+
+At minimum compare the candidate interaction against:
+- raw-information control;
+- stateless structured assistance;
+- the five-question dumb-friction checklist;
+- simple prediction/confidence/outcome feedback where the task permits.
+
+Measure preregistered primary outcomes such as:
+- calibration;
+- contradiction detection;
+- uncertainty recognition;
+- process/outcome separation;
+- unnecessary-action rate;
+- task time/cognitive burden.
+
+## Q03-B representation test
+
+Run the objective Translator/Evidence representation comparison in the same evidence family where compatible, but do not let subjective preference substitute for Q00 primary outcomes.
 
 ## Gate
 
-### STOP_CURRENT_CONFIGURATION
+### Q00-A STOP_CURRENT_CONFIGURATION
 
-Rework representation; do not use the failed representation for:
-- Q01 external legal review;
-- E03-C repeat-use;
-- E05 comparative moat evidence.
+If simple/cheap baselines capture the meaningful effect and no narrower mechanism survives:
+- stop the current product configuration;
+- do not run pricing, moat, legal or production-data closure for the rejected configuration;
+- update product thesis/components before new testing.
 
-### CLOSED_CONDITIONAL
+### Q00-A CLOSED_CONDITIONAL
 
-Freeze narrowed task/cohort and repeat the material parts that changed.
+If a smaller intervention survives:
+- freeze the narrower mechanism;
+- remove/defer unsupported complexity;
+- ensure subsequent Q03/Q01/Q05 work uses the narrowed configuration.
 
-### CLOSED_PASS
+### Q00-A CLOSED_PASS
 
-The candidate interaction is stable enough for repeat-use evidence and preliminary legal packaging.
+Proceed with the candidate mechanism into longitudinal falsification.
 
 ### INCONCLUSIVE
 
-Do not treat subjective preference as a substitute. Resolve the invalid/missing primary evidence first.
+Do not advance expensive validation. Resolve evidence quality first.
+
+Q03-B may independently require representation changes; any material change reopens the affected Q00-A comparison.
 
 ---
 
-# Stage 3 — Parallel foundation tracks
+# Stage 3 — Longitudinal causal/product evidence + quant foundation
 
-Once E03-B is promotable for one candidate interaction, three tracks can run in parallel where practical.
+Once one Q00-A/Q03-B candidate is promotable, parallel tracks may run.
 
 ## Track 3A — Q03-C Repeat Use
 
-Run 14-day repeat-use experiment.
+Run the 14-day repeat-use experiment.
 
 Purpose:
 - determine whether novelty becomes repeated workflow use;
-- provide required input to Q05.
+- provide behavioral evidence for Q00-B and Q05.
 
-## Track 3B — Q04-A Deterministic Harness
+## Track 3B — Q00-B Memory / transfer / outcome-blind falsification
+
+Run the longitudinal destructive tests defined by Q00 as applicable:
+- stateless vs simple feedback vs short memory vs full memory;
+- hidden-rubric evaluation;
+- outcome-blind process-quality test;
+- assisted vs unassisted transfer;
+- delayed transfer where feasible;
+- regime/context transfer where pre-registered;
+- cognitive-cost comparison.
+
+Possible scoped findings include:
+- `MEMORY_EXCLUDED`;
+- `SHORT_MEMORY_SUFFICIENT`;
+- `FULL_MEMORY_SUPPORTED`;
+- assisted-only value;
+- supported transfer;
+- current configuration stopped/pivoted.
+
+These component findings do not replace the terminal Q00 decision.
+
+## Track 3C — Q04-A Deterministic Harness
 
 Instantiate one research-permitted data profile and validate the research engine.
 
@@ -138,43 +189,70 @@ Purpose:
 - discover provider/data-semantic issues early.
 
 Constraint:
-- data used must be allowed for the research purpose even if Q02 commercial production rights are not yet closed;
-- a research-permitted profile is not automatically production-permitted.
+- research-permitted data is not automatically production-permitted.
 
-## Track 3C — Q01 Review Packet Assembly
+## Track 3D — Q01 Review Packet Assembly
 
-Prepare but do not finalize external review until the exact interaction/prototype digest is frozen.
+Prepare but do not finalize external review until Q00/Q03 has frozen the interaction scope.
 
 Assemble:
-- F01–F20 flow inventory from `REGULATORY_REVIEW_PACKET.md`;
+- F01–F20 flow inventory;
 - exact claim/copy set;
 - prototype/screens;
-- pricing/entitlement candidate;
-- disclaimers/terms candidate;
+- candidate pricing/entitlements;
 - privacy/data-flow/consent artifacts;
 - candidate subscription/payment/cancellation flow where applicable;
 - required authority coverage by legal/compliance surface.
 
-If E03-C materially changes the interaction/wedge, refresh the packet before freezing for external review.
+If Q00-B or E03-C materially narrows the interaction/wedge, refresh the packet before external review.
 
 ---
 
-# Stage 4 — Q03-D Pricing and Q02 Candidate Data Profiles
+# Stage 4 — Q00 final causal decision
+
+Before serious pricing interpretation, final legal review, production rights closure or moat claims, issue the Q00 EvidenceReceipt for the candidate intervention.
+
+Required inputs:
+- Q00-A early baseline results;
+- Q00-B longitudinal/ablation/transfer results where applicable;
+- dependency/effective-sample corrections;
+- cognitive-cost analysis;
+- realistic cheap/free substitute comparison where operationally available.
+
+## Gate
+
+### CLOSED_PASS
+Proceed with the supported intervention scope.
+
+### CLOSED_CONDITIONAL
+Proceed only with frozen exclusions/deferred components and claim limitations.
+
+### PIVOT_REQUIRED
+Update product thesis/wedge/components and re-run affected downstream evidence.
+
+### STOP_CURRENT_CONFIGURATION
+Stop the current independent-product configuration. Do not allow WTP, ML or moat arguments to rescue it.
+
+### INCONCLUSIVE
+Do not advance expensive validation that assumes product value is established.
+
+---
+
+# Stage 5 — Q03-D Pricing and Q02 Candidate Data Profiles
+
+Entry condition: Q00 must be promotable for the exact intervention being priced.
 
 ## Q03-D Pricing / Commitment
 
-Start Stage-1 pricing signal only after participants can understand the product being priced.
+Start pricing signal only after participants can understand the product and Q00 has established material incremental value for the candidate intervention.
 
-Until Q01 authorizes the exact commercial charging flow, pricing evidence is research-only/non-charge and must follow the non-deceptive fake-door/commitment contract.
+Until Q01 authorizes the exact commercial charging flow, pricing evidence is research-only/non-charge and must follow the non-deceptive commitment contract.
 
-The purpose is to constrain:
-- viable price hypotheses;
-- entitlement structure;
-- unit-economics assumptions.
+Positive pricing intent cannot retroactively rescue weak Q00 evidence.
 
 ## Q02 candidate profiles
 
-Now enumerate provider/data profiles matching the validated product surface rather than generic market-data wish lists.
+Enumerate provider/data profiles matching only the Q00/Q03-supported surface.
 
 For each candidate:
 - instantiate `docs/validation/q02/DATA_USE_PROFILE_PACKET.md`;
@@ -184,180 +262,131 @@ For each candidate:
 - assess fallback compatibility;
 - freeze reopen triggers.
 
-Do not choose a provider solely because its technical API is convenient.
+Do not purchase data complexity removed by Q00 merely because it was in the original vision.
 
 ---
 
-# Stage 5 — Q01 External Legal / Compliance Review
+# Stage 6 — Q01 External Legal / Compliance Review
 
-Freeze the exact candidate MK1 interaction set and send `REGULATORY_REVIEW_PACKET.md` to the qualified external authority set required by the packet.
+Freeze the exact Q00/Q03-supported candidate interaction set and send `REGULATORY_REVIEW_PACKET.md` to the required qualified external authority set.
 
-Securities/advisory counsel remains mandatory for the investment-services boundary; privacy, consumer/e-commerce, subscription/payment or other applicable surfaces must also be resolved by a competent reviewer or explicitly classified not applicable with rationale.
-
-Inputs should reflect:
+Inputs reflect:
+- Q00-supported intervention and claim scope;
 - Q03-supported Peru persona/wedge;
 - candidate pricing/entitlements;
 - portfolio-context behavior;
-- Translator/Evidence/Strategy Sandbox semantics;
-- any model/probability surface still proposed;
+- surviving Translator/Evidence/Strategy semantics;
 - actual claims/copy;
 - privacy/consent/data flows;
 - subscription/payment/cancellation flow where applicable.
 
-## After external response
-
-Create:
-- Q01 EvidenceReceipt;
-- constraints promoted into canonical product/copy/API/privacy/commercial docs;
-- contradictions against Q03/Q02/Q04 as needed.
-
-If external review requires material UX/commercial re-scope, affected user evidence may need to be re-run for the changed flow.
-
-`INCONCLUSIVE` authority coverage blocks Q01 promotion.
+If external review materially re-scopes the flow, affected Q00/Q03 evidence may need to be repeated.
 
 ---
 
-# Stage 6 — Q02 Production Data Closure
+# Stage 7 — Q02 Production Data Closure
 
-Finalize exact production `DataUseProfile`s only after:
-- product surface is sufficiently stable;
-- Q01 conditions that affect display/personalization are known;
-- pricing/unit-economics assumptions are concrete enough to evaluate provider cost.
-
-## Required result
-
-One of:
-- viable primary provider/profile + approved fallback group(s);
-- viable primary profile with explicit no-fallback degradation behavior;
-- pivot to narrower/derived-only data surface;
-- stop current configuration if mandatory rights/economics cannot be satisfied;
-- `INCONCLUSIVE` if required rights remain unresolved — never promotable.
+Finalize exact production `DataUseProfile`s only after product surface, Q00 scope, Q01 constraints and pricing assumptions are sufficiently stable.
 
 Q02 promotable closure freezes:
 - provider set;
 - asset universe;
-- data families;
+- data families still required by supported intervention;
 - rights/retention/entitlements;
 - evidence freshness/review dates;
 - cost assumptions;
 - fallback groups.
 
+`INCONCLUSIVE` rights are never promotable.
+
 ---
 
-# Stage 7 — Q04-B Optional ML
+# Stage 8 — Q04-B Optional ML
 
 Entry conditions:
 - Q04-A `CLOSED_PASS`;
-- dataset/profile used for intended MK1 model role is rights-compatible for that use;
+- Q00 has not excluded the proposed ML role as unnecessary complexity;
+- intended data use is rights-compatible;
 - exact feature availability semantics frozen.
-
-Q04-A `INCONCLUSIVE`, `PIVOT_REQUIRED` or `STOP_CURRENT_CONFIGURATION` blocks this stage for the affected profile.
 
 Run ML only if there is still a product reason to do so.
 
-Possible successful ML-scope outcomes after a valid harness:
+Possible outcomes after a valid harness:
 - `INCLUDE`;
 - `EXCLUDE`;
 - `DEFER`.
 
-An E04-B `INCONCLUSIVE` result is not the same as `DEFER`; it requires resolution/rerun before the ML question itself is closed.
-
-Do not delay MK1 merely because ML fails if deterministic intelligence already satisfies the product thesis and Q04 can close with ML excluded/deferred under the preregistration.
+ML success cannot rescue failed Q00 causal value.
 
 ---
 
-# Stage 8 — Q05 Competitive Durability
+# Stage 9 — Q05 Competitive Durability
 
 Entry conditions:
+- Q00 promotable final receipt exists;
 - E03-C repeat-use evidence exists;
 - candidate flow reflects material Q01 constraints;
 - product surface uses Q02-compatible data semantics;
-- promoted Q03 persona/geography is frozen;
-- enough of the experience is stable for a fair comparative task.
+- promoted Q03 persona/geography is frozen.
 
-Run:
-- E05-A competitive task;
-- E05-B exposure-aware repeat-use linkage;
-- E05-C replicability assessment.
+Q05 may assess defensibility only for components still allowed by Q00/Q01/Q02.
 
-A valid aggregate outcome may be:
-- `CLOSED_PASS` supported candidate durability;
-- `CLOSED_CONDITIONAL` / `LEARNING_WEDGE`;
-- `PIVOT_REQUIRED`;
-- `STOP_CURRENT_CONFIGURATION`;
-- `INCONCLUSIVE`.
-
-`INCONCLUSIVE` does not create a moat claim or permit scale-spend assumptions.
+No persistent memory, LLM, translation, backtesting, Decision Record or other feature is moat merely because it exists.
 
 ---
 
-# Stage 9 — Unit Economics Synchronization
+# Stage 10 — Unit Economics Synchronization
 
-Before promotion, synchronize `docs/economics/UNIT_ECONOMICS.md` with observed/authoritative inputs:
-- Q02 provider/data costs and quote validity;
-- compliance/legal recurring cost assumptions where known;
-- Q03 pricing/commitment evidence and evidence type;
+Synchronize `docs/economics/UNIT_ECONOMICS.md` with:
+- Q00-supported scope/cognitive burden;
+- Q02 provider/data costs;
+- compliance/legal recurring cost assumptions;
+- Q03 pricing/commitment evidence;
 - infrastructure workload assumptions;
-- payment fees/tax assumptions if applicable and verified;
-- support burden observed in Q03.
+- support burden.
 
-Do not treat TAM or optimistic conversion as a substitute for unit economics.
-
-If the candidate is structurally nonviable at the validated price/data configuration, create a contradiction and pivot before build.
+If the validated intervention is useful but structurally nonviable at the observed price/cost structure, T4 economic thesis fails for that configuration even if T2/T3 survive.
 
 ---
 
-# Stage 10 — Cross-Receipt Contradiction Review
-
-Instantiate `docs/validation/CONTRADICTION_LOG_TEMPLATE.md` for every material mismatch.
+# Stage 11 — Cross-Receipt Contradiction Review
 
 Review at minimum:
+- Q00 supported/excluded components vs Q03 WTP/repeat-use;
+- Q00 vs Q04 proposed complexity;
+- Q00 vs Q05 moat narrative;
 - Q01 vs Q03 interaction/personalization;
-- Q01 vs privacy/subscription/payment implementation;
-- Q01 vs pricing/claims;
 - Q02 vs Q04 feature/data requirements;
 - Q02 cost vs Q03 price;
-- Q03 repeat-use vs Q05 moat hypothesis;
-- Q05 supported advantage vs Q01/Q02 constraints;
-- geography/user-class compatibility across all receipts;
+- geography/user-class compatibility;
 - evidence freshness/expiry;
-- any evidence-driven selection vs closed internal design invariants.
+- evidence-driven selections vs closed internal invariants.
 
-No P0/P1 contradiction may remain open or mitigating.
+No P0/P1 contradiction may remain open.
 
 ---
 
-# Stage 11 — Promotion Packet and Bootstrap Profile
+# Stage 12 — Promotion Packet and Bootstrap Profile
 
-Only after Q01–Q05 are promotable:
+Only after Q00–Q05 applicable evidence is promotable:
 
 1. instantiate `MK0_PROMOTION_PACKET`;
-2. attach final EvidenceReceipts;
+2. attach Q00 and Q01–Q05 final receipts;
 3. attach contradiction log;
-4. verify `AUDIT_TRACEABILITY_MATRIX.md` and `BOOTSTRAP_PROVENANCE_MATRIX.md` field-by-field;
+4. verify provenance/traceability field-by-field;
 5. run architecture-impact review;
-6. generate candidate `MK1_BOOTSTRAP_PROFILE` from frozen outputs only;
-7. verify `BUILD_READINESS` line-by-line;
-8. approve or reject the packet.
+6. generate `MK1_BOOTSTRAP_PROFILE` from frozen outputs only;
+7. verify that Q00 exclusions are encoded as build constraints;
+8. verify `BUILD_READINESS` line-by-line;
+9. approve or reject the packet.
 
-No manual value should be inserted into the bootstrap profile without a permitted receipt/closed-contract/ADR source.
-
-A missing producer, conflicting producer or stale producer blocks approval.
+A missing producer, conflicting producer, stale producer or unpropagated Q00 exclusion blocks approval.
 
 ---
 
-# Stage 12 — Production MK1 Authorization
+# Stage 13 — Production MK1 Authorization
 
 Only an `APPROVED` promotion packet plus `APPROVED` bootstrap profile and a passing `BUILD_READINESS` gate unlock production MK1 implementation.
-
-At that moment:
-
-```text
-MK0 validation execution     -> CLOSED FOR THIS EXACT PROFILE
-MK1 production build         -> OPEN
-Q01–Q05 historical receipts  -> immutable
-future material change       -> reopens affected scope
-```
 
 Promotion is profile-specific, not a permanent authorization for all future SOPHROSYNE configurations.
 
@@ -368,23 +397,25 @@ Promotion is profile-specific, not a permanent authorization for all future SOPH
 | Workstream | Can run early? | Must wait for |
 |---|---|---|
 | E03-A discovery | Yes | Stage 0 |
-| E03-B Translator test | No | E03-A promotable candidate |
-| E03-C repeat use | No | E03-B promotable representation |
-| E03-D pricing | Partial | users understand product; research/legal boundary respected |
+| Q00-A / E03-B | No | E03-A promotable candidate |
+| E03-C repeat use | No | Q00-A/E03-B promotable representation |
+| Q00-B memory/transfer | No | Q00-A candidate + sufficient longitudinal design |
+| Q03-D pricing | No for promotable interpretation | final/promotable Q00 candidate |
 | Q04-A harness | Yes, parallel | research-permitted data + Stage 0 |
-| Q04-B ML | No | Q04-A CLOSED_PASS + rights-compatible intended features |
+| Q04-B ML | No | Q04-A CLOSED_PASS + Q00-compatible role + rights-compatible features |
 | Q01 packet assembly | Partial | candidate interaction exists |
-| Q01 final external review | No | frozen candidate flow/copy/privacy/commercial surface |
-| Q02 provider discovery | Yes | candidate product needs known enough |
-| Q02 final production profile | No | product/legal/pricing constraints sufficiently stable |
-| Q05 | No | repeat-use evidence + stable candidate flow + exposure semantics |
-| Promotion packet | No | Q01–Q05 promotable + contradictions resolved |
+| Q01 final external review | No | Q00/Q03 frozen candidate flow/copy/privacy/commercial surface |
+| Q02 provider discovery | Yes | candidate needs known enough |
+| Q02 final production profile | No | Q00/product/legal/pricing constraints sufficiently stable |
+| Q05 | No | final Q00 + repeat-use + stable candidate flow |
+| Promotion packet | No | Q00–Q05 applicable gates promotable + contradictions resolved |
 
 ---
 
 ## Global stop conditions
 
 Pause the affected track immediately when:
+- Q00 simple/cheap baselines eliminate material incremental value;
 - a fatal legal/data-rights contradiction appears;
 - experiment instrumentation invalidates primary measures;
 - required authority cannot be obtained;
@@ -401,6 +432,4 @@ Stopping is evidence discipline, not failure.
 
 ## Final execution invariant
 
-> The next task is always the cheapest valid action that can still falsify the current candidate configuration without breaking the authority, geography, rights or evidence contracts.
-
-This keeps MK0 from becoming an endless research program while also preventing premature production code.
+> The next task is always the cheapest valid action that can still falsify the current candidate configuration. SOPHROSYNE earns complexity only after simpler alternatives fail to explain the observed value.

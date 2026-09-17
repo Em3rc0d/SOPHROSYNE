@@ -2,7 +2,7 @@
 
 ## Product / evidence locks
 
-All non-closed product/evidence rows map to one or more canonical Q01–Q05 closure tracks. There is no separate hidden sixth evidence system.
+All non-closed product/evidence rows map to the canonical Q00–Q05 closure system. Q00 is the core causal-value gate; Q01–Q05 cover legal/compliance, data rights, user/commercial evidence, quantitative components and defensibility. There is no hidden parallel evidence system.
 
 ### Status vocabulary
 
@@ -15,36 +15,39 @@ Blocking/fatality semantics live in `Promotion role`; they are not encoded by in
 
 | Lock | Status | Promotion role | Canonical track | Decision / Evidence | Closure evidence |
 |---|---|---|---|---|---|
-| Problem exists | CLOSED | FOUNDATION | Foundation | Market complexity and information overload are real; product targets translation + discipline. | Ongoing validation only. |
-| Product thesis | CLOSED | FOUNDATION / REOPEN_ON_PIVOT | Foundation | Financial Decision Intelligence, not prediction/guru product. | Frozen for MK1 unless evidence forces pivot. |
-| Initial persona | PARTIAL | BLOCKING_IF_SCOPE_CHANGES | Q03 | Spanish-first capable beginner / intermediate self-directed investor remains the candidate. | Behavioral discovery + repeat-use evidence. |
-| Wedge | PARTIAL | BLOCKING | Q03 | Progressive disclosure + evidence + auditability + risk-first UX. | Translator/comprehension + repeat-use evidence. |
-| Competition | CLOSED | INPUT_TO_Q05 | Q05 | AI/NL/backtesting/automation already exist; those capabilities alone are not the moat. | Competitive refresh remains recurring evidence. |
-| Moat | PARTIAL | BLOCKING_OR_CONDITIONAL | Q05 | Trust/evidence graph + beginner-to-quant UX + decision ledger are hypotheses. | Competitive task + retention linkage + replicability evidence. |
-| Peru regulatory boundary | OPEN | FATAL_IF_FAILED | Q01 | Personalized recommendations/execution may cross regulated boundaries. | Written counsel review of exact frozen flows/copy. Issue #2. |
+| Problem exists | CLOSED | FOUNDATION / REOPEN_ON_Q00 | T1 + Q00 | Market complexity/information overload are plausible problems, but product-value interpretation is subordinate to causal testing. | Reopen if Q00 shows no material decision-process problem or trivial baseline suffices. |
+| Product thesis | PARTIAL | FATAL_IF_Q00_FAILS | T2/T3 + Q00 | Financial Decision Intelligence is the candidate category; current intervention must beat strong simple baselines. | Q00 causal-value receipt + Q03 product-use evidence. |
+| Core causal value | OPEN | FATAL_FOR_CURRENT_CONFIGURATION | Q00 | Complexity is not value unless the candidate intervention materially outperforms simple/cheap baselines under robust controls. | Q00 preregistered causal/ablation bundle. |
+| Initial persona | PARTIAL | BLOCKING_IF_SCOPE_CHANGES | Q03 constrained by Q00 | Spanish-first capable beginner / intermediate self-directed investor remains the candidate. | Behavioral discovery + repeat-use + Q00 subgroup evidence. |
+| Wedge | PARTIAL | BLOCKING | Q00 + Q03 | Progressive disclosure + evidence + auditability + risk-first UX are candidate mechanisms, not assumed causal drivers. | Q00 component/ablation evidence + Q03 repeat-use evidence. |
+| Competition | CLOSED | INPUT_TO_Q00/Q05 | Q00 + Q05 | AI/NL/backtesting/automation/memory already exist; those capabilities alone are not moat. | Competitive refresh remains recurring evidence. |
+| Moat | PARTIAL | BLOCKING_OR_CONDITIONAL | Q05 after Q00 | No single feature is moat. Defensibility must emerge from a validated compound system/accumulated asset. | Q05 comparative/retention/replicability evidence after causal value survives. |
+| Peru regulatory boundary | OPEN | FATAL_IF_FAILED | Q01 | Personalized recommendations/execution and commercial/legal flows may cross regulated boundaries. | Written competent-authority review of exact frozen flows/copy. Issue #2. |
 | Custody | CLOSED | HARD_MK1_CONSTRAINT | Q01 constraint | Excluded from MK1. | Keep excluded unless a future MK explicitly reopens the trust/regulatory boundary. |
 | Live auto-trading | CLOSED | HARD_MK1_CONSTRAINT | Q01 constraint | Excluded from MK1. | Re-open only in a future MK with a new execution/regulatory trust boundary. |
 | Market-data technical access | CLOSED | INPUT_TO_Q02 | Q02 | Sufficient technical sources exist for research. | Does not substitute for commercial rights. |
 | Market-data commercial rights | OPEN | FATAL_IF_FAILED | Q02 | Access does not imply display/redistribution/derived-data rights. | Final receipts for exact production `DataUseProfile`s. Issue #3. |
 | XTB automation | CLOSED | SCOPE_CONSTRAINT | Scope | Public API discontinued; no MK1 execution dependency. | Monitor only. |
 | Quant feasibility | CLOSED | LIMIT / INPUT_TO_Q04 | Q04 | Signals may exist; durable alpha is not assumed. | Baseline experiment decides what the harness can demonstrate. |
-| ML incremental value | OPEN | BLOCKING_FOR_ML_ONLY | Q04 | ML must earn its place versus transparent baselines OOS after costs. | Pre-registered benchmark experiment. Issue #5. |
+| ML incremental value | OPEN | BLOCKING_FOR_ML_ONLY | Q04 subordinate to Q00 | ML must earn its place versus transparent baselines OOS after costs. | Pre-registered benchmark experiment. |
 | Explainability/auditability | CLOSED | INTERNAL_CONTRACT | Internal design | Decision Record is mandatory. | Implementation acceptance receipts. |
 | Causality claims | CLOSED | INTERNAL_CONTRACT | Internal design | OBSERVED / ATTRIBUTED / INFERRED / CORRELATED / UNKNOWN. | Enforce output schema. |
 | LLM authority | CLOSED | HARD_MK1_CONSTRAINT | Internal design | LLM cannot invent probabilities or authorize trades. | Enforce architecture + acceptance receipts. |
 | Security posture | CLOSED | INTERNAL_CONTRACT | Internal design | Least privilege, isolated LLM, no withdrawals/execution creds, kill/revoke paths. | Implementation proof via typed security receipt before real credentials/beta. |
-| Unit economics | PARTIAL | BLOCKING_IF_NONVIABLE | Q02 + Q03 | Viability depends on actual provider/compliance costs, pricing intent and retention. | Synchronize Q02 cost receipts + Q03 pricing/repeat-use evidence. |
+| Unit economics | PARTIAL | BLOCKING_IF_NONVIABLE | Q02 + Q03 after Q00 | Viability depends on actual provider/compliance costs, pricing intent and retention; willingness to pay cannot rescue failed causal value. | Synchronize Q02 cost receipts + Q03 pricing/repeat-use evidence after Q00. |
 | TAM/SAM/SOM | OPEN | NON_BLOCKING_UNLESS_SCOPE_CHANGES | Q03 commercial analysis | Bottom-up market sizing is not allowed to fabricate demand. | Observed funnel/account/user evidence. Reopens scope only if it materially changes MK1 boundaries. |
-| MVP scope | CLOSED | REOPEN_ON_MATERIAL_EVIDENCE | Q01 + Q03 + Q04 | Translator + evidence + ledger + portfolio context + strategy sandbox. | Reopen only if Q01/Q03/Q04 forces material re-scope. |
+| MVP scope | PARTIAL | REOPEN_ON_Q00/Q01/Q03/Q04 | Q00 + Q01 + Q03 + Q04 | Translator/evidence/ledger/portfolio context/strategy sandbox are candidate components, not all guaranteed to survive ablation. | Q00 may remove unnecessary complexity; other Qs can re-scope. |
 | GTM | PARTIAL | NON_BLOCKING_FOR_CORE_BUILD | Q03 + Q05 | Trust/content/community/partnerships remain channel hypotheses. | Channel/commitment evidence; not a standalone architecture gate. |
-| Willingness-to-pay / retention | OPEN | BLOCKING | Q03 | Recurring value is not yet proven. | Behavioral/comprehension/repeat-use/pricing bundle. Issue #4. |
-| Liability/reputation | PARTIAL | BLOCKING_AT_LEGAL/BETA_BOUNDARIES | Q01 + MK1 beta receipts | Incident semantics are closed; terms/claim policy depend on legal flow and implemented controls. | Counsel-aligned terms/claim policy + beta incident/security receipts. |
+| Willingness-to-pay / retention | OPEN | BLOCKING | Q03 constrained by Q00 | Recurring value is not yet proven. Positive WTP is insufficient if incremental causal/product value fails. | Behavioral/comprehension/repeat-use/pricing bundle + Q00 compatibility. Issue #4. |
+| Liability/reputation | PARTIAL | BLOCKING_AT_LEGAL/BETA_BOUNDARIES | Q01 + MK1 beta receipts | Incident semantics are closed; terms/claim policy depend on legal flow and implemented controls. | Authority-aligned terms/claim policy + beta incident/security receipts. |
 
 ### Evidence-status rule
 
 The statuses above describe **outcomes not yet observed**, not missing internal design.
 
-The method for closing them is already frozen by:
+The method for closing them is frozen by:
+- `docs/product/THESIS_STACK.md`;
+- `docs/validation/Q00_CORE_CAUSAL_VALUE.md`;
 - `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`;
 - `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`;
 - `docs/validation/MK0_PROMOTION_PACKET.md`;
@@ -52,11 +55,14 @@ The method for closing them is already frozen by:
 
 No row may be marked closed merely because implementation exists or because a nearby Q passed. Closure scope must match its final `EvidenceReceipt`.
 
+A positive Q03/Q04/Q05 result may not rescue a failed Q00 current configuration.
+
 ## Internal executable-design locks
 
 | Lock | Status | Canonical artifact |
 |---|---|---|
-| Product promise / MK1 boundaries | CLOSED | `docs/product/PRODUCT_THESIS.md`, `docs/mvp/MK1_SPEC.md` |
+| Product promise / thesis layering | CLOSED | `docs/product/PRODUCT_THESIS.md`, `docs/product/THESIS_STACK.md`, `docs/mvp/MK1_SPEC.md` |
+| Core causal-value falsification method | CLOSED | `docs/validation/Q00_CORE_CAUSAL_VALUE.md` |
 | Domain vocabulary | CLOSED | `docs/architecture/DOMAIN_MODEL.md` |
 | System contracts | CLOSED | `docs/architecture/SYSTEM_CONTRACTS.md` |
 | Runtime topology | CLOSED | `docs/implementation/REFERENCE_ARCHITECTURE.md` |
@@ -95,11 +101,11 @@ Pending implementation tests, drills, measured SLOs, security verification and r
 
 **External/empirical validation method:** `CLOSED`.
 
-**External/empirical outcomes Q01–Q05:** `OPEN / PARTIAL AS LISTED ABOVE`.
+**External/empirical outcomes Q00–Q05:** `OPEN / PARTIAL AS LISTED ABOVE`.
 
-**MK1 production implementation:** `BLOCKED` until `docs/implementation/BUILD_READINESS.md` is satisfied and one evidence-derived `MK1_BOOTSTRAP_PROFILE` is approved.
+**MK1 production implementation:** `BLOCKED` until Q00–Q05 applicable evidence satisfies `docs/implementation/BUILD_READINESS.md` and one evidence-derived `MK1_BOOTSTRAP_PROFILE` is approved.
 
-The remaining uncertainty is intentionally empirical/external: regulation, commercial data rights, user value/WTP/retention, quant baseline/ML increment and moat durability. Provider-specific production selection is evidence-gated rather than an internal architectural ambiguity.
+The remaining uncertainty is intentionally empirical/external: core causal value, regulation, commercial data rights, user value/WTP/retention, quant baseline/ML increment and moat durability. Provider-specific production selection is evidence-gated rather than an internal architectural ambiguity.
 
 ## Hard MK1 invariants
 
@@ -118,4 +124,7 @@ The remaining uncertainty is intentionally empirical/external: regulation, comme
 - no production implementation against an unspecified or unapproved bootstrap profile;
 - no implementation-complete claim without the applicable typed acceptance receipt;
 - no internal design semantic may be changed silently during coding: reopen the lock and issue an ADR when an invariant changes;
-- no evidence receipt may be silently edited after finalization: supersede it explicitly.
+- no evidence receipt may be silently edited after finalization: supersede it explicitly;
+- no complexity may be credited as product value unless Q00 shows material incremental value over competent simpler baselines;
+- no feature, language, memory mechanism, LLM capability, backtest engine or Decision Record may be called a moat without Q05 evidence;
+- no willingness-to-pay signal may rescue a current configuration that fails Q00 causal value.

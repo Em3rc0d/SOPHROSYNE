@@ -21,11 +21,24 @@ approved_at:
 canonical_commit:
 supersedes:
 
+causal_value:
+  q00_receipt_ref:
+  intervention_scope:
+  required_components: []
+  excluded_components: []
+  deferred_components: []
+  simple_friction_result:
+  memory_scope: EXCLUDED | SHORT | FULL | NOT_APPLICABLE
+  transfer_claim_scope: ASSISTED_ONLY | LIMITED_TRANSFER | SUPPORTED_TRANSFER
+  cognitive_cost_constraints: []
+  cheap_substitute_comparison_ref:
+
 product:
   primary_persona:
   jtbd_version:
   wedge_version:
   product_thesis_version:
+  thesis_stack_version:
   mk1_spec_version:
   pricing_hypothesis:
 
@@ -87,19 +100,15 @@ provenance:
 ## Profile states
 
 ### DRAFT
-
 Fields are still being populated from evidence. Production implementation is not authorized.
 
 ### CANDIDATE
-
 All required fields are populated and the profile can enter promotion review.
 
 ### APPROVED
-
 The `MK0_PROMOTION_PACKET` has passed and this exact profile is authorized for implementation.
 
 ### SUPERSEDED
-
 A later approved profile replaces this version. Historical implementation/release artifacts continue to reference the profile version they were built against.
 
 ---
@@ -108,11 +117,12 @@ A later approved profile replaces this version. Historical implementation/releas
 
 | Profile section | Primary authority |
 |---|---|
-| product | Q03 + closed product contracts |
+| causal_value | Q00 + ADR-0014 + thesis stack |
+| product | Q03 constrained by Q00 + closed product contracts |
 | regulatory | Q01 |
 | data | Q02 |
-| quant | Q04 |
-| moat | Q05 |
+| quant | Q04 constrained by Q00 |
+| moat | Q05 constrained by Q00 |
 | risk | closed internal contracts + evidence-driven selected profile |
 | operations | closed internal implementation contracts |
 | provenance | promotion packet / repository history |
@@ -121,13 +131,28 @@ A field cannot be filled merely because it is convenient for implementation.
 
 ---
 
-## Material-change matrix
+## Q00 binding rule
 
-After approval, changes are classified by impact.
+Q00 determines which candidate components are allowed to count as required product complexity.
+
+Examples:
+- if Q00 concludes `MEMORY_EXCLUDED`, MK1 may not require persistent memory as a core value mechanism;
+- if Q00 concludes `SHORT_MEMORY_SUFFICIENT`, full-history memory cannot be introduced without new evidence;
+- if simple friction captures most of the measured benefit, MK1 must implement the narrower validated intervention or reopen Q00;
+- if transfer is unsupported, product copy cannot claim that SOPHROSYNE improves independent reasoning outside assisted use;
+- if a cheap substitute is non-inferior on the primary outcomes, the current independent-product configuration cannot be approved without a material pivot.
+
+Implementation may not silently reintroduce a component listed in `excluded_components`.
+
+---
+
+## Material-change matrix
 
 ### Class A — evidence-invalidating
 
 Examples:
+- reintroducing a Q00-excluded component as core value;
+- materially broadening the intervention beyond Q00 evidence;
 - new personalization/recommendation semantics;
 - different jurisdiction;
 - provider/data family with materially different rights;
@@ -178,10 +203,6 @@ Examples:
 - non-substantive documentation formatting;
 - wording changes that do not alter legal/product meaning.
 
-Required action:
-- ordinary review;
-- no profile version required unless a canonical digest policy intentionally tracks such changes.
-
 ---
 
 ## Build authorization rule
@@ -193,6 +214,7 @@ Every production feature PR should be able to answer:
 ```text
 bootstrap_profile_id:
 affected_profile_sections:
+q00_component_status: REQUIRED | ALLOWED | EXCLUDED | DEFERRED
 semantic_change: YES | NO
 requires_revalidation: YES | NO
 requires_adr: YES | NO
@@ -207,31 +229,13 @@ If a feature cannot identify its governing profile/contract, the work is not rea
 
 A provider is not interchangeable merely because it exposes the same symbol or OHLCV shape.
 
-A substitution is permitted without reopening Q02 only if the replacement belongs to an already-approved fallback compatibility group whose receipt proves compatible:
-- time semantics;
-- instrument identity;
-- rights profile;
-- freshness profile;
-- corrections behavior;
-- corporate actions/session behavior where applicable;
-- attribution/entitlement requirements.
-
-Otherwise, create a new `DataUseProfile` receipt and a new bootstrap profile version.
+A substitution is permitted without reopening Q02 only if the replacement belongs to an already-approved fallback compatibility group whose receipt proves compatible time semantics, identity, rights, freshness, corrections, corporate actions/session behavior and attribution/entitlement requirements.
 
 ---
 
 ## Asset-universe rule
 
-The asset universe is part of the validated configuration.
-
-Adding assets may affect:
-- provider rights/cost;
-- exchange/session calendars;
-- corporate actions;
-- liquidity/cost model;
-- benchmark selection;
-- risk policy;
-- legal/product presentation.
+The asset universe is part of the validated configuration. Adding assets may affect provider rights/cost, exchange/session calendars, corporate actions, liquidity/cost model, benchmark selection, risk policy and product/legal presentation.
 
 Therefore “add one more asset” is not automatically a trivial implementation change.
 
@@ -242,67 +246,40 @@ Therefore “add one more asset” is not automatically a trivial implementation
 `ml_scope` is explicit:
 
 ### INCLUDE
-
 Only when Q04 produced a promoted model/model family and the authoritative role of that model is specified.
 
 ### EXCLUDE
-
 MK1 intentionally proceeds without ML as an alpha component. No implementation PR may silently add predictive authority.
 
 ### DEFER
-
 The product proceeds with deterministic intelligence while a later MK/experiment may re-open the ML question.
 
-All three are valid evidence-derived outcomes.
+All three are valid evidence-derived outcomes, but none can compensate for failed Q00 causal value.
 
 ---
 
 ## Pricing-hypothesis rule
 
-The profile may carry an initial pricing hypothesis, but this is not permanent commercial truth.
-
-Changing price alone may be Class C/D if nothing else changes. It becomes Class A when the price or entitlement design changes:
-- user classification;
-- provider entitlements;
-- data redistribution rights;
-- legal posture;
-- feature authority boundaries;
-- target persona/wedge.
+The profile may carry an initial pricing hypothesis, but this is not permanent commercial truth. Positive pricing intent does not override Q00.
 
 ---
 
 ## Risk-policy binding
 
-The bootstrap profile references an exact `risk_policy_version`.
-
-Risk policy remains independent from model conviction. No evidence receipt or model promotion may grant a model authority to bypass:
-- exposure limits;
-- freshness gates;
-- portfolio constraints;
-- `NO CONCLUSION` / `NO TRADE` behavior;
-- rights restrictions.
+The bootstrap profile references an exact `risk_policy_version`. Risk policy remains independent from model conviction and cannot be weakened by evidence/model promotion.
 
 ---
 
 ## Reproducibility binding
 
-Every quant/research result used by MK1 must be reconstructible from the profile references:
-- dataset manifest;
-- cost model;
-- benchmark versions;
-- model/strategy versions where applicable;
-- source/provider profile;
-- point-in-time semantics;
-- code/build identity once implementation exists.
+Every quant/research result used by MK1 must be reconstructible from profile references, including Q00 experiment/receipt identity where the result defines product scope.
 
 ---
 
 ## Relationship to release artifacts
 
-The profile is pre-build configuration truth. Later implementation/release artifacts add implementation proof.
-
 ```text
-Evidence receipts
+Q00–Q05 Evidence receipts
       |
       v
 MK1_BOOTSTRAP_PROFILE
@@ -328,14 +305,6 @@ A release must never claim a different bootstrap profile than the one its implem
 
 An approved profile means:
 
-> **This exact MK1 configuration has passed the evidence gates required to justify implementation.**
+> **This exact MK1 configuration has passed the evidence gates required to justify implementation, including the core causal-value gate for the complexity it contains.**
 
-It does not mean:
-- profitable;
-- regulation-proof in every jurisdiction;
-- product-market fit proven;
-- moat proven forever;
-- production reliability proven;
-- security proven before implementation receipts exist.
-
-Those claims require their own evidence.
+It does not mean profitable, regulation-proof in every jurisdiction, product-market fit proven, moat proven forever, production reliability proven or security proven before implementation receipts exist.
