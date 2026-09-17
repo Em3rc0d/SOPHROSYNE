@@ -176,6 +176,14 @@ input[type="range"] { accent-color: var(--accent); width: 100%; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .form-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .immutable-badge { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 6px 9px; }
+.form-hint { color:var(--muted); font-size:11px; line-height:1.45; margin-top:-3px; }
+.form-feedback { display:none; border:1px solid #5b4b2f; background:#17140e; color:#e6d2a8; border-radius:12px; padding:12px 13px; font-size:12px; line-height:1.5; }
+.form-feedback.show { display:block; }
+.form-feedback.error { border-color:#5a353a; background:#1a1012; color:#f0b8bd; }
+.ack-row { display:none; grid-template-columns:auto 1fr; gap:9px; align-items:start; color:#d7c7a4; font-size:11px; line-height:1.4; }
+.ack-row.show { display:grid; }
+.alignment-badge { display:inline-block; margin-top:8px; border:1px solid var(--line); border-radius:999px; padding:4px 8px; font-size:9px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.alignment-badge.divergent { border-color:#67522e; color:#e0c485; background:#17140e; }
 
 button.primary, button.secondary, button.ghost { border-radius: 10px; padding: 9px 12px; border: 1px solid transparent; }
 button.primary { background: var(--accent); color: #07110d; font-weight: 800; }
@@ -423,8 +431,9 @@ button.full { width: 100%; }
 
           <div class="form-row">
             <label>
-              <span>Confianza <strong id="confidenceValue">50%</strong></span>
-              <input id="confidenceInput" type="range" min="0" max="100" value="50" />
+              <span>Confianza en tu interpretación <strong id="confidenceValue">50%</strong></span>
+              <input id="confidenceInput" type="range" min="0" max="100" value="50" aria-describedby="confidenceHint" />
+              <span class="form-hint" id="confidenceHint">No es una probabilidad de que el mercado suba o baje. 100% significa que no estás contemplando estar equivocado.</span>
             </label>
             <label>
               <span>Postura de proceso</span>
@@ -440,6 +449,12 @@ button.full { width: 100%; }
           <label>
             <span>¿Qué evidencia concreta te haría cambiar de opinión?</span>
             <input id="changeMindInput" required maxlength="240" placeholder="Ej.: confirmación de ruptura con volumen y evidencia macro no contradictoria." />
+          </label>
+
+          <div id="formFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+          <label id="divergenceAckRow" class="ack-row">
+            <input id="divergenceAck" type="checkbox" />
+            <span>Entiendo que mi postura actual es más fuerte que la conclusión soportada por la evidencia del escenario y quiero registrarla igualmente como una discrepancia explícita.</span>
           </label>
 
           <div class="form-actions">
@@ -468,7 +483,7 @@ button.full { width: 100%; }
 (() => {
   'use strict';
 
-  const VERSION = 'research-prototype-v1.3.0';
+  const VERSION = 'research-prototype-v1.4.0';
   const STORAGE_LEDGER = 'sophrosyne.research.ledger.v1';
   const STORAGE_EVENTS = 'sophrosyne.research.events.v1';
   const sessionId = crypto.randomUUID ? crypto.randomUUID() : `session-${Date.now()}`;
@@ -728,6 +743,52 @@ button.full { width: 100%; }
     });
   }
 
+
+  const processLabels = {
+    NO_CONCLUSION: 'Sin conclusión',
+    WAIT_FOR_EVIDENCE: 'Esperar más evidencia',
+    CONTINUE_RESEARCH: 'Continuar investigación',
+    HYPOTHESIS_READY: 'Hipótesis suficientemente definida'
+  };
+
+  function normalizedWords(value) {
+    return String(value)
+      .toLocaleLowerCase('es')
+      .replace(/[^a-záéíóúüñ0-9\s-]/gi, ' ')
+      .split(/\s+/)
+      .filter(Boolean);
+  }
+
+  function looksLowInformation(value) {
+    const text = String(value).trim();
+    const words = normalizedWords(text);
+    const unique = new Set(words);
+    const repeatedRun = /(.)\1{6,}/i.test(text);
+    const actionOnly = /^(compra+r*|vende+r*|buy+|sell+|sube+|baja+)[\s!?.]*$/i.test(text);
+    return text.length < 18 || words.length < 4 || unique.size < 3 || repeatedRun || actionOnly;
+  }
+
+  function evidenceAlignment(processAction) {
+    const cautious = activeScenario.conclusion === 'SIN CONCLUSIÓN' || activeScenario.conclusion === 'ESPERAR EVIDENCIA';
+    if (cautious && processAction === 'HYPOTHESIS_READY') return 'DIVERGENT';
+    return 'ALIGNED_OR_NEUTRAL';
+  }
+
+  function setFormFeedback(message, kind = 'warning') {
+    const node = $('formFeedback');
+    node.textContent = message || '';
+    node.classList.toggle('show', Boolean(message));
+    node.classList.toggle('error', kind === 'error');
+  }
+
+  function refreshDivergenceState() {
+    const alignment = evidenceAlignment($('processAction').value);
+    const show = alignment === 'DIVERGENT';
+    $('divergenceAckRow').classList.toggle('show', show);
+    if (!show) $('divergenceAck').checked = false;
+    return alignment;
+  }
+
   function renderLedger() {
     $('ledgerCount').textContent = ledger.length;
     const target = $('ledgerList');
@@ -738,13 +799,14 @@ button.full { width: 100%; }
     target.innerHTML = ledger.slice().reverse().map(record => `
       <article class="ledger-record" data-record-id="${escapeHtml(record.record_id)}">
         <div class="ledger-record-head">
-          <strong>${escapeHtml(record.scenario_id)} · ${escapeHtml(record.process_action)}</strong>
+          <strong>${escapeHtml(record.scenario_id)} · ${escapeHtml(processLabels[record.process_action] || record.process_action)}</strong>
           <span>${new Date(record.created_at).toLocaleString()}</span>
         </div>
         <p><strong>Lectura:</strong> ${escapeHtml(record.hypothesis)}</p>
         <p><strong>Confianza:</strong> ${record.confidence_pct}%</p>
         <p><strong>Cambio de opinión:</strong> ${escapeHtml(record.change_mind_condition)}</p>
         <p class="muted">${escapeHtml(record.prototype_version)} · ${escapeHtml(record.arm)} · solo local</p>
+        ${record.evidence_alignment === 'DIVERGENT' ? '<span class="alignment-badge divergent">Discrepancia explícita con la evidencia</span>' : ''}
       </article>`).join('');
     target.querySelectorAll('.ledger-record').forEach(node => {
       node.addEventListener('click', () => logEvent('decision_record_revisited', { record_id: node.dataset.recordId }));
@@ -756,6 +818,7 @@ button.full { width: 100%; }
     renderArm();
     renderScenario();
     renderLedger();
+    refreshDivergenceState();
   }
 
   document.querySelectorAll('.depth-tab').forEach(btn => {
@@ -778,10 +841,55 @@ button.full { width: 100%; }
   $('invalidatorCard').addEventListener('click', () => logEvent('invalidation_opened'));
   $('invalidatorCard').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') logEvent('invalidation_opened'); });
 
-  $('confidenceInput').addEventListener('input', e => $('confidenceValue').textContent = `${e.target.value}%`);
+  $('confidenceInput').addEventListener('input', e => {
+    $('confidenceValue').textContent = `${e.target.value}%`;
+    if (Number(e.target.value) === 100) {
+      setFormFeedback('100% implica que no contemplas estar equivocado. Puedes usarlo, pero SOPHROSYNE lo registra como confianza extrema para revisión de calibración.');
+      logEvent('extreme_confidence_selected', { confidence_pct: 100 });
+    } else if (!$('divergenceAckRow').classList.contains('show')) {
+      setFormFeedback('');
+    }
+  });
+
+  $('processAction').addEventListener('change', () => {
+    const alignment = refreshDivergenceState();
+    if (alignment === 'DIVERGENT') {
+      setFormFeedback('Tu postura es más fuerte que la conclusión soportada por la evidencia actual. No se bloquea tu decisión, pero la discrepancia debe quedar explícita.');
+      logEvent('evidence_posture_divergence_shown', { process_action: $('processAction').value });
+    } else {
+      setFormFeedback('');
+    }
+  });
 
   $('decisionForm').addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const hypothesis = $('hypothesisInput').value.trim();
+    const changeCondition = $('changeMindInput').value.trim();
+    const processAction = $('processAction').value;
+    const confidencePct = Number($('confidenceInput').value);
+    const alignment = refreshDivergenceState();
+
+    if (looksLowInformation(hypothesis)) {
+      setFormFeedback('Tu lectura necesita explicar qué observas y por qué. Una palabra, una orden o texto repetitivo no produce un registro útil para aprender después.', 'error');
+      logEvent('decision_record_rejected_low_information', { field: 'hypothesis' });
+      $('hypothesisInput').focus();
+      return;
+    }
+
+    if (looksLowInformation(changeCondition)) {
+      setFormFeedback('La condición de cambio debe nombrar evidencia concreta que podría hacerte revisar tu postura.', 'error');
+      logEvent('decision_record_rejected_low_information', { field: 'change_mind_condition' });
+      $('changeMindInput').focus();
+      return;
+    }
+
+    if (alignment === 'DIVERGENT' && !$('divergenceAck').checked) {
+      setFormFeedback('Antes de guardar, confirma que entiendes que tu postura diverge del estado de evidencia del escenario.', 'error');
+      $('divergenceAck').focus();
+      return;
+    }
+
     const record = Object.freeze({
       record_id: crypto.randomUUID ? crypto.randomUUID() : `record-${Date.now()}`,
       created_at: new Date().toISOString(),
@@ -789,22 +897,36 @@ button.full { width: 100%; }
       arm,
       scenario_id: activeScenario.id,
       scenario_digest_hint: `${activeScenario.id}:${activeScenario.freshness}`,
-      hypothesis: $('hypothesisInput').value.trim(),
-      confidence_pct: Number($('confidenceInput').value),
-      process_action: $('processAction').value,
-      change_mind_condition: $('changeMindInput').value.trim(),
+      system_conclusion: activeScenario.conclusion,
+      evidence_alignment: alignment,
+      hypothesis,
+      confidence_pct: confidencePct,
+      process_action: processAction,
+      change_mind_condition: changeCondition,
       data_scope: 'SYNTHETIC/HISTORICAL-STYLE',
       recommendation: null,
       live_trade: false
     });
+
     ledger.push(record);
     persist(STORAGE_LEDGER, ledger);
-    logEvent('decision_record_created', { record_id: record.record_id, confidence_pct: record.confidence_pct, process_action: record.process_action });
+    logEvent('decision_record_created', {
+      record_id: record.record_id,
+      confidence_pct: record.confidence_pct,
+      process_action: record.process_action,
+      evidence_alignment: alignment
+    });
+
     e.target.reset();
     $('confidenceInput').value = '50';
     $('confidenceValue').textContent = '50%';
+    $('divergenceAck').checked = false;
+    $('divergenceAckRow').classList.remove('show');
+    setFormFeedback('');
     renderLedger();
-    toast('Registro de decisión añadido al historial local.');
+    toast(alignment === 'DIVERGENT'
+      ? 'Registro guardado con discrepancia explícita.'
+      : 'Registro de decisión añadido al historial local.');
   });
 
   document.querySelectorAll('#modeSwitcher [data-arm]').forEach(btn => {
