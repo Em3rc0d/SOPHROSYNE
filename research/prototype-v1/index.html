@@ -277,7 +277,7 @@ button.full { width: 100%; }
       <section class="hero-card">
         <div class="hero-meta">
           <div>
-            <div class="eyebrow" id="scenarioFamily">Synthetic replay</div>
+            <div class="eyebrow" id="scenarioFamily">Repetición sintética</div>
             <h1 id="scenarioTitle">Cargando escenario…</h1>
           </div>
           <div class="freshness" id="freshnessBadge">—</div>
@@ -389,9 +389,9 @@ button.full { width: 100%; }
         <div class="panel-head">
           <div>
             <div class="eyebrow">Tu razonamiento</div>
-            <h2 id="decisionHeading">Crear Decision Record</h2>
+            <h2 id="decisionHeading">Crear registro de decisión</h2>
           </div>
-          <span class="immutable-badge">append-only en la app · local</span>
+          <span class="immutable-badge">solo se agrega desde la app · almacenamiento local</span>
         </div>
 
         <form id="decisionForm">
@@ -422,7 +422,7 @@ button.full { width: 100%; }
           </label>
 
           <div class="form-actions">
-            <span class="small muted">No se guarda ninguna orden, broker credential ni dato de cuenta.</span>
+            <span class="small muted">No se guarda ninguna orden, credencial de cuenta de corretaje ni dato de cuenta.</span>
             <button class="primary" type="submit">Guardar en historial</button>
           </div>
         </form>
@@ -533,7 +533,7 @@ button.full { width: 100%; }
       id: 'SYN-03',
       family: 'Repetición sintética · evidencia desactualizada',
       title: 'Señales favorables con una fuente crítica desactualizada',
-      question: 'Varios indicadores son constructivos, pero una fuente importante está stale. ¿Debe mantenerse una conclusión direccional?',
+      question: 'Varios indicadores son constructivos, pero una fuente importante está desactualizada. ¿Debe mantenerse una conclusión direccional?',
       freshness: '1 fuente crítica desactualizada · sintético',
       state: 'Constructivo, evidencia incompleta',
       volatility: 'Media-alta',
@@ -542,7 +542,7 @@ button.full { width: 100%; }
       translation: 'La evidencia disponible favorece una lectura constructiva, pero una fuente crítica está desactualizada. SOPHROSYNE separa “lo que parece probable” de “lo que puede defenderse con evidencia vigente”.',
       depth: {
         beginner: 'Una señal puede verse bien y aun así no ser suficiente si una pieza importante está desactualizada.',
-        investor: 'El problema no es que la fuente stale sea necesariamente negativa, sino que su estado impide afirmar que el conjunto actual de evidencia está completo.',
+        investor: 'El problema no es que la fuente desactualizada sea necesariamente negativa, sino que su estado impide afirmar que el conjunto actual de evidencia está completo.',
         trader: 'Las señales rápidas son constructivas, pero el filtro contextual crítico no tiene vigencia válida. Cualquier regla dependiente de ese filtro debe degradar a sin conclusión.',
         quant: 'La política de vigencia marca una entrada crítica de contexto como DESACTUALIZADA. Por ello, la política determinista candidata no cumple la precondición de completitud y no emite ninguna probabilidad direccional calibrada.'
       },
@@ -561,7 +561,7 @@ button.full { width: 100%; }
         'Estructura sintética de corto plazo mejora.',
         'Momentum normalizado cruza a terreno positivo.',
         'Proxy de liquidez dentro de rango normal.',
-        'Una fuente crítica excede el freshness máximo del escenario.',
+        'Una fuente crítica excede el límite de vigencia del escenario.',
         'No existe confirmación secundaria disponible.',
         'Volatilidad en régimen media-alta.',
         'La política del escenario requiere inputs críticos vigentes.'
