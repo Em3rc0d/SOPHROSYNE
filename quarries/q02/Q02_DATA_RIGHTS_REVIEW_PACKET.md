@@ -204,7 +204,7 @@ A Q02 receipt must contain:
 
 ## 10. Frozen outputs
 
-PASS/CONDITIONAL freezes:
+A `CLOSED_PASS` or `CLOSED_CONDITIONAL` receipt freezes:
 
 ```yaml
 initial_provider_set: []
