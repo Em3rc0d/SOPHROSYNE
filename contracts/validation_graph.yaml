@@ -1,4 +1,4 @@
-graph_version: cvg-macro-v1
+graph_version: cvg-macro-v2
 schema: contracts/validation_graph.schema.yaml
 status: STRUCTURALLY_CLOSED_PREBUILD
 nodes_digest: PENDING_PHASE0_HASH
@@ -72,7 +72,7 @@ nodes:
     owner: docs/architecture/CLOSED_VALIDATION_GRAPH.md
     state: CLOSED
     scope: graph closure, edge, digest, contradiction and reopen semantics
-    version: v1
+    version: v2
     content_digest: PENDING_PHASE0_HASH
     materiality: P0
     reopen_triggers: [graph_integrity_failure, governance_contradiction]
@@ -118,10 +118,10 @@ nodes:
     reopen_triggers: [incident, drift, stale_assumption]
 
   - node_id: CONTRADICTION_REVIEW
-    node_type: CONTRADICTION
+    node_type: DESIGN
     owner: GOVERNANCE.md + contradiction protocol
     state: CLOSED
-    scope: detection, propagation and targeted reopening semantics
+    scope: detection, propagation and targeted reopening semantics; actual contradictions instantiate separate CONTRADICTION nodes
     version: v1
     content_digest: PENDING_PHASE0_HASH
     materiality: P0
@@ -132,6 +132,7 @@ edges:
     from: T0_METHOD
     to: T1_T5_THESIS
     relation: CONSTRAINS
+    closure_requirement: REQUIRED
     state: CLOSED
     closure_rule: thesis claims must remain falsifiable and evidence-bounded
     required_receipts: []
@@ -142,9 +143,10 @@ edges:
     from: T1_T5_THESIS
     to: Q00_Q05
     relation: REQUIRES
+    closure_requirement: REQUIRED
     state: CLOSED
-    closure_rule: every material thesis layer maps to explicit validation/kill criteria
-    required_receipts: [EvidenceReceipt]
+    closure_rule: every material thesis layer maps to explicit validation and kill criteria before empirical outcomes are inspected
+    required_receipts: []
     revalidate_on: [thesis_semantic_change]
     edge_digest: PENDING_PHASE0_HASH
 
@@ -152,6 +154,7 @@ edges:
     from: Q00_Q05
     to: MK0_PROMOTION
     relation: VALIDATES
+    closure_requirement: REQUIRED
     state: OPEN
     closure_rule: promotable evidence receipts and no unresolved P0/P1 contradiction
     required_receipts: [EvidenceReceipt]
@@ -162,6 +165,7 @@ edges:
     from: MK0_PROMOTION
     to: MK1_BOOTSTRAP
     relation: PRODUCES
+    closure_requirement: REQUIRED
     state: OPEN
     closure_rule: approved promotion packet freezes one exact buildable profile
     required_receipts: []
@@ -172,8 +176,9 @@ edges:
     from: MK1_BOOTSTRAP
     to: DESIGN_CONTRACTS
     relation: CONSTRAINS
+    closure_requirement: CONDITIONAL
     state: OPEN
-    closure_rule: selected profile must fit closed architecture or explicitly reopen affected design
+    closure_rule: once a bootstrap profile is selected it must fit closed architecture or explicitly reopen affected design
     required_receipts: []
     revalidate_on: [material_profile_change]
     edge_digest: PENDING_PHASE0_HASH
@@ -182,8 +187,9 @@ edges:
     from: DESIGN_CONTRACTS
     to: IMPLEMENTATION
     relation: IMPLEMENTS
+    closure_requirement: REQUIRED
     state: CLOSED
-    closure_rule: implementation may choose mechanisms only inside frozen semantics
+    closure_rule: implementation may choose mechanisms only inside frozen semantics; implementation itself remains OPEN until authorized and built
     required_receipts: []
     revalidate_on: [design_change]
     edge_digest: PENDING_PHASE0_HASH
@@ -192,8 +198,9 @@ edges:
     from: CVG_CONTRACT
     to: IMPLEMENTATION
     relation: CONSTRAINS
+    closure_requirement: REQUIRED
     state: CLOSED
-    closure_rule: implementation/build metadata must bind to approved graph digest
+    closure_rule: implementation and build metadata must bind to the approved graph snapshot; implementation itself remains OPEN until authorized and built
     required_receipts: [GRAPH_CONFORMANCE]
     revalidate_on: [graph_change]
     edge_digest: PENDING_PHASE0_HASH
@@ -202,6 +209,7 @@ edges:
     from: IMPLEMENTATION
     to: VERIFICATION
     relation: TESTS
+    closure_requirement: REQUIRED
     state: OPEN
     closure_rule: every active P0/P1 runtime surface has a mapped mandatory verification path
     required_receipts: [AcceptanceReceipt]
@@ -212,8 +220,9 @@ edges:
     from: VERIFICATION
     to: CERTIFICATION
     relation: CERTIFIES
+    closure_requirement: REQUIRED
     state: OPEN
-    closure_rule: all gate-required receipts are current PASS for exact build/profile/graph digests
+    closure_rule: all gate-required receipts are current PASS for exact build, profile and graph digests
     required_receipts: [AcceptanceReceipt]
     revalidate_on: [receipt_invalidation]
     edge_digest: PENDING_PHASE0_HASH
@@ -222,8 +231,9 @@ edges:
     from: CERTIFICATION
     to: RUNTIME_OBSERVATION
     relation: PRODUCES
+    closure_requirement: REQUIRED
     state: OPEN
-    closure_rule: certified release emits required operational telemetry and drift/incident evidence
+    closure_rule: certified release emits required operational telemetry and drift or incident evidence
     required_receipts: [OBSERVABILITY_SLO, INCIDENT_DRILL]
     revalidate_on: [release_change]
     edge_digest: PENDING_PHASE0_HASH
@@ -232,8 +242,9 @@ edges:
     from: RUNTIME_OBSERVATION
     to: CONTRADICTION_REVIEW
     relation: OBSERVES
+    closure_requirement: CONDITIONAL
     state: OPEN
-    closure_rule: material runtime evidence is evaluated against active assumptions/guarantees
+    closure_rule: when material runtime evidence exists it is evaluated against active assumptions and guarantees
     required_receipts: []
     revalidate_on: [runtime_material_event]
     edge_digest: PENDING_PHASE0_HASH
@@ -242,8 +253,9 @@ edges:
     from: CONTRADICTION_REVIEW
     to: T1_T5_THESIS
     relation: REOPENS
+    closure_requirement: REVERSE_VALIDATION
     state: CLOSED
-    closure_rule: contradictions propagate to smallest sufficient upstream cut set
+    closure_rule: contradiction handling has an explicit path to reopen the smallest sufficient thesis cut set
     required_receipts: []
     revalidate_on: [contradiction_protocol_change]
     edge_digest: PENDING_PHASE0_HASH
@@ -252,8 +264,9 @@ edges:
     from: CONTRADICTION_REVIEW
     to: Q00_Q05
     relation: REOPENS
+    closure_requirement: REVERSE_VALIDATION
     state: CLOSED
-    closure_rule: new conflicting evidence reopens affected evidence locks/profile fields
+    closure_rule: new conflicting evidence has an explicit path to reopen affected evidence locks and profile fields
     required_receipts: []
     revalidate_on: [contradiction_protocol_change]
     edge_digest: PENDING_PHASE0_HASH
@@ -262,8 +275,9 @@ edges:
     from: VERIFICATION
     to: DESIGN_CONTRACTS
     relation: VALIDATES
+    closure_requirement: REVERSE_VALIDATION
     state: CLOSED
-    closure_rule: acceptance evidence returns to governing design; design reopens only when failure is semantic rather than implementation defect
+    closure_rule: acceptance evidence returns to governing design and can open a contradiction when failure is semantic rather than an implementation defect
     required_receipts: [AcceptanceReceipt]
     revalidate_on: [contract_change]
     edge_digest: PENDING_PHASE0_HASH
@@ -272,8 +286,9 @@ edges:
     from: Q00_Q05
     to: T1_T5_THESIS
     relation: VALIDATES
+    closure_requirement: CONDITIONAL
     state: OPEN
-    closure_rule: empirical/external evidence narrows, supports, pivots or kills exact thesis layers
+    closure_rule: empirical and external evidence narrows, supports, pivots or kills exact thesis layers when evidence exists
     required_receipts: [EvidenceReceipt]
     revalidate_on: [new_authoritative_evidence, replication_failure]
     edge_digest: PENDING_PHASE0_HASH
@@ -282,14 +297,26 @@ edges:
     from: DESIGN_CONTRACTS
     to: CVG_CONTRACT
     relation: VALIDATES
+    closure_requirement: REQUIRED
     state: CLOSED
-    closure_rule: every closed material design node must be representable with CVG node/edge/reopen semantics
-    required_receipts: [GRAPH_CONFORMANCE]
+    closure_rule: every closed material design node must be representable with CVG node, edge, receipt and reopen semantics
+    required_receipts: []
     revalidate_on: [design_node_added, design_node_removed, design_semantic_change]
     edge_digest: PENDING_PHASE0_HASH
 
+  - edge_id: E017
+    from: CONTRADICTION_REVIEW
+    to: T0_METHOD
+    relation: REOPENS
+    closure_requirement: REVERSE_VALIDATION
+    state: CLOSED
+    closure_rule: a contradiction in the methodological invariant has an explicit path to reopen T0 rather than treating the root method as permanently unquestionable
+    required_receipts: []
+    revalidate_on: [contradiction_protocol_change, methodological_contradiction]
+    edge_digest: PENDING_PHASE0_HASH
+
 fixed_point_rule:
-  condition: validate(active_graph) produces no P0/P1 state transition and no stale required receipt
+  condition: validate(active_graph) produces no P0/P1 state transition, no stale required receipt and no REQUIRED edge violation for a closed or promotable target
   result: STRUCTURALLY_OR_OPERATIONALLY_CLOSED_FOR_SCOPE
 
 phase0_hashing_requirement:
