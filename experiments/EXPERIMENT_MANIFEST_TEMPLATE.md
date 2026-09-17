@@ -2,11 +2,13 @@
 
 ## Purpose
 
-Every empirical MK0 experiment that may close or materially influence Q03, Q04 or Q05 must be pre-registered before outcome data are inspected.
+Every empirical MK0 experiment that may close or materially influence Q00, Q03, Q04 or Q05 must be pre-registered before outcome data are inspected.
 
 This template is designed to prevent post-hoc metric changes, cherry-picking and ambiguous promotion decisions.
 
 Copy this file into a versioned experiment folder or receipt bundle before running the experiment.
+
+Canonical lifecycle/outcome vocabulary is governed by `docs/validation/CANONICAL_VALIDATION_SPEC.md`. This template must use those exact terms rather than aliases.
 
 ---
 
@@ -15,7 +17,7 @@ Copy this file into a versioned experiment folder or receipt bundle before runni
 ```text
 experiment_id:
 version:
-status: DRAFT | PRE_REGISTERED | RUNNING | ANALYSIS | FINAL | SUPERSEDED
+status: DRAFT | PRE_REGISTERED | EVIDENCE_RUNNING | REVIEW_READY | FINAL | SUPERSEDED
 lock_ids:
 owner:
 independent_reviewer:
@@ -39,6 +41,7 @@ question:
 ```
 
 Examples of acceptable questions:
+- Does the full candidate intervention add material decision-process value beyond competent simple baselines?
 - Does Translator View improve objective comprehension while preserving confidence calibration versus the comparison workflow?
 - Does the deterministic benchmark harness reproduce point-in-time results under the frozen cost model?
 - Does an ML candidate add robust out-of-sample value versus the strongest eligible transparent baseline?
@@ -138,10 +141,11 @@ Secondary measures may explain a result but cannot rescue a failed primary decis
 Freeze the exact rule before execution.
 
 ```text
-pass_rule:
-conditional_pass_rule:
-pivot_rule:
-stop_rule:
+closed_pass_rule:
+closed_conditional_rule:
+pivot_required_rule:
+stop_current_configuration_rule:
+inconclusive_rule:
 ```
 
 If numeric thresholds are appropriate, put them here now.
@@ -272,12 +276,12 @@ adverse_or_conflicting_evidence:
 ## 18. Decision
 
 ```text
-result: PASS | CONDITIONAL_PASS | PIVOT_REQUIRED | STOP_CURRENT_CONFIGURATION | INCONCLUSIVE
+result: CLOSED_PASS | CLOSED_CONDITIONAL | PIVOT_REQUIRED | STOP_CURRENT_CONFIGURATION | INCONCLUSIVE
 rationale:
 limitations:
 ```
 
-`INCONCLUSIVE` is a valid result. It cannot be auto-promoted to PASS.
+Only the canonical aggregate outcome vocabulary is valid. `INCONCLUSIVE` is a valid result and cannot be auto-promoted to PASS.
 
 ## 19. Freeze outputs
 
@@ -311,4 +315,4 @@ Before finalizing, confirm:
 - no result is generalized outside its defined scope without qualification;
 - a prototype success is not represented as production evidence;
 - implementation effort already spent did not lower the gate;
-- the final decision follows the registered rule.
+- the final decision follows the registered rule and canonical vocabulary.
