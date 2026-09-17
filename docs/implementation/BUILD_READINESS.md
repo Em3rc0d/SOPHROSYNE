@@ -6,11 +6,19 @@
 
 **KNOWN INTERNAL DESIGN NODES REMAINING: 0**
 
+**CLOSED VALIDATION GRAPH: STRUCTURALLY CLOSED FOR PRE-BUILD**
+
 **MK1 IMPLEMENTATION: BLOCKED BY EXTERNAL / EMPIRICAL LOCKS**
 
 The architecture is specific enough to implement without choosing major system semantics during coding. Remaining implementation tests, drills and measured operational properties are acceptance evidence, not unresolved MK0 design decisions.
 
 Canonical internal-closure audit: `docs/implementation/INTERNAL_CLOSURE_AUDIT.md`.
+
+Canonical graph-closure audit: `docs/implementation/GRAPH_CLOSURE_AUDIT.md`.
+
+Canonical Closed Validation Graph contract: `docs/architecture/CLOSED_VALIDATION_GRAPH.md`.
+
+Canonical machine-readable graph snapshot: `contracts/validation_graph.yaml`.
 
 Canonical implementation-verification schema: `docs/implementation/ACCEPTANCE_RECEIPTS.md`.
 
@@ -36,6 +44,9 @@ Canonical evidence-derived implementation profile: `docs/validation/MK1_BOOTSTRA
 | Core causal-value falsification method | CLOSED | `docs/validation/Q00_CORE_CAUSAL_VALUE.md` |
 | Domain vocabulary | CLOSED | `docs/architecture/DOMAIN_MODEL.md` |
 | System contracts | CLOSED | `docs/architecture/SYSTEM_CONTRACTS.md` |
+| Closed validation graph semantics | CLOSED | `docs/architecture/CLOSED_VALIDATION_GRAPH.md`, ADR-0016 |
+| Validation graph schema/snapshot | CLOSED_FOR_STRUCTURE | `contracts/validation_graph.schema.yaml`, `contracts/validation_graph.yaml` |
+| Graph closure audit | CLOSED | `docs/implementation/GRAPH_CLOSURE_AUDIT.md` |
 | Runtime topology | CLOSED | `docs/implementation/REFERENCE_ARCHITECTURE.md` |
 | Technology stack | CLOSED | `docs/implementation/TECH_STACK.md` |
 | Data/time semantics | CLOSED | `docs/implementation/DATA_MODEL.md` |
@@ -64,7 +75,31 @@ Canonical evidence-derived implementation profile: `docs/validation/MK1_BOOTSTRA
 
 Every known MK1 internal design node remains closed.
 
-A future `SECURITY_READINESS`, `OBSERVABILITY_SLO`, `INCIDENT_DRILL`, `BACKUP_RESTORE`, `GOLDEN_REPLAY` or other implementation receipt may still be pending because the implementation does not yet exist. That status belongs to MK1/beta verification, not to the MK0 design graph.
+`CLOSED_FOR_STRUCTURE` on the machine-readable graph means the graph model, ids, relations and closure semantics are frozen, while Phase 0 still owes deterministic canonical serialization and cryptographic digests. That is an implementation obligation, not an unresolved architecture choice.
+
+A future `SECURITY_READINESS`, `OBSERVABILITY_SLO`, `INCIDENT_DRILL`, `BACKUP_RESTORE`, `GOLDEN_REPLAY`, `GRAPH_CONFORMANCE` or other implementation receipt may still be pending because the implementation does not yet exist. That status belongs to MK1/beta verification, not to the MK0 design graph.
+
+---
+
+## Closed Validation Graph rule
+
+Build readiness is evaluated against one explicit graph snapshot.
+
+The active graph must satisfy, for all P0/P1 nodes in scope:
+
+- canonical owner and bounded scope;
+- no orphan node;
+- all required edge endpoints present;
+- explicit edge closure rule;
+- forward traceability from proposition/profile to implementation obligation;
+- reverse-validation path from verification/runtime evidence back to the governing proposition;
+- no unresolved P0/P1 contradiction on the promotable path;
+- explicit reopen/revalidation triggers;
+- stable graph version for the promotion decision.
+
+A later build may not silently target a different graph. Material graph change requires classification, revalidation and, where required, a new ADR/profile/promotion packet.
+
+Phase 0 must replace `PENDING_PHASE0_HASH` graph placeholders with deterministic SHA-256 node/edge/graph digests and make CVG-001 through CVG-012 executable CI checks.
 
 ---
 
@@ -138,7 +173,8 @@ Allowed activities:
 - provider/legal discovery;
 - infrastructure spikes whose output is evidence/measurement, not production code;
 - test fixture/schema prototyping needed to validate a design assumption;
-- generation of evidence receipts, contradiction logs and candidate bootstrap profiles.
+- generation of evidence receipts, contradiction logs and candidate bootstrap profiles;
+- validation-graph tooling/prototypes whose output is graph-integrity evidence, not product behavior.
 
 These artifacts do not become MK1 production code merely because they are useful.
 
@@ -167,8 +203,12 @@ All must be true:
 17. `MK0_LOCKS.md` contains no OPEN/PARTIAL evidence item whose outcome would materially change MK1 system boundaries.
 18. One `MK1_BOOTSTRAP_PROFILE` is `APPROVED` and identifies the exact configuration to build, including Q00-driven exclusions/constraints.
 19. `docs/validation/MK0_PROMOTION_PACKET.md` is instantiated for the candidate and receives final `APPROVED` status.
+20. One canonical `contracts/validation_graph.yaml` snapshot covers the exact promoted configuration and contains no P0/P1 orphan node or dangling required edge.
+21. The graph snapshot has no unresolved P0/P1 contradiction on any path reachable from the approved bootstrap profile and all promotable P0/P1 decisions have a declared reverse-validation path.
+22. The promotion packet and bootstrap profile record the same `graph_version`; after Phase 0 hashing is available, both must also bind to the same `graph_digest`.
+23. `docs/implementation/GRAPH_CLOSURE_AUDIT.md` is current for the candidate graph and no known graph-integrity exception is unresolved.
 
-The internal design graph itself is not a remaining condition: it is already closed. If new evidence materially invalidates an internal decision, that node is explicitly reopened under governance rather than silently changed in code.
+The internal design graph itself is not a remaining semantic condition: its contracts are already closed. The graph still remains a live validation structure. If new evidence materially invalidates an internal decision, the affected node/edge is explicitly reopened under ADR-0016 rather than silently changed in code.
 
 ---
 
@@ -178,14 +218,21 @@ Every production implementation PR after MK0 promotion must identify:
 
 ```text
 bootstrap_profile_id:
+graph_version:
+graph_digest:
+affected_node_ids: []
+affected_edge_ids: []
 affected_profile_sections:
 semantic_change: YES | NO
+graph_revalidation_required: YES | NO
 requires_revalidation: YES | NO
 requires_adr: YES | NO
 acceptance_receipts_required: []
 ```
 
-Production work that cannot identify its governing bootstrap profile is not ready.
+Production work that cannot identify its governing bootstrap profile and graph is not ready.
+
+A PR whose change creates a P0/P1 node without incoming/outgoing material edges, creates an implementation surface without a verification return path, or changes graph reachability without explicit classification fails build authorization.
 
 ---
 
@@ -194,6 +241,7 @@ Production work that cannot identify its governing bootstrap profile is not read
 In addition to implementation completion:
 
 - mandatory CI gates green;
+- current `GRAPH_CONFORMANCE` receipt is `PASS` for the exact release graph/build/profile digests;
 - all required current acceptance receipts defined by `ACCEPTANCE_RECEIPTS.md` are `PASS`;
 - golden replay 100% for deterministic corpus;
 - anti-leakage suite green;
@@ -210,7 +258,9 @@ In addition to implementation completion:
 - product surface matches the Q00-approved intervention scope;
 - no excluded Q00 component is silently reintroduced;
 - no uncalibrated probability or unsupported performance claim exposed;
-- released semantics still match the approved `MK1_BOOTSTRAP_PROFILE`.
+- released semantics still match the approved `MK1_BOOTSTRAP_PROFILE`;
+- release metadata binds to the exact active `graph_digest`;
+- every active P0/P1 runtime surface remains reachable from the approved profile and reaches at least one mandatory verification path.
 
 ---
 
@@ -218,6 +268,8 @@ In addition to implementation completion:
 
 A slice is done only when it has:
 - bootstrap-profile traceability;
+- graph version/digest traceability;
+- affected node/edge declarations;
 - domain/API contract;
 - persistence migration where required;
 - authorization;
@@ -225,7 +277,8 @@ A slice is done only when it has:
 - unit/integration/contract tests;
 - failure/degradation behavior;
 - user-visible stale/error semantics;
-- applicable acceptance receipt evidence;
+- applicable acceptance receipt evidence, including graph conformance when required;
+- reverse-validation path from implemented surface/receipt back to the governing proposition;
 - documentation/ADR updates for semantic changes;
 - staging verification.
 
@@ -237,4 +290,6 @@ A UI screen backed by mock data is not a completed vertical slice.
 
 If new evidence invalidates causal value, product, legal, data-rights, quant or an internal architectural assumption, **stop and update the graph before coding around the contradiction**.
 
-The purpose of this gate is not to eliminate all uncertainty—impossible in a real system—but to ensure no known high-impact decision is deferred accidentally into implementation and no validated configuration is silently replaced during build.
+If a graph-integrity check fails, unrelated green CI cannot override it for the affected promotion/build/release path.
+
+The purpose of this gate is not to eliminate all uncertainty—impossible in a real system—but to ensure no known high-impact decision is deferred accidentally into implementation, no material uncertainty remains invisible to the governing graph, and no validated configuration is silently replaced during build.

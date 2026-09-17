@@ -6,7 +6,7 @@ This is the final technical gate before Phase 0 implementation may begin **after
 
 It answers a narrower question than `BUILD_READINESS.md`:
 
-> If the product/evidence gates were green today, could engineering begin without inventing architecture, repository, persistence, contract, async, testing or delivery semantics during coding?
+> If the product/evidence gates were green today, could engineering begin without inventing architecture, repository, persistence, contract, async, testing, graph-governance or delivery semantics during coding?
 
 The answer must be **yes** before build starts.
 
@@ -14,9 +14,11 @@ The answer must be **yes** before build starts.
 
 **TECHNICAL DESIGN: CLOSED FOR PRE-BUILD**
 
+**CLOSED VALIDATION GRAPH: STRUCTURALLY CLOSED FOR PRE-BUILD**
+
 **PRODUCTION BUILD: STILL BLOCKED BY MK0 EVIDENCE / PROMOTION**
 
-This document does not override Q00–Q05, Q01/Q02 external authority, the promotion packet or bootstrap-profile requirements.
+This document does not override Q00–Q05, Q01/Q02 external authority, the promotion packet, bootstrap-profile requirements or Closed Validation Graph integrity.
 
 ## Required pre-build contracts
 
@@ -38,7 +40,11 @@ The following must exist and agree:
 - `TEST_STRATEGY.md` — verification layers;
 - `CI_CD_AND_ENVIRONMENTS.md` — promotion/rollback environment contract;
 - `IMPLEMENTATION_SEQUENCE.md` — build order;
-- `FIRST_VERTICAL_SLICE.md` — first end-to-end implementation target.
+- `FIRST_VERTICAL_SLICE.md` — first end-to-end implementation target;
+- `docs/architecture/CLOSED_VALIDATION_GRAPH.md` — cyclic validation/reopen semantics;
+- `contracts/validation_graph.schema.yaml` — machine-readable graph contract;
+- `contracts/validation_graph.yaml` — active macro graph snapshot;
+- `docs/implementation/GRAPH_CLOSURE_AUDIT.md` — structural graph audit.
 
 No contradictory current contract may exist at build start.
 
@@ -85,6 +91,17 @@ No contradictory current contract may exist at build start.
 - initial job type allow-list fixed;
 - no order/execution jobs in MK1.
 
+### Validation graph
+
+- node/edge/receipt vocabulary fixed;
+- no-orphan P0/P1 rule fixed;
+- reverse-validation rule fixed;
+- contradiction propagation and targeted reopen semantics fixed;
+- graph snapshot/version semantics fixed;
+- deterministic SHA-256 graph digest obligation fixed for Phase 0;
+- `GRAPH_CONFORMANCE` receipt class fixed;
+- runtime dependency cycles remain forbidden where `MODULE_BOUNDARIES.md` forbids them.
+
 ### Toolchain
 
 - supported runtime lines fixed;
@@ -101,6 +118,7 @@ No contradictory current contract may exist at build start.
 - golden DecisionRecord replay mandatory;
 - provider contract fixtures mandatory;
 - architecture-import tests mandatory;
+- CVG-001 through CVG-012 graph checks mandatory in Phase 0 CI;
 - E2E/accessibility/security gates defined;
 - failure injection before beta defined.
 
@@ -120,7 +138,8 @@ The following are intentionally **not** hard-coded by this pre-build contract an
 - deterministic feature/state configuration;
 - ML scope (`INCLUDE | EXCLUDE | DEFER`);
 - legal/claim/disclaimer constraints;
-- moat/scale-spend status.
+- moat/scale-spend status;
+- exact graph nodes/edges activated by the approved profile.
 
 Engineering may not replace a missing bootstrap value with a convenient default.
 
@@ -141,7 +160,10 @@ Once MK0 promotion is approved, Phase 0 may open only if all are true:
 11. container/SBOM/provenance path specified;
 12. staging deployment target/config boundary selected;
 13. first vertical slice references the approved bootstrap profile;
-14. no production feature code has been written outside the authorized profile.
+14. active `validation_graph.yaml` covers the exact promoted scope;
+15. graph has no P0/P1 orphan node or unresolved contradiction on the build path;
+16. all active P0/P1 proposition/design nodes have declared reverse-validation paths;
+17. no production feature code has been written outside the authorized profile/graph.
 
 ## Phase 0 exit checklist
 
@@ -155,6 +177,12 @@ Phase 0 is complete only when a clean clone can, without paid/external provider 
 - start S3-compatible local artifact storage;
 - generate OpenAPI + web client deterministically;
 - execute architecture/import-boundary tests;
+- validate `contracts/validation_graph.yaml` deterministically;
+- run CVG-001 through CVG-012;
+- generate canonical SHA-256 node/edge/graph digests;
+- detect P0/P1 orphans and dangling edges;
+- prove bootstrap -> implementation -> verification -> governing-proposition reachability for the skeleton/slice paths that exist;
+- emit a `GRAPH_CONFORMANCE` receipt for the Phase 0 artifact/config/graph snapshot;
 - build API/worker/web immutable containers;
 - generate SBOM/provenance;
 - deploy the same image digests to staging;
@@ -168,12 +196,15 @@ The first vertical slice may begin only when:
 
 - Phase 0 passes;
 - approved bootstrap profile identifies provider/data/instrument/component scope;
+- graph version/digest matches the approved bootstrap profile;
+- slice node/edge set is identified before coding;
 - first provider contract fixture set is legally retainable or synthetic equivalent exists;
 - exact DataRightsRecord semantics are known;
 - point-in-time timestamp mapping is known for that provider;
 - first deterministic MarketState configuration is frozen;
 - golden fixture set is preregistered/defined;
-- rights/staleness/degradation expectations are testable.
+- rights/staleness/degradation expectations are testable;
+- a reverse-validation path exists from slice verification back to every governing P0/P1 proposition/design node.
 
 ## Technical reopen triggers
 
@@ -186,20 +217,27 @@ This pre-build design reopens when evidence or implementation proves one of the 
 - provider semantics require a data model not representable without breaking point-in-time invariants;
 - first vertical slice requires a cyclic module dependency;
 - contract generation is non-deterministic or cannot preserve API compatibility;
-- required security/legal isolation introduces a new trust boundary.
+- required security/legal isolation introduces a new trust boundary;
+- graph model cannot represent a material authority/validation relationship;
+- CVG validator finds a P0/P1 orphan/reachability failure not resolvable as metadata-only drift;
+- graph digest cannot be generated deterministically;
+- a new contradiction class cannot propagate to an explicit affected cut set.
 
 A reopen is explicit. Coding around it silently is forbidden.
 
 ## What does not reopen technical design by itself
 
 - a library implementation preference inside an existing contract;
-- code organization refactor that preserves module/API semantics;
+- code organization refactor that preserves module/API/graph semantics;
 - patch-level runtime/security upgrades;
 - performance optimizations that preserve observable behavior;
-- visual/component implementation choices inside UX contracts.
+- visual/component implementation choices inside UX contracts;
+- graph serialization metadata changes that do not change node/edge semantics or reachability and pass compatibility checks.
 
 ## Final pre-build invariant
 
-> When build starts, developers choose implementations inside frozen contracts; they do not choose product truth, financial semantics, authority boundaries, data-rights assumptions, module ownership or point-in-time rules.
+> When build starts, developers choose implementations inside frozen contracts; they do not choose product truth, financial semantics, authority boundaries, data-rights assumptions, module ownership, point-in-time rules or validation-graph authority during coding.
+
+> Every material implementation path must already have a declared route back through verification to the proposition that authorized it.
 
 That is the threshold for SOPHROSYNE to move from design into build.

@@ -227,8 +227,44 @@ Material drift from that profile reopens the relevant evidence and/or internal d
 
 Canonical detail: `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`, `docs/validation/MK0_PROMOTION_PACKET.md`, `docs/validation/MK1_BOOTSTRAP_PROFILE.md`, `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`, `docs/implementation/BUILD_READINESS.md`.
 
+---
+
+## ADR-0014 — Layer the Thesis and Require Q00 Causal Value Before Complexity
+
+**Status:** ACCEPTED
+
+SOPHROSYNE separates T0 methodological invariant, T1 problem thesis, T2 causal intervention thesis, T3 product thesis, T4 economic thesis and T5 defensibility thesis. Passing one layer never proves the next.
+
+Q00 is the causal-value gate that must allow competent simple baselines to defeat unnecessary product complexity. Positive willingness-to-pay, sophistication, ML, persistent memory or feature breadth cannot rescue a configuration that fails causal value.
+
+Canonical detail: `adr/ADR-0014-THESIS-STACK-AND-Q00.md`, `docs/product/THESIS_STACK.md`, `docs/validation/Q00_CORE_CAUSAL_VALUE.md`.
+
+---
+
+## ADR-0015 — Pre-Build Physical Architecture Baseline
+
+**Status:** ACCEPTED
+
+MK1 freezes its implementation-shaping physical baseline before product coding: monorepo, one shared Python distribution with API/worker entrypoints, explicit acyclic module boundaries, PostgreSQL ownership/RLS, UUIDv7/exact-decimal/UTC semantics, transactional outbox/jobs, authoritative OpenAPI generation, `uv` + `pnpm`, and one defined first vertical slice.
+
+These decisions constrain implementation but do not authorize build before the evidence-derived bootstrap profile and build-readiness gates pass.
+
+Canonical detail: `adr/ADR-0015-PREBUILD-PHYSICAL-BASELINE.md`, `docs/implementation/PREBUILD_TECHNICAL_DOR.md`.
+
+---
+
+## ADR-0016 — Closed Validation Graph Governance
+
+**Status:** ACCEPTED
+
+SOPHROSYNE is governed by a cyclic validation graph while runtime dependency direction remains acyclic where required. Every material P0/P1 node must be connected, every required edge must carry closure semantics, every promotable path must have reverse validation, contradictions must propagate, and promotion/build/release artifacts must bind to the exact governing graph/profile digests.
+
+The edge contract distinguishes `REQUIRED`, `CONDITIONAL` and `REVERSE_VALIDATION`, allowing structural closure, future verification and reopen behavior to be mechanically separated.
+
+Canonical detail: `adr/ADR-0016-CLOSED-VALIDATION-GRAPH.md`, `docs/architecture/CLOSED_VALIDATION_GRAPH.md`, `contracts/validation_graph.schema.yaml`, `contracts/validation_graph.yaml`.
+
 ## ADR policy
 
-Create a new ADR whenever a change modifies product promise, execution authority, risk semantics, regulatory posture, data-rights assumptions, probability semantics, LLM authority, runtime topology, authoritative persistence, point-in-time semantics, design-closure semantics, evidence-closure/promotion semantics or another invariant listed in `GOVERNANCE.md`.
+Create a new ADR whenever a change modifies product promise, execution authority, risk semantics, regulatory posture, data-rights assumptions, probability semantics, LLM authority, runtime topology, authoritative persistence, point-in-time semantics, design-closure semantics, evidence-closure/promotion semantics, closed-validation-graph semantics or another invariant listed in `GOVERNANCE.md`.
 
 Accepted ADRs may be superseded, but not silently edited into the opposite decision. A reversal requires a new ADR identifying the superseded record and evidence motivating the change.

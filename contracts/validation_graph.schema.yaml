@@ -1,0 +1,145 @@
+schema_version: 2
+kind: SOPHROSYNE_VALIDATION_GRAPH_SCHEMA
+
+node:
+  required:
+    - node_id
+    - node_type
+    - owner
+    - state
+    - scope
+    - version
+    - content_digest
+    - materiality
+    - reopen_triggers
+  enums:
+    node_type:
+      - THESIS
+      - EVIDENCE
+      - DESIGN
+      - PROFILE
+      - IMPLEMENTATION
+      - VERIFICATION
+      - CERTIFICATION
+      - RUNTIME
+      - CONTRADICTION
+    state:
+      - OPEN
+      - CLOSED
+      - CLOSED_CONDITIONAL
+      - PENDING_EVIDENCE
+      - REVALIDATION_REQUIRED
+      - FAILED
+      - REOPENED
+      - RETIRED
+    materiality:
+      - P0
+      - P1
+      - P2
+      - P3
+  constraints:
+    - node_id_is_unique
+    - scope_is_nonempty
+    - owner_is_nonempty
+    - content_digest_is_sha256_or_declared_pending
+    - p0_p1_nodes_cannot_be_non_authoritative_leaf
+
+edge:
+  required:
+    - edge_id
+    - from
+    - to
+    - relation
+    - closure_requirement
+    - state
+    - closure_rule
+    - required_receipts
+    - revalidate_on
+    - edge_digest
+  enums:
+    relation:
+      - REQUIRES
+      - VALIDATES
+      - CONSTRAINS
+      - PRODUCES
+      - IMPLEMENTS
+      - TESTS
+      - CERTIFIES
+      - OBSERVES
+      - INVALIDATES
+      - REOPENS
+    closure_requirement:
+      - REQUIRED
+      - CONDITIONAL
+      - REVERSE_VALIDATION
+    state:
+      - OPEN
+      - CLOSED
+      - FAILED
+      - SUPERSEDED
+  semantics:
+    REQUIRED: destination_cannot_be_closed_or_promoted_while_edge_is_not_closed
+    CONDITIONAL: edge_becomes_gate_only_when_its_declared_scope_or_lifecycle_condition_is_active
+    REVERSE_VALIDATION: edge_exists_to_return_evidence_or_reopen_upstream_and_is_not_a_prerequisite_for_current_target_closure
+  constraints:
+    - edge_id_is_unique
+    - from_references_existing_node
+    - to_references_existing_node
+    - from_must_not_equal_to_unless_explicit_self_audit_edge
+    - closed_edge_requires_nonempty_closure_rule
+    - required_edge_to_closed_or_promotable_target_must_be_closed
+    - reverse_validation_edges_must_not_be_counted_as_target_closure_prerequisites
+    - edge_digest_is_sha256_or_declared_pending
+
+receipt_binding:
+  required:
+    - receipt_id
+    - graph_digest
+    - validated_nodes
+    - validated_edges
+    - status
+    - evidence_refs
+  enums:
+    status:
+      - PASS
+      - FAIL
+      - WAIVED
+  constraints:
+    - validated_node_digests_match_active_graph
+    - validated_edge_digests_match_active_graph
+    - p0_p1_integrity_receipts_cannot_be_waived
+
+graph_snapshot:
+  required:
+    - graph_version
+    - nodes
+    - edges
+    - nodes_digest
+    - edges_digest
+    - graph_digest
+    - supersedes_graph_digest
+  constraints:
+    - deterministic_canonical_serialization
+    - no_duplicate_ids
+    - no_dangling_edges
+    - no_p0_p1_orphans
+    - all_closed_p0_p1_nodes_have_closed_required_incoming_edges
+    - all_promotable_p0_p1_nodes_have_reverse_validation_path
+    - all_active_implementation_nodes_reachable_from_approved_profile
+    - all_active_implementation_nodes_reach_verification
+    - all_required_verification_paths_return_to_governing_proposition
+    - all_open_p0_p1_contradictions_block_affected_promotion_paths
+
+ci_checks:
+  CVG-001: schema_valid
+  CVG-002: ids_unique
+  CVG-003: edge_referential_integrity
+  CVG-004: no_p0_p1_orphans
+  CVG-005: required_incoming_edges_closed_for_closed_or_promotable_targets
+  CVG-006: reverse_validation_path_exists
+  CVG-007: contradiction_links_complete
+  CVG-008: receipt_digests_match_graph
+  CVG-009: bootstrap_to_implementation_reachability
+  CVG-010: implementation_to_verification_reachability
+  CVG-011: verification_to_governing_proposition_return_path
+  CVG-012: graph_digest_deterministic

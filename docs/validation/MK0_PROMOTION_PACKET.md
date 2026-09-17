@@ -6,6 +6,8 @@ This is the canonical shape of the evidence bundle required to promote SOPHROSYN
 
 It is intentionally incomplete until real external/empirical evidence exists. Missing sections remain `PENDING`; they are not inferred from design documents.
 
+Promotion is authorized only for one explicit Closed Validation Graph snapshot. A packet cannot approve evidence for one graph and silently build another.
+
 ---
 
 ## Packet identity
@@ -17,27 +19,41 @@ created_at:
 reviewed_at:
 canonical_commit:
 bootstrap_profile_id:
+graph_version:
+graph_digest: PENDING_UNTIL_PHASE0_HASHING_AVAILABLE
 supersedes:
 ```
 
 The packet references immutable evidence receipts. It does not duplicate or rewrite their results.
 
+Before Phase 0 graph hashing exists, `graph_version` is mandatory and `graph_digest` remains the declared placeholder from the canonical graph snapshot. Once deterministic hashing exists, promotion/re-approval must bind the exact digest.
+
 ---
 
-## Section A — Internal-design baseline
+## Section A — Internal-design and graph baseline
 
 Expected state before this packet can become `REVIEW_READY`:
 
 - internal design graph = `CLOSED`;
 - known internal design nodes remaining = `0`;
-- no unresolved P0/P1 architecture contradiction;
+- Closed Validation Graph = `STRUCTURALLY_CLOSED_PREBUILD` for the candidate scope;
+- P0/P1 orphan nodes = `0`;
+- dangling required edges = `0`;
+- all promotable P0/P1 nodes have declared reverse-validation paths;
+- no unresolved P0/P1 architecture/graph contradiction;
 - accepted ADR set current;
 - `BUILD_READINESS.md` current;
-- `ACCEPTANCE_RECEIPTS.md` current.
+- `GRAPH_CLOSURE_AUDIT.md` current;
+- `ACCEPTANCE_RECEIPTS.md` current;
+- packet `graph_version` matches `contracts/validation_graph.yaml`.
 
-Current canonical source: `MK0_LOCKS.md` and `docs/implementation/BUILD_READINESS.md`.
+Current canonical sources:
+- `MK0_LOCKS.md`;
+- `docs/implementation/BUILD_READINESS.md`;
+- `docs/implementation/GRAPH_CLOSURE_AUDIT.md`;
+- `contracts/validation_graph.yaml`.
 
-If evidence forces a material architecture change, the packet returns to `DRAFT` until the affected internal node is reopened, resolved and closed again.
+If evidence forces a material architecture/graph change, the packet returns to `DRAFT` until affected nodes/edges are reopened, resolved, reconnected and closed again.
 
 ---
 
@@ -63,7 +79,7 @@ Promotion requirement:
 - final state must be `CLOSED_PASS` or `CLOSED_CONDITIONAL`;
 - full-product complexity is not required to pass; Q00 may force a narrower intervention;
 - a failed current configuration cannot be rescued by Q03 willingness-to-pay, Q04 sophistication or Q05 moat narrative;
-- all excluded/deferred components must propagate into the bootstrap profile.
+- all excluded/deferred components must propagate into the bootstrap profile and graph reachability.
 
 ---
 
@@ -85,7 +101,8 @@ material_conditions: PENDING
 
 Promotion requirement:
 - final state must be `CLOSED_PASS` or `CLOSED_CONDITIONAL`;
-- every condition must be incorporated into canonical product/UX/API behavior before packet approval.
+- every condition must be incorporated into canonical product/UX/API behavior before packet approval;
+- the approved flow must be represented by the candidate graph/profile scope.
 
 ---
 
@@ -117,7 +134,8 @@ Promotion requirement:
 - all mandatory uses explicitly allowed;
 - unknown rights treated as denied;
 - cost assumptions propagated into `UNIT_ECONOMICS.md`;
-- fallback/degradation semantics compatible with architecture.
+- fallback/degradation semantics compatible with architecture;
+- selected provider/data rights are represented by active graph/profile scope.
 
 ---
 
@@ -198,7 +216,7 @@ Weak moat evidence does not necessarily kill MK1; it blocks pretending that defe
 
 ## Section H — Cross-receipt contradiction log
 
-Every contradiction gets an ID.
+Every contradiction gets an ID and a graph impact.
 
 ```text
 contradictions:
@@ -207,12 +225,14 @@ contradictions:
     description:
     severity: P0 | P1 | P2 | P3
     affected_docs:
+    affected_node_ids: []
+    affected_edge_ids: []
     resolution:
     residual_risk:
     status: OPEN | RESOLVED | ACCEPTED_LIMITATION
 ```
 
-Packet cannot be approved while a P0/P1 contradiction remains `OPEN`.
+Packet cannot be approved while a P0/P1 contradiction remains `OPEN` on any path reachable from the candidate bootstrap profile.
 
 Examples:
 - Q03 willingness-to-pay depends on complexity rejected by Q00;
@@ -222,6 +242,8 @@ Examples:
 - validated wedge conflicts with the currently frozen persona;
 - moat thesis depends on a feature removed during Q00 or legal re-scope.
 
+Contradictions must propagate through ADR-0016 rather than remain local notes.
+
 ---
 
 ## Section I — MK1 Bootstrap Profile
@@ -230,6 +252,10 @@ The exact implementation configuration is copied by reference from the final evi
 
 ```text
 profile_id: PENDING
+graph_version: PENDING
+graph_digest: PENDING_UNTIL_PHASE0_HASHING_AVAILABLE
+active_node_ids: PENDING
+active_edge_ids: PENDING
 q00_intervention_scope: PENDING
 q00_excluded_components: PENDING
 regulatory_flow_profile: PENDING
@@ -250,15 +276,15 @@ legal_copy_version: PENDING
 canonical_source_digests: PENDING
 ```
 
-No production implementation is authorized against a vague “latest” configuration. It builds against this immutable profile version.
+No production implementation is authorized against a vague “latest” configuration. It builds against this immutable profile + graph version/digest pair.
 
 ---
 
-## Section J — Architecture impact review
+## Section J — Architecture and graph impact review
 
 Required questions:
 
-1. Did Q00 remove/require a component that changes system boundaries?
+1. Did Q00 remove/require a component that changes system boundaries or graph reachability?
 2. Did any evidence introduce a new trust boundary?
 3. Did any provider requirement change storage/display/retention architecture?
 4. Did counsel impose a flow constraint that changes API/domain semantics?
@@ -267,17 +293,22 @@ Required questions:
 7. Did pricing/entitlements create a new authorization boundary?
 8. Did fallback selection introduce incompatible semantics?
 9. Did any change invalidate an accepted ADR?
+10. Did any evidence add/remove a P0/P1 node, required edge or reverse-validation path?
+11. Does the candidate graph have any orphan, dangling endpoint or unresolved contradiction?
+12. Can every active implementation obligation return through verification to its governing proposition?
 
 Output:
 
 ```text
 architecture_impact: NONE | NON_MATERIAL | MATERIAL
+graph_impact: NONE | METADATA_ONLY | REVALIDATION_REQUIRED | MATERIAL
 reopened_internal_nodes: []
+affected_edge_ids: []
 new_or_superseding_adrs: []
 review_status: PENDING
 ```
 
-A `MATERIAL` result blocks promotion until affected internal nodes are closed again.
+A `MATERIAL` architecture result or `REVALIDATION_REQUIRED/MATERIAL` graph result blocks promotion until affected nodes/edges are resolved and the candidate graph reaches a stable fixed point again.
 
 ---
 
@@ -287,7 +318,7 @@ Only one final state is allowed.
 
 ### APPROVED
 
-All MK0 promotion requirements are satisfied and production MK1 implementation may begin against the exact bootstrap profile.
+All MK0 promotion requirements are satisfied and production MK1 implementation may begin against the exact bootstrap profile and graph snapshot.
 
 ### REJECTED — RESEARCH CONTINUES
 
@@ -295,7 +326,7 @@ One or more evidence gates remain insufficient. Research/prototype work continue
 
 ### PIVOT REQUIRED
 
-Evidence invalidates the current product configuration but supports a materially different candidate. Canonical docs are updated and affected evidence gates reopen.
+Evidence invalidates the current product configuration but supports a materially different candidate. Canonical docs are updated and affected evidence/design/graph nodes reopen.
 
 ### STOP
 
@@ -319,9 +350,13 @@ A promotion reviewer must be able to answer **yes** to all:
 - Is the selected persona/wedge supported by observed behavior?
 - Are Q03/Q05 conclusions compatible with Q00 exclusions/conditions?
 - Are unit-economics assumptions synchronized with provider/pricing evidence?
-- Are all P0/P1 contradictions resolved?
+- Are all P0/P1 contradictions resolved on the candidate path?
 - Does the bootstrap profile identify one exact build configuration?
-- Does architecture impact review show no unresolved reopened node?
+- Does architecture/graph impact review show no unresolved reopened node/edge?
+- Does the candidate graph contain zero P0/P1 orphans/dangling required edges?
+- Does every promotable P0/P1 decision have a reverse-validation path?
+- Do packet and bootstrap profile reference the same `graph_version` and, once available, `graph_digest`?
+- Is `GRAPH_CLOSURE_AUDIT.md` current for that graph?
 - Does `BUILD_READINESS.md` pass?
 
 If any answer is no, the packet is not approved.
@@ -332,6 +367,6 @@ If any answer is no, the packet is not approved.
 
 An approved packet authorizes only the following statement:
 
-> **SOPHROSYNE MK1 has an evidence-backed, causally tested, legally/data-rights-scoped and scientifically reproducible candidate configuration that is ready to be implemented and tested.**
+> **SOPHROSYNE MK1 has an evidence-backed, causally tested, legally/data-rights-scoped and scientifically reproducible candidate configuration, bound to one internally consistent validation-graph snapshot, that is ready to be implemented and tested.**
 
 It does **not** authorize claims of profitability, investment performance, regulatory approval beyond the reviewed scope, product-market fit, durable moat or production reliability beyond the evidence actually contained in the receipts.
