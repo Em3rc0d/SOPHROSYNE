@@ -144,7 +144,7 @@ Counsel cannot reach a sufficiently scoped conclusion from the submitted materia
 
 ## 8. Frozen outputs on closure
 
-A PASS/CONDITIONAL receipt must freeze:
+A `CLOSED_PASS` or `CLOSED_CONDITIONAL` receipt must freeze:
 
 ```yaml
 RegulatoryFlowProfile_version:
