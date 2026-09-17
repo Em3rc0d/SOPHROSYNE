@@ -41,7 +41,33 @@ If evidence forces a material architecture change, the packet returns to `DRAFT`
 
 ---
 
-## Section B — Q01 Regulatory receipt
+## Section B — Q00 Core causal-value receipt
+
+```text
+receipt_ref: PENDING
+receipt_status: PENDING
+validated_intervention_scope: PENDING
+simple_friction_result: PENDING
+memory_ablation_result: PENDING
+hidden_rubric_result: PENDING
+transfer_result: PENDING
+outcome_blind_result: PENDING
+cognitive_cost_result: PENDING
+cheap_substitute_result: PENDING
+minimum_meaningful_effect_met: PENDING
+excluded_components: PENDING
+conditional_constraints: PENDING
+```
+
+Promotion requirement:
+- final state must be `CLOSED_PASS` or `CLOSED_CONDITIONAL`;
+- full-product complexity is not required to pass; Q00 may force a narrower intervention;
+- a failed current configuration cannot be rescued by Q03 willingness-to-pay, Q04 sophistication or Q05 moat narrative;
+- all excluded/deferred components must propagate into the bootstrap profile.
+
+---
+
+## Section C — Q01 Regulatory receipt
 
 ```text
 receipt_ref: PENDING
@@ -63,7 +89,7 @@ Promotion requirement:
 
 ---
 
-## Section C — Q02 Data-rights receipts
+## Section D — Q02 Data-rights receipts
 
 One receipt per initial production `DataUseProfile`.
 
@@ -95,7 +121,7 @@ Promotion requirement:
 
 ---
 
-## Section D — Q03 User-value / WTP bundle
+## Section E — Q03 User-value / WTP bundle
 
 ```text
 behavioral_discovery_receipt: PENDING
@@ -115,11 +141,12 @@ Promotion requirement:
 - objective comprehension/workflow evidence supports the selected product representation;
 - repeat-use evidence exists;
 - pricing evidence is stronger than generic survey enthusiasm;
-- target persona/wedge is frozen from observed results, not preference of the team.
+- target persona/wedge is frozen from observed results, not preference of the team;
+- Q03 evidence is compatible with the intervention scope that survived Q00.
 
 ---
 
-## Section E — Q04 Quant bundle
+## Section F — Q04 Quant bundle
 
 ```text
 baseline_harness_receipt: PENDING
@@ -140,13 +167,14 @@ Promotion requirement:
 - no look-ahead violation;
 - exact cost/accounting semantics frozen;
 - explicit ML include/exclude/defer decision exists;
-- MK1 has no hidden dependency on unvalidated alpha.
+- MK1 has no hidden dependency on unvalidated alpha;
+- Q04 complexity cannot override Q00 causal-value conclusions.
 
 A valid packet may explicitly contain `ml_decision: EXCLUDE`.
 
 ---
 
-## Section F — Q05 Moat bundle
+## Section G — Q05 Moat bundle
 
 ```text
 competitive_task_receipt: PENDING
@@ -161,13 +189,14 @@ next_evidence_horizon: PENDING
 
 Promotion requirement:
 - either a candidate durable advantage has supporting evidence;
-- or Q05 is `CLOSED_CONDITIONAL` with MK1 explicitly framed as a learning wedge and scale spend blocked.
+- or Q05 is `CLOSED_CONDITIONAL` with MK1 explicitly framed as a learning wedge and scale spend blocked;
+- no component removed or weakened by Q00 may still be presented as moat.
 
 Weak moat evidence does not necessarily kill MK1; it blocks pretending that defensibility has been proven.
 
 ---
 
-## Section G — Cross-receipt contradiction log
+## Section H — Cross-receipt contradiction log
 
 Every contradiction gets an ID.
 
@@ -186,20 +215,23 @@ contradictions:
 Packet cannot be approved while a P0/P1 contradiction remains `OPEN`.
 
 Examples:
+- Q03 willingness-to-pay depends on complexity rejected by Q00;
 - user preference depends on personalization prohibited by Q01;
 - preferred data source invalidates unit economics;
 - ML result depends on data use not allowed by Q02;
 - validated wedge conflicts with the currently frozen persona;
-- moat thesis depends on a feature removed during legal re-scope.
+- moat thesis depends on a feature removed during Q00 or legal re-scope.
 
 ---
 
-## Section H — MK1 Bootstrap Profile
+## Section I — MK1 Bootstrap Profile
 
 The exact implementation configuration is copied by reference from the final evidence outputs.
 
 ```text
 profile_id: PENDING
+q00_intervention_scope: PENDING
+q00_excluded_components: PENDING
 regulatory_flow_profile: PENDING
 primary_persona: PENDING
 jtbd: PENDING
@@ -222,18 +254,19 @@ No production implementation is authorized against a vague “latest” configur
 
 ---
 
-## Section I — Architecture impact review
+## Section J — Architecture impact review
 
 Required questions:
 
-1. Did any evidence introduce a new trust boundary?
-2. Did any provider requirement change storage/display/retention architecture?
-3. Did counsel impose a flow constraint that changes API/domain semantics?
-4. Did the validated persona require a new data family or authority level?
-5. Did Q04 add ML into an authoritative path?
-6. Did pricing/entitlements create a new authorization boundary?
-7. Did fallback selection introduce incompatible semantics?
-8. Did any change invalidate an accepted ADR?
+1. Did Q00 remove/require a component that changes system boundaries?
+2. Did any evidence introduce a new trust boundary?
+3. Did any provider requirement change storage/display/retention architecture?
+4. Did counsel impose a flow constraint that changes API/domain semantics?
+5. Did the validated persona require a new data family or authority level?
+6. Did Q04 add ML into an authoritative path?
+7. Did pricing/entitlements create a new authorization boundary?
+8. Did fallback selection introduce incompatible semantics?
+9. Did any change invalidate an accepted ADR?
 
 Output:
 
@@ -248,7 +281,7 @@ A `MATERIAL` result blocks promotion until affected internal nodes are closed ag
 
 ---
 
-## Section J — Final promotion decision
+## Section K — Final promotion decision
 
 Only one final state is allowed.
 
@@ -266,7 +299,7 @@ Evidence invalidates the current product configuration but supports a materially
 
 ### STOP
 
-The current program thesis lacks a viable legal/data/commercial/scientific path after repeated falsification.
+The current program thesis lacks a viable causal/legal/data/commercial/scientific path after repeated falsification.
 
 ---
 
@@ -274,6 +307,7 @@ The current program thesis lacks a viable legal/data/commercial/scientific path 
 
 A promotion reviewer must be able to answer **yes** to all:
 
+- Is Q00 final and promotable for the exact intervention scope entering MK1?
 - Are all Q01–Q05 receipts final and promotable?
 - Are conditional constraints frozen into canonical specs?
 - Are required external authorities actually present where required?
@@ -283,6 +317,7 @@ A promotion reviewer must be able to answer **yes** to all:
 - Is the quant baseline reproducible independently?
 - Is ML explicitly included, excluded or deferred?
 - Is the selected persona/wedge supported by observed behavior?
+- Are Q03/Q05 conclusions compatible with Q00 exclusions/conditions?
 - Are unit-economics assumptions synchronized with provider/pricing evidence?
 - Are all P0/P1 contradictions resolved?
 - Does the bootstrap profile identify one exact build configuration?
@@ -297,6 +332,6 @@ If any answer is no, the packet is not approved.
 
 An approved packet authorizes only the following statement:
 
-> **SOPHROSYNE MK1 has an evidence-backed, legally/data-rights-scoped, scientifically reproducible candidate configuration that is ready to be implemented and tested.**
+> **SOPHROSYNE MK1 has an evidence-backed, causally tested, legally/data-rights-scoped and scientifically reproducible candidate configuration that is ready to be implemented and tested.**
 
 It does **not** authorize claims of profitability, investment performance, regulatory approval beyond the reviewed scope, product-market fit, durable moat or production reliability beyond the evidence actually contained in the receipts.
