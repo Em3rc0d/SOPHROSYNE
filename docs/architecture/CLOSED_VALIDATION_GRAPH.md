@@ -8,7 +8,7 @@ The objective is not to claim impossible certainty about markets, users, regulat
 
 > No material uncertainty may remain unmodeled; no material claim may exist without an owner; no owner may declare closure without explicit validators; no validator may be accepted without immutable evidence; and no contradiction may remain local when it invalidates upstream or downstream assumptions.
 
-A node is therefore not considered trustworthy because it was written earlier. It remains trustworthy only while its incoming validation edges remain valid.
+A node is therefore not considered trustworthy because it was written earlier. It remains trustworthy only while its required incoming validation edges remain valid.
 
 ## Two graphs, one system
 
@@ -43,15 +43,15 @@ CERTIFICATION / RELEASE
         v
 RUNTIME OBSERVATION / INCIDENTS
         |
-        +--------------------------+
-                                   |
-                                   v
-                     CONTRADICTION / REOPEN
-                                   |
-                                   +----> THESIS / EVIDENCE / DESIGN
+        v
+CONTRADICTION / REOPEN
+        |
+        +-------------------------> THESIS / EVIDENCE / DESIGN
 ```
 
-There is no terminal semantic state. `CLOSED` means **currently supported by the complete set of required incoming edges**, not permanently true.
+There is no terminal semantic state and no permanently unquestionable root node. Even T0 has a declared reverse/reopen path if a methodological contradiction is demonstrated.
+
+`CLOSED` means **currently supported by the complete set of active `REQUIRED` incoming edges for the declared scope**, not permanently true.
 
 ---
 
@@ -59,7 +59,7 @@ There is no terminal semantic state. `CLOSED` means **currently supported by the
 
 ### Node
 
-A node represents one material proposition, decision, invariant, evidence conclusion, implementation surface, verification obligation or runtime observation.
+A node represents one material proposition, decision, invariant, evidence conclusion, implementation surface, verification obligation, certification state, runtime observation or actual contradiction.
 
 Minimum fields:
 
@@ -67,7 +67,7 @@ Minimum fields:
 node_id: stable-string
 node_type: THESIS | EVIDENCE | DESIGN | PROFILE | IMPLEMENTATION | VERIFICATION | CERTIFICATION | RUNTIME | CONTRADICTION
 owner: canonical-artifact-or-authority
-state: OPEN | CLOSED | CLOSED_CONDITIONAL | PENDING_EVIDENCE | FAILED | REOPENED | RETIRED
+state: OPEN | CLOSED | CLOSED_CONDITIONAL | PENDING_EVIDENCE | REVALIDATION_REQUIRED | FAILED | REOPENED | RETIRED
 scope: explicit bounded scope
 version: immutable semantic version or digest
 content_digest: sha256 canonical content digest
@@ -76,6 +76,8 @@ reopen_triggers: []
 ```
 
 A node without explicit scope is invalid because its closure cannot be bounded.
+
+`CONTRADICTION_REVIEW` as a governance mechanism is a `DESIGN` node. Individual discovered contradictions instantiate `CONTRADICTION` nodes. This prevents conflating the protocol for handling contradictions with an actual contradiction event.
 
 ### Edge
 
@@ -88,6 +90,7 @@ edge_id: stable-string
 from: node_id
 to: node_id
 relation: REQUIRES | VALIDATES | CONSTRAINS | PRODUCES | IMPLEMENTS | TESTS | CERTIFIES | OBSERVES | INVALIDATES | REOPENS
+closure_requirement: REQUIRED | CONDITIONAL | REVERSE_VALIDATION
 state: OPEN | CLOSED | FAILED | SUPERSEDED
 closure_rule: machine-readable-or-canonical-reference
 required_receipts: []
@@ -95,7 +98,38 @@ revalidate_on: []
 edge_digest: sha256 canonical edge digest
 ```
 
-An edge is not decorative documentation. If it is required for a promotable path and remains `OPEN`, the destination cannot be promoted.
+`closure_requirement` has exact semantics:
+
+### `REQUIRED`
+
+The destination cannot be considered closed/promotable while this active edge is not `CLOSED`.
+
+Examples:
+- Q evidence -> MK0 Promotion;
+- Promotion -> Bootstrap;
+- Design contract -> authorized implementation obligation;
+- Verification -> Certification.
+
+### `CONDITIONAL`
+
+The edge becomes a gate only when its declared lifecycle/scope condition becomes active.
+
+Examples:
+- a selected bootstrap profile constraining already-closed generic architecture;
+- runtime observations entering contradiction review only when material runtime evidence exists;
+- Q evidence returning to a thesis layer whose pre-evidence state is intentionally `CLOSED_CONDITIONAL`.
+
+A conditional edge may remain `OPEN` without invalidating an otherwise structurally closed preconditioned node when its condition has not yet activated.
+
+### `REVERSE_VALIDATION`
+
+The edge exists to return verification/evidence upstream, invalidate a prior assumption or reopen a governing proposition. It is mandatory for graph connectivity where specified but is **not** counted as a prerequisite for the target's current closure.
+
+Examples:
+- verification -> design;
+- contradiction review -> thesis/Q/T0.
+
+An edge is not decorative documentation. Its closure requirement tells the validator whether it blocks target closure now, later under a condition, or exists as the return half of a validation cycle.
 
 ### Receipt
 
@@ -125,7 +159,9 @@ bootstrap_profile_digest: sha256 | null
 supersedes_graph_digest: sha256 | null
 ```
 
-The `graph_digest` is recorded in promotion packets, build metadata and applicable acceptance receipts.
+The `graph_digest` is recorded in promotion packets, bootstrap profiles, build metadata and applicable acceptance receipts once Phase 0 deterministic hashing exists.
+
+Before Phase 0 hashing, `graph_version` is authoritative and digest fields use an explicit pending placeholder rather than a fabricated digest.
 
 ---
 
@@ -136,21 +172,24 @@ The `graph_digest` is recorded in promotion packets, build metadata and applicab
 A node is structurally closed only if:
 
 1. it has one canonical owner;
-2. all required incoming edges are present;
-3. every required incoming edge has a closure rule;
+2. every active `REQUIRED` incoming edge is present and `CLOSED`;
+3. every material incoming edge declares `closure_requirement` and a closure rule;
 4. all outgoing material dependencies are declared;
 5. verification/reopen obligations are declared;
-6. no P0/P1 contradiction is unresolved;
+6. no P0/P1 contradiction invalidates its closure path;
 7. its scope and version are immutable for the closure decision;
-8. it is not an orphan in the authoritative graph.
+8. it is not an orphan in the authoritative graph;
+9. required reverse-validation reachability exists where the node is promotable/material.
+
+`CONDITIONAL` and `REVERSE_VALIDATION` edges are evaluated according to their own semantics rather than being incorrectly counted as current target-closing prerequisites.
 
 ### Evidentiary closure
 
-An evidence-dependent node additionally requires valid EvidenceReceipts from the authority/experiment defined by its incoming edges.
+An evidence-dependent node additionally requires valid EvidenceReceipts from the authority/experiment defined by its active required edges.
 
 ### Implementation closure
 
-An implementation node additionally requires acceptance receipts proving conformance to the exact governing design/profile digests.
+An implementation node additionally requires acceptance receipts proving conformance to the exact governing design/profile/graph digests.
 
 ### Operational closure
 
@@ -160,12 +199,12 @@ Operational/certification nodes remain valid only while runtime observations hav
 
 ## No-orphan invariant
 
-Every P0/P1 active node must have:
+Every active P0/P1 node must have:
 
-- at least one incoming edge that explains why it is believed/required; and
-- at least one outgoing edge that explains what it affects or how it is later validated.
+- at least one incoming material edge that explains why it is believed/required **or how it can be reopened/revalidated**; and
+- at least one outgoing material edge that explains what it affects or how it participates in validation.
 
-Exceptions are prohibited for P0/P1 nodes.
+Exceptions are prohibited for P0/P1 nodes, including the methodological root. There is no P0/P1 “genesis node” exempt from scrutiny.
 
 Lower-materiality leaf artifacts may be explicitly marked `NON_AUTHORITATIVE_LEAF`, but such artifacts cannot authorize product behavior.
 
@@ -181,6 +220,7 @@ proposition
   -> implementation obligation
   -> verification obligation
   -> receipt/runtime observation
+  -> contradiction/revalidation route
   -> validates or reopens proposition
 ```
 
@@ -194,7 +234,7 @@ This is how MK0 can close architecture without pretending MK1 tests have already
 
 Forward traceability is insufficient.
 
-Every material design edge must have a declared reverse-validation path.
+Every material promotable decision must have a declared reverse-validation path.
 
 Example:
 
@@ -206,13 +246,15 @@ DATA_TIME_SEMANTICS
     --VALIDATES---> DATA_TIME_SEMANTICS
 ```
 
-If the anti-leakage receipt fails, the system may initially suspect implementation. If repeated conforming implementations fail because the design assumption itself is invalid, the reverse path reopens the design node through the contradiction protocol.
+If the anti-leakage receipt fails, the system may initially suspect implementation. If a conforming implementation exposes a false/insufficient design assumption, the reverse path opens a contradiction and reopens the affected design node.
+
+The return path is not allowed to become a circular authority argument: downstream evidence does not prove itself. It only validates/reopens a separately owned upstream proposition against independently defined criteria.
 
 ---
 
 ## Contradiction propagation
 
-A contradiction is a first-class node, never an informal comment.
+A discovered contradiction is a first-class node, never an informal comment.
 
 ```yaml
 node_type: CONTRADICTION
@@ -225,12 +267,13 @@ resolution_state: OPEN | RESOLVED_IMPLEMENTATION | RESOLVED_DESIGN | RESOLVED_EV
 For P0/P1 contradictions:
 
 1. promotion/build/release through affected paths freezes;
-2. all directly invalidated edges become `FAILED`;
-3. affected descendants are marked `REVALIDATION_REQUIRED`;
+2. directly invalidated edges become `FAILED` or otherwise non-promotable;
+3. affected descendants become `REVALIDATION_REQUIRED` where applicable;
 4. reverse-validation paths identify candidate upstream nodes;
 5. the smallest semantically sufficient cut set is reopened;
 6. new evidence/ADR/version closes the cut set;
-7. descendants are revalidated transitively.
+7. descendants are revalidated transitively;
+8. a new graph version represents the repaired state.
 
 The system must prefer targeted reopening over globally discarding unrelated closed nodes.
 
@@ -243,10 +286,12 @@ Given invalidated node/edge `x`:
 1. locate all active incoming/outgoing edges of `x`;
 2. classify whether failure is implementation, evidence, scope, design or external-authority failure;
 3. compute affected transitive dependents until reaching independently validated boundaries;
-4. reopen every node whose closure depended on a failed edge;
-5. preserve unaffected nodes and all historical receipts;
-6. issue a new graph version after repair;
-7. invalidate any receipt bound to obsolete node/edge/graph digests where `revalidate_on` applies.
+4. reopen every node whose closure depended on a failed `REQUIRED` edge;
+5. evaluate `CONDITIONAL` edges whose activation condition is now true;
+6. follow `REVERSE_VALIDATION` paths to candidate upstream propositions;
+7. preserve unaffected nodes and all historical receipts;
+8. issue a new graph version after repair;
+9. invalidate any receipt bound to obsolete node/edge/graph digests where `revalidate_on` applies.
 
 Historical graph snapshots are immutable.
 
@@ -313,6 +358,8 @@ Revalidate / Narrow / Reopen / Retire
 
 No phase can use later success to retroactively erase earlier failure.
 
+The methodological invariant T0 itself has a `REVERSE_VALIDATION` reopen edge from contradiction review. SOPHROSYNE therefore does not make its own epistemic method unfalsifiable.
+
 ---
 
 ## Required subcycles
@@ -365,6 +412,16 @@ FAILURE_DEGRADATION -> jobs/runtime -> failure injection + SLO receipts -> incid
 Q04/VALIDATION_PROTOCOL -> research engine -> reproducible experiment -> observed OOS result/drift -> Q04/model lifecycle -> VALIDATION_PROTOCOL
 ```
 
+### Method cycle
+
+```text
+T0 evidence-over-conviction method
+  -> falsifiable thesis/evidence architecture
+  -> downstream contradiction detection
+  -> methodological contradiction review
+  -> T0 reopen if method itself is shown insufficient
+```
+
 ---
 
 ## Graph validity rules
@@ -374,12 +431,14 @@ A candidate graph is invalid if any of the following is true:
 - duplicate node or edge id;
 - dangling edge endpoint;
 - P0/P1 orphan node;
-- closed node with open required incoming edge;
-- closed edge without closure rule;
+- material edge lacks `closure_requirement`;
+- closed/promotable target has an active `REQUIRED` incoming edge that is not closed;
+- `REVERSE_VALIDATION` edge is incorrectly treated as a target-closing prerequisite;
+- closed edge lacks a closure rule;
 - receipt references stale/missing node or edge digest;
 - promotable node lacks a reverse-validation path;
 - contradiction exists without affected-node/edge links;
-- material semantic change does not produce a new node/artifact version;
+- material semantic change does not produce a new node/artifact/graph version as required;
 - a build/release references a graph digest other than the approved one;
 - an implementation component is not reachable from the approved bootstrap profile;
 - an active runtime surface has no test/receipt path;
@@ -398,13 +457,14 @@ validate(graph_n) -> graph_n
 
 Meaning:
 - no new unresolved contradiction appears;
-- no required edge changes state;
-- no closed node depends on an invalid/stale receipt;
+- no active `REQUIRED` edge changes state;
+- no closed node depends on an invalid/stale required receipt;
+- active `CONDITIONAL` edges are correctly evaluated for current scope;
 - all P0/P1 nodes satisfy structural and applicable evidence/implementation closure;
 - all required reverse-validation paths exist;
 - promotion/build/release gate state is stable.
 
-Any semantic/evidence/runtime change produces `graph_n+1` and closure must be recomputed.
+Any material semantic/evidence/runtime change produces `graph_n+1` and closure must be recomputed.
 
 ---
 
@@ -419,7 +479,7 @@ CVG-001 schema valid
 CVG-002 ids unique
 CVG-003 edge referential integrity
 CVG-004 no P0/P1 orphan nodes
-CVG-005 closed-node incoming-edge closure
+CVG-005 REQUIRED incoming-edge closure for closed/promotable targets
 CVG-006 reverse-validation path exists
 CVG-007 contradiction propagation links complete
 CVG-008 receipt digests match active graph
@@ -430,6 +490,26 @@ CVG-012 graph digest deterministic
 ```
 
 The validator proves graph integrity, not truth of external evidence. Truth still comes from the authority/experiment represented by the receipt.
+
+---
+
+## Pre-build self-red-team result
+
+The first draft of the macro graph failed its own intended invariants before merge:
+
+1. `T0_METHOD` had an outgoing edge but no incoming/reopen edge, making it a P0 orphan under the no-orphan rule.
+2. The first schema referred to “required incoming edges” without a machine-readable field distinguishing required, conditional and reverse-validation edges.
+3. `CONTRADICTION_REVIEW` was initially modeled as a `CONTRADICTION` node even though it is the design mechanism for handling contradiction instances.
+
+Corrections:
+- added `E017 CONTRADICTION_REVIEW -> T0_METHOD` as `REVERSE_VALIDATION`;
+- introduced schema v2 `closure_requirement = REQUIRED | CONDITIONAL | REVERSE_VALIDATION` and classified every macro edge;
+- retyped `CONTRADICTION_REVIEW` as `DESIGN`; actual contradiction events use `CONTRADICTION` nodes;
+- incremented canonical macro graph to `cvg-macro-v2`.
+
+The failed draft remains visible in Git history. It is not rewritten as though the contradiction never existed.
+
+This self-red-team is evidence that “graph closure” itself is subject to the same contradiction/reopen discipline it imposes elsewhere.
 
 ---
 
