@@ -14,6 +14,10 @@ Canonical internal-closure audit: `docs/implementation/INTERNAL_CLOSURE_AUDIT.md
 
 Canonical implementation-verification schema: `docs/implementation/ACCEPTANCE_RECEIPTS.md`.
 
+Canonical thesis layering: `docs/product/THESIS_STACK.md`.
+
+Canonical core causal-value gate: `docs/validation/Q00_CORE_CAUSAL_VALUE.md`.
+
 Canonical external/empirical closure protocol: `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`.
 
 Canonical pre-build experiment template: `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md`.
@@ -28,7 +32,8 @@ Canonical evidence-derived implementation profile: `docs/validation/MK1_BOOTSTRA
 
 | Lock | Status | Canonical artifact |
 |---|---|---|
-| Product thesis / boundaries | CLOSED | `docs/product/PRODUCT_THESIS.md`, `docs/mvp/MK1_SPEC.md` |
+| Product thesis / layered claims | CLOSED | `docs/product/PRODUCT_THESIS.md`, `docs/product/THESIS_STACK.md`, `docs/mvp/MK1_SPEC.md` |
+| Core causal-value falsification method | CLOSED | `docs/validation/Q00_CORE_CAUSAL_VALUE.md` |
 | Domain vocabulary | CLOSED | `docs/architecture/DOMAIN_MODEL.md` |
 | System contracts | CLOSED | `docs/architecture/SYSTEM_CONTRACTS.md` |
 | Runtime topology | CLOSED | `docs/implementation/REFERENCE_ARCHITECTURE.md` |
@@ -65,13 +70,19 @@ A future `SECURITY_READINESS`, `OBSERVABILITY_SLO`, `INCIDENT_DRILL`, `BACKUP_RE
 
 ## External / empirical locks that still block MK1
 
-The authoritative closure semantics for Q01–Q05 are defined by `docs/validation/EVIDENCE_CLOSURE_PROTOCOL.md`.
+### Q00 — Core causal value — FATAL_FOR_CURRENT_CONFIGURATION
+
+Requires preregistered evidence that the candidate intervention produces material incremental decision-process value over competent simple baselines and realistic cheap/free substitutes.
+
+A valid `CLOSED_CONDITIONAL` may narrow the intervention by excluding persistent memory, ML, multimodal complexity or other components.
+
+A failed current configuration cannot be rescued by willingness-to-pay, model sophistication or moat narrative.
 
 ### Q01 — Peru regulatory boundary — FATAL_IF_FAILED
 
 Issue #2.
 
-Requires written qualified Peruvian securities counsel review of the exact frozen product flows/copy.
+Requires written qualified external review of the exact frozen product/commercial flows within the applicable Peru legal surfaces.
 
 Closure authority is external. Self-certification is not allowed.
 
@@ -81,29 +92,27 @@ Issue #3.
 
 Requires authoritative evidence for every initial production `DataUseProfile` covering the intended commercial use.
 
-Unknown rights default to denied.
+Unknown or stale rights default to denied/pending review.
 
 ### Q03 — Willingness to pay / repeat use
 
 Issue #4.
 
-Requires pre-registered behavioral, comprehension, repeat-use and pricing/commitment evidence.
+Requires pre-registered behavioral, comprehension, repeat-use and pricing/commitment evidence compatible with the intervention scope that survives Q00.
 
 Statements of enthusiasm alone do not close the lock.
 
 ### Q04 — Quant baseline / ML incremental value
 
-Issue #5.
-
 Requires a reproducible deterministic baseline harness before any ML promotion decision.
 
-A valid closure may explicitly exclude ML from MK1.
+A valid closure may explicitly exclude ML from MK1. Q04 complexity cannot substitute for Q00 product-value evidence.
 
 ### Q05 — Moat / competitive durability
 
 Issue #6.
 
-Requires preference/repeat-use evidence and a replicability assessment.
+Requires preference/repeat-use evidence and a replicability assessment after core value survives.
 
 A valid conditional closure may authorize MK1 only as a learning wedge while scale architecture/large GTM spend remain blocked.
 
@@ -111,22 +120,11 @@ A valid conditional closure may authorize MK1 only as a learning wedge while sca
 
 ## Evidence lifecycle requirement
 
-Each external / empirical lock must move through the canonical lifecycle:
-
-```text
-OPEN
-  -> PRE_REGISTERED
-  -> EVIDENCE_RUNNING
-  -> REVIEW_READY
-  -> CLOSED_PASS
-     or CLOSED_CONDITIONAL
-     or PIVOT_REQUIRED
-     or STOP_CURRENT_CONFIGURATION
-```
+Each external / empirical lock must follow the canonical validation lifecycle and terminal vocabulary defined by the validation system.
 
 No Q may move directly from `OPEN` to a promotable state without the required immutable `EvidenceReceipt`.
 
-Empirical Q03/Q04/Q05 experiments use `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md` before outcome inspection.
+Empirical Q00/Q03/Q04/Q05 experiments use `experiments/EXPERIMENT_MANIFEST_TEMPLATE.md` before outcome inspection.
 
 ---
 
@@ -135,8 +133,8 @@ Empirical Q03/Q04/Q05 experiments use `experiments/EXPERIMENT_MANIFEST_TEMPLATE.
 To preserve docs-first discipline, **production feature implementation remains blocked**.
 
 Allowed activities:
-- research scripts used strictly to close Q03/Q04/Q05;
-- throwaway/prototype UX used for behavioral/legal review, clearly outside production architecture;
+- research scripts used strictly to close Q00/Q03/Q04/Q05;
+- throwaway/prototype UX used for causal/behavioral/legal review, clearly outside production architecture;
 - provider/legal discovery;
 - infrastructure spikes whose output is evidence/measurement, not production code;
 - test fixture/schema prototyping needed to validate a design assumption;
@@ -150,23 +148,25 @@ These artifacts do not become MK1 production code merely because they are useful
 
 All must be true:
 
-1. Q01 has a final `CLOSED_PASS` or `CLOSED_CONDITIONAL` evidence receipt from the required external authority.
-2. Q02 has a final promotable evidence receipt for every initial production `DataUseProfile`.
-3. Q03 has final promotable evidence supporting the selected persona/JTBD/wedge or canonical product docs have been explicitly pivoted to the supported result.
-4. Q04 baseline-harness validity is reproducibly closed; ML is explicitly `INCLUDE`, `EXCLUDE` or `DEFER`.
-5. Q05 is `CLOSED_PASS` or an explicit `CLOSED_CONDITIONAL` learning-wedge state whose scale constraints are frozen.
-6. Every empirical experiment used for closure was pre-registered before outcome inspection.
-7. Failed/inconclusive evidence remains preserved in the experiment/evidence history.
-8. Initial production provider set and fallback compatibility groups are frozen by Q02 evidence.
-9. Initial exact asset universe and corresponding market-data profile(s) are frozen.
-10. Initial freshness profiles and risk policy version are frozen.
-11. Corporate-action/session/currency semantics for every selected profile are confirmed against actual provider capabilities/fixtures.
-12. Unit-economics assumptions are synchronized with observed pricing evidence and actual provider/compliance cost assumptions.
-13. Cross-receipt contradiction log has no unresolved P0/P1 item.
-14. Architecture impact review finds no unresolved P0/P1 internal contradiction introduced by evidence-driven selections.
-15. `MK0_LOCKS.md` contains no OPEN/PARTIAL evidence item whose outcome would materially change MK1 system boundaries.
-16. One `MK1_BOOTSTRAP_PROFILE` is `APPROVED` and identifies the exact configuration to build.
-17. `docs/validation/MK0_PROMOTION_PACKET.md` is instantiated for the candidate and receives final `APPROVED` status.
+1. Q00 has a final `CLOSED_PASS` or `CLOSED_CONDITIONAL` receipt defining the exact intervention scope and excluded/deferred complexity.
+2. Q01 has a final `CLOSED_PASS` or `CLOSED_CONDITIONAL` evidence receipt from the required external authority.
+3. Q02 has a final promotable evidence receipt for every initial production `DataUseProfile`.
+4. Q03 has final promotable evidence supporting the selected persona/JTBD/wedge and is compatible with Q00 conclusions.
+5. Q04 baseline-harness validity is reproducibly closed; ML is explicitly `INCLUDE`, `EXCLUDE` or `DEFER`.
+6. Q05 is `CLOSED_PASS` or an explicit `CLOSED_CONDITIONAL` learning-wedge state whose scale constraints are frozen.
+7. Every empirical experiment used for closure was pre-registered before outcome inspection.
+8. Failed/inconclusive evidence remains preserved in the experiment/evidence history.
+9. Initial production provider set and fallback compatibility groups are frozen by Q02 evidence.
+10. Initial exact asset universe and corresponding market-data profile(s) are frozen.
+11. Initial freshness profiles and risk policy version are frozen.
+12. Corporate-action/session/currency semantics for every selected profile are confirmed against actual provider capabilities/fixtures.
+13. Unit-economics assumptions are synchronized with observed pricing evidence and actual provider/compliance cost assumptions.
+14. No unit-economics or WTP result is being used to rescue failed Q00 causal value.
+15. Cross-receipt contradiction log has no unresolved P0/P1 item.
+16. Architecture impact review finds no unresolved P0/P1 internal contradiction introduced by evidence-driven selections.
+17. `MK0_LOCKS.md` contains no OPEN/PARTIAL evidence item whose outcome would materially change MK1 system boundaries.
+18. One `MK1_BOOTSTRAP_PROFILE` is `APPROVED` and identifies the exact configuration to build, including Q00-driven exclusions/constraints.
+19. `docs/validation/MK0_PROMOTION_PACKET.md` is instantiated for the candidate and receives final `APPROVED` status.
 
 The internal design graph itself is not a remaining condition: it is already closed. If new evidence materially invalidates an internal decision, that node is explicitly reopened under governance rather than silently changed in code.
 
@@ -207,6 +207,8 @@ In addition to implementation completion:
 - no unresolved P0/P1 defects;
 - user-facing legal copy/terms match the Q01-approved flow profile;
 - production data use matches Q02-approved `DataUseProfile`s;
+- product surface matches the Q00-approved intervention scope;
+- no excluded Q00 component is silently reintroduced;
 - no uncalibrated probability or unsupported performance claim exposed;
 - released semantics still match the approved `MK1_BOOTSTRAP_PROFILE`.
 
@@ -233,6 +235,6 @@ A UI screen backed by mock data is not a completed vertical slice.
 
 ## Stop rule
 
-If new evidence invalidates product, legal, data-rights, quant or an internal architectural assumption, **stop and update the graph before coding around the contradiction**.
+If new evidence invalidates causal value, product, legal, data-rights, quant or an internal architectural assumption, **stop and update the graph before coding around the contradiction**.
 
 The purpose of this gate is not to eliminate all uncertainty—impossible in a real system—but to ensure no known high-impact decision is deferred accidentally into implementation and no validated configuration is silently replaced during build.
