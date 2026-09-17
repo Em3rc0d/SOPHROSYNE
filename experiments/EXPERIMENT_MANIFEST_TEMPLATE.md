@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Every empirical MK0 experiment that may close or materially influence Q03, Q04 or Q05 must be pre-registered before outcome data are inspected.
+Every empirical MK0 experiment that may close or materially influence Q00, Q03, Q04 or Q05 must be pre-registered before outcome data are inspected.
 
 This template is designed to prevent post-hoc metric changes, cherry-picking and ambiguous promotion decisions.
 
@@ -39,6 +39,7 @@ question:
 ```
 
 Examples of acceptable questions:
+- Does the full candidate intervention add material decision-process value beyond competent simple baselines?
 - Does Translator View improve objective comprehension while preserving confidence calibration versus the comparison workflow?
 - Does the deterministic benchmark harness reproduce point-in-time results under the frozen cost model?
 - Does an ML candidate add robust out-of-sample value versus the strongest eligible transparent baseline?
