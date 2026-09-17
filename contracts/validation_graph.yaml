@@ -1,0 +1,299 @@
+graph_version: cvg-macro-v1
+schema: contracts/validation_graph.schema.yaml
+status: STRUCTURALLY_CLOSED_PREBUILD
+nodes_digest: PENDING_PHASE0_HASH
+edges_digest: PENDING_PHASE0_HASH
+graph_digest: PENDING_PHASE0_HASH
+supersedes_graph_digest: null
+
+nodes:
+  - node_id: T0_METHOD
+    node_type: THESIS
+    owner: docs/product/THESIS_STACK.md
+    state: CLOSED
+    scope: evidence-over-conviction methodology
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [methodological_contradiction]
+
+  - node_id: T1_T5_THESIS
+    node_type: THESIS
+    owner: docs/product/THESIS_STACK.md
+    state: CLOSED_CONDITIONAL
+    scope: layered problem, causal, product, economic and defensibility claims
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [q_failure, runtime_outcome_contradiction]
+
+  - node_id: Q00_Q05
+    node_type: EVIDENCE
+    owner: docs/validation/
+    state: PENDING_EVIDENCE
+    scope: causal, regulatory, data-rights, demand, quant and defensibility evidence
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [new_authoritative_evidence, experiment_replication_failure]
+
+  - node_id: MK0_PROMOTION
+    node_type: PROFILE
+    owner: docs/validation/MK0_PROMOTION_PACKET.md
+    state: OPEN
+    scope: exact configuration eligible for MK1 promotion
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [q_receipt_invalidation, contradiction]
+
+  - node_id: MK1_BOOTSTRAP
+    node_type: PROFILE
+    owner: docs/validation/MK1_BOOTSTRAP_PROFILE.md
+    state: OPEN
+    scope: evidence-derived configuration allowed to build
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [material_profile_change, graph_change]
+
+  - node_id: DESIGN_CONTRACTS
+    node_type: DESIGN
+    owner: docs/architecture/ + docs/implementation/
+    state: CLOSED
+    scope: product, domain, runtime, data, API, async, security, test and operations contracts
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [evidence_invalidates_design, implementation_proves_contract_impossible]
+
+  - node_id: CVG_CONTRACT
+    node_type: DESIGN
+    owner: docs/architecture/CLOSED_VALIDATION_GRAPH.md
+    state: CLOSED
+    scope: graph closure, edge, digest, contradiction and reopen semantics
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [graph_integrity_failure, governance_contradiction]
+
+  - node_id: IMPLEMENTATION
+    node_type: IMPLEMENTATION
+    owner: future MK1 build
+    state: OPEN
+    scope: only components reachable from approved MK1 bootstrap profile
+    version: pending
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [design_change, profile_change, failed_receipt]
+
+  - node_id: VERIFICATION
+    node_type: VERIFICATION
+    owner: docs/implementation/ACCEPTANCE_RECEIPTS.md
+    state: OPEN
+    scope: contract, security, replay, leakage, rights, reliability and release verification
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [build_change, config_change, provider_change, contract_change]
+
+  - node_id: CERTIFICATION
+    node_type: CERTIFICATION
+    owner: BUILD_READINESS + beta/release gates
+    state: OPEN
+    scope: promotion and release authorization
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [receipt_invalidation, incident, material_change]
+
+  - node_id: RUNTIME_OBSERVATION
+    node_type: RUNTIME
+    owner: observability + incident + drift receipts
+    state: OPEN
+    scope: production/staging observations relevant to assumptions and guarantees
+    version: pending
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [incident, drift, stale_assumption]
+
+  - node_id: CONTRADICTION_REVIEW
+    node_type: CONTRADICTION
+    owner: GOVERNANCE.md + contradiction protocol
+    state: CLOSED
+    scope: detection, propagation and targeted reopening semantics
+    version: v1
+    content_digest: PENDING_PHASE0_HASH
+    materiality: P0
+    reopen_triggers: [unhandled_contradiction_class]
+
+edges:
+  - edge_id: E001
+    from: T0_METHOD
+    to: T1_T5_THESIS
+    relation: CONSTRAINS
+    state: CLOSED
+    closure_rule: thesis claims must remain falsifiable and evidence-bounded
+    required_receipts: []
+    revalidate_on: [thesis_semantic_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E002
+    from: T1_T5_THESIS
+    to: Q00_Q05
+    relation: REQUIRES
+    state: CLOSED
+    closure_rule: every material thesis layer maps to explicit validation/kill criteria
+    required_receipts: [EvidenceReceipt]
+    revalidate_on: [thesis_semantic_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E003
+    from: Q00_Q05
+    to: MK0_PROMOTION
+    relation: VALIDATES
+    state: OPEN
+    closure_rule: promotable evidence receipts and no unresolved P0/P1 contradiction
+    required_receipts: [EvidenceReceipt]
+    revalidate_on: [new_authoritative_evidence, experiment_replication_failure]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E004
+    from: MK0_PROMOTION
+    to: MK1_BOOTSTRAP
+    relation: PRODUCES
+    state: OPEN
+    closure_rule: approved promotion packet freezes one exact buildable profile
+    required_receipts: []
+    revalidate_on: [promotion_packet_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E005
+    from: MK1_BOOTSTRAP
+    to: DESIGN_CONTRACTS
+    relation: CONSTRAINS
+    state: OPEN
+    closure_rule: selected profile must fit closed architecture or explicitly reopen affected design
+    required_receipts: []
+    revalidate_on: [material_profile_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E006
+    from: DESIGN_CONTRACTS
+    to: IMPLEMENTATION
+    relation: IMPLEMENTS
+    state: CLOSED
+    closure_rule: implementation may choose mechanisms only inside frozen semantics
+    required_receipts: []
+    revalidate_on: [design_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E007
+    from: CVG_CONTRACT
+    to: IMPLEMENTATION
+    relation: CONSTRAINS
+    state: CLOSED
+    closure_rule: implementation/build metadata must bind to approved graph digest
+    required_receipts: [GRAPH_CONFORMANCE]
+    revalidate_on: [graph_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E008
+    from: IMPLEMENTATION
+    to: VERIFICATION
+    relation: TESTS
+    state: OPEN
+    closure_rule: every active P0/P1 runtime surface has a mapped mandatory verification path
+    required_receipts: [AcceptanceReceipt]
+    revalidate_on: [build_change, config_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E009
+    from: VERIFICATION
+    to: CERTIFICATION
+    relation: CERTIFIES
+    state: OPEN
+    closure_rule: all gate-required receipts are current PASS for exact build/profile/graph digests
+    required_receipts: [AcceptanceReceipt]
+    revalidate_on: [receipt_invalidation]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E010
+    from: CERTIFICATION
+    to: RUNTIME_OBSERVATION
+    relation: PRODUCES
+    state: OPEN
+    closure_rule: certified release emits required operational telemetry and drift/incident evidence
+    required_receipts: [OBSERVABILITY_SLO, INCIDENT_DRILL]
+    revalidate_on: [release_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E011
+    from: RUNTIME_OBSERVATION
+    to: CONTRADICTION_REVIEW
+    relation: OBSERVES
+    state: OPEN
+    closure_rule: material runtime evidence is evaluated against active assumptions/guarantees
+    required_receipts: []
+    revalidate_on: [runtime_material_event]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E012
+    from: CONTRADICTION_REVIEW
+    to: T1_T5_THESIS
+    relation: REOPENS
+    state: CLOSED
+    closure_rule: contradictions propagate to smallest sufficient upstream cut set
+    required_receipts: []
+    revalidate_on: [contradiction_protocol_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E013
+    from: CONTRADICTION_REVIEW
+    to: Q00_Q05
+    relation: REOPENS
+    state: CLOSED
+    closure_rule: new conflicting evidence reopens affected evidence locks/profile fields
+    required_receipts: []
+    revalidate_on: [contradiction_protocol_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E014
+    from: VERIFICATION
+    to: DESIGN_CONTRACTS
+    relation: VALIDATES
+    state: CLOSED
+    closure_rule: acceptance evidence returns to governing design; design reopens only when failure is semantic rather than implementation defect
+    required_receipts: [AcceptanceReceipt]
+    revalidate_on: [contract_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E015
+    from: Q00_Q05
+    to: T1_T5_THESIS
+    relation: VALIDATES
+    state: OPEN
+    closure_rule: empirical/external evidence narrows, supports, pivots or kills exact thesis layers
+    required_receipts: [EvidenceReceipt]
+    revalidate_on: [new_authoritative_evidence, replication_failure]
+    edge_digest: PENDING_PHASE0_HASH
+
+  - edge_id: E016
+    from: DESIGN_CONTRACTS
+    to: CVG_CONTRACT
+    relation: VALIDATES
+    state: CLOSED
+    closure_rule: every closed material design node must be representable with CVG node/edge/reopen semantics
+    required_receipts: [GRAPH_CONFORMANCE]
+    revalidate_on: [design_node_added, design_node_removed, design_semantic_change]
+    edge_digest: PENDING_PHASE0_HASH
+
+fixed_point_rule:
+  condition: validate(active_graph) produces no P0/P1 state transition and no stale required receipt
+  result: STRUCTURALLY_OR_OPERATIONALLY_CLOSED_FOR_SCOPE
+
+phase0_hashing_requirement:
+  replace_pending_hashes: true
+  canonical_serialization: required
+  algorithm: SHA-256
+  ci_check: CVG-012
