@@ -1,4 +1,4 @@
-# SOPHROSYNE Research Prototype v1.2
+# SOPHROSYNE Research Prototype v1.3
 
 ## Status
 
@@ -39,7 +39,7 @@ Formal Q00 execution must freeze the assigned arm before observation; the UAT sw
 
 ## Version
 
-`research-prototype-v1.2.0`
+`research-prototype-v1.3.0`
 
 ## Verification
 
@@ -48,8 +48,30 @@ Formal Q00 execution must freeze the assigned arm before observation; the UAT sw
 - no external JavaScript dependencies
 - no backend/API dependencies
 
-## UAT v1.2
+## UAT v1.3
 
 - Spanish-facing copy normalized.
 - Active depth is explicit and states that more detail does not imply more certainty.
 - Canonical internal event/field names remain stable for research export compatibility.
+
+
+## Automated verification
+
+`verify.mjs` enforces the research boundary without relying on manual QA:
+- no live-trading or personalized-recommendation surface;
+- no external JavaScript;
+- research arms remain present;
+- novice quick summary remains present;
+- progressive disclosure remains present;
+- Q03-compatible core research events remain present;
+- JavaScript syntax parses;
+- the tested artifact SHA-256 is printed by the verifier.
+
+The GitHub Actions workflow `.github/workflows/research-prototype-smoke.yml` runs this verifier on research-branch changes.
+
+## UAT v1.3
+
+- research controls moved behind progressive disclosure so they do not dominate the product experience;
+- beginner-first 20-second summary added: known / missing / responsible reading;
+- deeper levels remain available without changing the conclusion state;
+- reviewer authority split is documented in `UAT_BOUNDARY.md`.
