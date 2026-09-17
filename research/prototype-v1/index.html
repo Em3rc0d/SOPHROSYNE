@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="SOPHROSYNE pre-MK0 research prototype for evidence-based market understanding." />
-  <title>SOPHROSYNE — Research Prototype</title>
+  <meta name="description" content="Prototipo pre-MK0 de SOPHROSYNE para comprensión de mercado basada en evidencia." />
+  <title>SOPHROSYNE — Prototipo de investigación</title>
   <style>
 :root {
   --bg: #0a0d12;
@@ -251,9 +251,9 @@ button.full { width: 100%; }
       <div class="sidebar-section">
         <div class="eyebrow">Modo de prueba</div>
         <div class="mode-switcher" id="modeSwitcher" aria-label="Cambiar modo de prueba">
-          <button type="button" data-arm="full">FULL</button>
-          <button type="button" data-arm="friction">FRICTION</button>
-          <button type="button" data-arm="raw">RAW</button>
+          <button type="button" data-arm="full">COMPLETO</button>
+          <button type="button" data-arm="friction">CHECKLIST</button>
+          <button type="button" data-arm="raw">CRUDO</button>
         </div>
         <p class="small muted">Control libre para UAT. En una ejecución formal, el modo queda congelado por protocolo.</p>
       </div>
@@ -262,7 +262,7 @@ button.full { width: 100%; }
         <nav id="scenarioNav" class="scenario-nav"></nav>
       </div>
       <div class="sidebar-section ledger-shortcut">
-        <div class="eyebrow">Decision Ledger</div>
+        <div class="eyebrow">Historial de decisiones</div>
         <div class="ledger-count"><span id="ledgerCount">0</span> registros locales</div>
         <button class="secondary full" id="openLedgerBtn" type="button">Ver historial</button>
       </div>
@@ -303,11 +303,11 @@ button.full { width: 100%; }
         </div>
       </section>
 
-      <section id="rawArm" class="arm-view hidden" aria-label="Raw information control">
+      <section id="rawArm" class="arm-view hidden" aria-label="Control de información sin estructura">
         <div class="panel">
           <div class="panel-head">
             <div>
-              <div class="eyebrow">Arm A · Raw information</div>
+              <div class="eyebrow">Brazo A · Información sin estructura</div>
               <h2>Contexto sin estructura</h2>
             </div>
           </div>
@@ -315,11 +315,11 @@ button.full { width: 100%; }
         </div>
       </section>
 
-      <section id="frictionArm" class="arm-view hidden" aria-label="Five question friction baseline">
+      <section id="frictionArm" class="arm-view hidden" aria-label="Línea base de cinco preguntas">
         <div class="panel">
           <div class="panel-head">
             <div>
-              <div class="eyebrow">Arm C · Simple friction</div>
+              <div class="eyebrow">Brazo C · Checklist simple</div>
               <h2>Checklist de cinco preguntas</h2>
             </div>
           </div>
@@ -327,18 +327,19 @@ button.full { width: 100%; }
         </div>
       </section>
 
-      <section id="fullArm" class="arm-view hidden" aria-label="Full SOPHROSYNE candidate">
+      <section id="fullArm" class="arm-view hidden" aria-label="Candidato SOPHROSYNE completo">
         <div class="depth-tabs" role="tablist" aria-label="Profundidad de evidencia">
-          <button class="depth-tab active" data-depth="beginner" role="tab" aria-selected="true">Beginner</button>
-          <button class="depth-tab" data-depth="investor" role="tab" aria-selected="false">Investor</button>
+          <button class="depth-tab active" data-depth="beginner" role="tab" aria-selected="true">Básico</button>
+          <button class="depth-tab" data-depth="investor" role="tab" aria-selected="false">Inversor</button>
           <button class="depth-tab" data-depth="trader" role="tab" aria-selected="false">Trader</button>
-          <button class="depth-tab" data-depth="quant" role="tab" aria-selected="false">Quant</button>
+          <button class="depth-tab" data-depth="quant" role="tab" aria-selected="false">Cuant</button>
         </div>
+        <div class="small muted" id="depthStatus" aria-live="polite">Nivel actual: Básico · más detalle no implica más certeza</div>
 
         <section class="translation panel">
           <div class="panel-head">
             <div>
-              <div class="eyebrow">Market Translator</div>
+              <div class="eyebrow">Traductor de mercado</div>
               <h2>¿Qué está pasando?</h2>
             </div>
           </div>
@@ -422,7 +423,7 @@ button.full { width: 100%; }
 
           <div class="form-actions">
             <span class="small muted">No se guarda ninguna orden, broker credential ni dato de cuenta.</span>
-            <button class="primary" type="submit">Guardar en Decision Ledger</button>
+            <button class="primary" type="submit">Guardar en historial</button>
           </div>
         </form>
       </section>
@@ -432,7 +433,7 @@ button.full { width: 100%; }
   <dialog id="ledgerDialog" class="ledger-dialog">
     <div class="dialog-head">
       <div>
-        <div class="eyebrow">Decision Ledger</div>
+        <div class="eyebrow">Historial de decisiones</div>
         <h2>Historial local</h2>
       </div>
       <button class="icon-button" id="closeLedgerBtn" aria-label="Cerrar historial">×</button>
@@ -446,7 +447,7 @@ button.full { width: 100%; }
 (() => {
   'use strict';
 
-  const VERSION = 'research-prototype-v1.1.0';
+  const VERSION = 'research-prototype-v1.2.0';
   const STORAGE_LEDGER = 'sophrosyne.research.ledger.v1';
   const STORAGE_EVENTS = 'sophrosyne.research.events.v1';
   const sessionId = crypto.randomUUID ? crypto.randomUUID() : `session-${Date.now()}`;
@@ -454,10 +455,10 @@ button.full { width: 100%; }
   const scenarios = [
     {
       id: 'SYN-01',
-      family: 'Synthetic replay · trend conflict',
+      family: 'Repetición sintética · conflicto de tendencia',
       title: 'Impulso fuerte, confirmación incompleta',
       question: 'El precio acelera después de varias sesiones positivas, pero parte de la evidencia de confirmación pierde calidad. ¿Qué puede afirmarse rigurosamente con la información disponible?',
-      freshness: 'as_of 14:30 UTC · synthetic',
+      freshness: 'corte 14:30 UTC · sintético',
       state: 'Impulso alcista no confirmado',
       volatility: 'Alta',
       evidenceQuality: 'Mixta',
@@ -467,16 +468,16 @@ button.full { width: 100%; }
         beginner: 'Lo importante no es adivinar el siguiente movimiento: es reconocer que el impulso existe y, al mismo tiempo, que faltan confirmaciones independientes.',
         investor: 'La tesis positiva depende de que el impulso sobreviva sin deteriorar amplitud/liquidez y de que la evidencia macro no introduzca una contradicción material.',
         trader: 'Momentum y expansión de rango son favorables, pero la confirmación por volumen relativo es débil y el cambio de volatilidad aumenta el riesgo de falsa continuidad.',
-        quant: 'Synthetic features: normalized momentum +1.42σ, realized-vol regime 82nd percentile, relative-volume z-score +0.18, breadth proxy deteriorating. No predictive probability is calibrated or displayed.'
+        quant: 'Variables sintéticas: momentum normalizado +1.42σ, régimen de volatilidad realizada en percentil 82, z-score de volumen relativo +0.18 y proxy de amplitud en deterioro. No se calibra ni se muestra ninguna probabilidad predictiva.'
       },
       support: [
-        { title: 'Momentum persistente', meta: 'OBSERVED · current', detail: 'Tres ventanas consecutivas mantienen pendiente positiva; la magnitud está por encima de su rango sintético reciente.' },
-        { title: 'Ruptura del rango previo', meta: 'OBSERVED · current', detail: 'El nivel superior del rango de referencia fue superado y no se reingresó inmediatamente.' },
-        { title: 'Liquidez operativa suficiente', meta: 'OBSERVED · current', detail: 'No aparece un deterioro extremo de profundidad en el snapshot sintético utilizado.' }
+        { title: 'Momentum persistente', meta: 'OBSERVADO · vigente', detail: 'Tres ventanas consecutivas mantienen pendiente positiva; la magnitud está por encima de su rango sintético reciente.' },
+        { title: 'Ruptura del rango previo', meta: 'OBSERVADO · vigente', detail: 'El nivel superior del rango de referencia fue superado y no se reingresó inmediatamente.' },
+        { title: 'Liquidez operativa suficiente', meta: 'OBSERVADO · vigente', detail: 'No aparece un deterioro extremo de profundidad en el corte sintético utilizado.' }
       ],
       oppose: [
-        { title: 'Volumen no confirma', meta: 'OBSERVED · current', detail: 'El volumen relativo permanece cerca de neutral pese a la expansión del precio.' },
-        { title: 'Amplitud deteriorándose', meta: 'OBSERVED · current', detail: 'Menos componentes acompañan el impulso en la ventana sintética de comparación.' }
+        { title: 'Volumen no confirma', meta: 'OBSERVADO · vigente', detail: 'El volumen relativo permanece cerca de neutral pese a la expansión del precio.' },
+        { title: 'Amplitud deteriorándose', meta: 'OBSERVADO · vigente', detail: 'Menos componentes acompañan el impulso en la ventana sintética de comparación.' }
       ],
       uncertainty: 'No sabemos si la expansión está impulsada por información durable o por posicionamiento transitorio. La señal de amplitud además llega con mayor rezago que el precio.',
       invalidator: 'Una pérdida sostenida del rango recuperado, acompañada de deterioro de liquidez y ausencia de confirmación independiente, invalida la hipótesis de continuación robusta.',
@@ -492,29 +493,29 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-02',
-      family: 'Synthetic replay · range',
+      family: 'Repetición sintética · rango',
       title: 'Rebote dentro de un rango, narrativa excesiva',
       question: 'El precio rebota desde la zona inferior de un rango mientras una narrativa externa gana atención. ¿El rebote demuestra un cambio de régimen?',
-      freshness: 'as_of 09:45 UTC · synthetic',
+      freshness: 'corte 09:45 UTC · sintético',
       state: 'Rango vigente',
       volatility: 'Media',
       evidenceQuality: 'Moderada',
-      conclusion: 'WAIT FOR EVIDENCE',
+      conclusion: 'ESPERAR EVIDENCIA',
       translation: 'El rebote es real, pero todavía encaja dentro del rango existente. La narrativa externa puede explicar atención, no causalidad. No hay evidencia suficiente para declarar cambio de régimen.',
       depth: {
         beginner: 'Un rebote no es lo mismo que una nueva tendencia. Aquí el movimiento sigue dentro de límites que ya existían.',
         investor: 'La hipótesis de cambio de régimen necesita evidencia que sobreviva fuera del rango y no dependa sólo de una narrativa correlacionada.',
-        trader: 'La reversión desde soporte es consistente con mean reversion; todavía no hay estructura de máximos/mínimos ni expansión que confirme trend transition.',
-        quant: 'Synthetic range score 0.77, trend-state confidence intentionally not calibrated, mean-reversion distance normalized at -1.1σ before rebound. Narrative item is tagged CORRELATED_NOT_CAUSAL.'
+        trader: 'La reversión desde soporte es consistente con reversión a la media; todavía no hay estructura de máximos/mínimos ni expansión que confirme transición de tendencia.',
+        quant: 'Puntuación sintética de rango 0.77; la confianza del estado de tendencia no está calibrada deliberadamente; distancia de reversión a la media normalizada en -1.1σ antes del rebote. El elemento narrativo está etiquetado como CORRELACIONADO_NO_CAUSAL.'
       },
       support: [
-        { title: 'Reacción en soporte', meta: 'OBSERVED · current', detail: 'La zona inferior del rango produjo una respuesta rápida y medible.' },
-        { title: 'Presión vendedora desacelera', meta: 'OBSERVED · current', detail: 'La magnitud de movimientos negativos disminuye en las últimas observaciones.' },
-        { title: 'Volatilidad estable', meta: 'OBSERVED · current', detail: 'No aparece expansión brusca que invalide por sí sola la lógica de rango.' }
+        { title: 'Reacción en soporte', meta: 'OBSERVADO · vigente', detail: 'La zona inferior del rango produjo una respuesta rápida y medible.' },
+        { title: 'Presión vendedora desacelera', meta: 'OBSERVADO · vigente', detail: 'La magnitud de movimientos negativos disminuye en las últimas observaciones.' },
+        { title: 'Volatilidad estable', meta: 'OBSERVADO · vigente', detail: 'No aparece expansión brusca que invalide por sí sola la lógica de rango.' }
       ],
       oppose: [
-        { title: 'Rango superior intacto', meta: 'OBSERVED · current', detail: 'El precio no supera la frontera que distinguiría rebote de cambio estructural.' },
-        { title: 'Narrativa sin enlace causal', meta: 'ATTRIBUTED · uncertain', detail: 'La coincidencia temporal con una narrativa externa no demuestra que ésta cause el movimiento.' }
+        { title: 'Rango superior intacto', meta: 'OBSERVADO · vigente', detail: 'El precio no supera la frontera que distinguiría rebote de cambio estructural.' },
+        { title: 'Narrativa sin enlace causal', meta: 'ATRIBUIDO · incierto', detail: 'La coincidencia temporal con una narrativa externa no demuestra que ésta cause el movimiento.' }
       ],
       uncertainty: 'La narrativa externa puede influir en posicionamiento, pero no existe evidencia suficiente para estimar su contribución causal. Tampoco sabemos si el rebote sobrevivirá al límite superior del rango.',
       invalidator: 'Una aceptación clara fuera del rango con evidencia de participación consistente obligaría a abandonar la hipótesis puramente mean-reversion.',
@@ -530,10 +531,10 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-03',
-      family: 'Synthetic replay · stale evidence',
+      family: 'Repetición sintética · evidencia desactualizada',
       title: 'Señales favorables con una fuente crítica desactualizada',
       question: 'Varios indicadores son constructivos, pero una fuente importante está stale. ¿Debe mantenerse una conclusión direccional?',
-      freshness: '1 critical source stale · synthetic',
+      freshness: '1 fuente crítica desactualizada · sintético',
       state: 'Constructivo, evidencia incompleta',
       volatility: 'Media-alta',
       evidenceQuality: 'Incompleta',
@@ -542,17 +543,17 @@ button.full { width: 100%; }
       depth: {
         beginner: 'Una señal puede verse bien y aun así no ser suficiente si una pieza importante está desactualizada.',
         investor: 'El problema no es que la fuente stale sea necesariamente negativa, sino que su estado impide afirmar que el conjunto actual de evidencia está completo.',
-        trader: 'Las señales rápidas son constructivas, pero el filtro contextual crítico no tiene freshness válida. Cualquier regla dependiente de ese filtro debe degradar a no-conclusion.',
-        quant: 'Freshness policy marks one critical context input STALE. Candidate deterministic policy therefore fails completeness precondition; no calibrated directional probability is emitted.'
+        trader: 'Las señales rápidas son constructivas, pero el filtro contextual crítico no tiene vigencia válida. Cualquier regla dependiente de ese filtro debe degradar a sin conclusión.',
+        quant: 'La política de vigencia marca una entrada crítica de contexto como DESACTUALIZADA. Por ello, la política determinista candidata no cumple la precondición de completitud y no emite ninguna probabilidad direccional calibrada.'
       },
       support: [
-        { title: 'Estructura de corto plazo mejora', meta: 'OBSERVED · current', detail: 'El patrón sintético de máximos/mínimos mejora en las ventanas recientes.' },
-        { title: 'Momentum sale de zona débil', meta: 'OBSERVED · current', detail: 'La señal normalizada cruza a terreno positivo sin aceleración extrema.' },
-        { title: 'Liquidez no se deteriora', meta: 'OBSERVED · current', detail: 'El proxy de liquidez permanece dentro de límites operativos.' }
+        { title: 'Estructura de corto plazo mejora', meta: 'OBSERVADO · vigente', detail: 'El patrón sintético de máximos/mínimos mejora en las ventanas recientes.' },
+        { title: 'Momentum sale de zona débil', meta: 'OBSERVADO · vigente', detail: 'La señal normalizada cruza a terreno positivo sin aceleración extrema.' },
+        { title: 'Liquidez no se deteriora', meta: 'OBSERVADO · vigente', detail: 'El proxy de liquidez permanece dentro de límites operativos.' }
       ],
       oppose: [
-        { title: 'Fuente crítica stale', meta: 'STALE · blocking', detail: 'El contexto crítico supera la ventana de freshness definida para este escenario.' },
-        { title: 'Confirmación secundaria ausente', meta: 'MISSING · current', detail: 'No existe observación independiente para validar la lectura contextual.' }
+        { title: 'Fuente crítica stale', meta: 'DESACTUALIZADO · bloqueante', detail: 'El contexto crítico supera la ventana de freshness definida para este escenario.' },
+        { title: 'Confirmación secundaria ausente', meta: 'AUSENTE · vigente', detail: 'No existe observación independiente para validar la lectura contextual.' }
       ],
       uncertainty: 'La principal incertidumbre proviene de información no vigente: no sabemos si el contexto crítico sigue siendo compatible con las señales rápidas observadas.',
       invalidator: 'Si la fuente actualizada contradice el contexto constructivo o revela deterioro material, la hipótesis debe degradarse inmediatamente.',
@@ -672,6 +673,8 @@ button.full { width: 100%; }
     $('conclusionState').textContent = s.conclusion;
     $('translationCopy').textContent = s.translation;
     $('depthDetail').textContent = s.depth[activeDepth];
+    const depthLabels = { beginner: 'Básico', investor: 'Inversor', trader: 'Trader', quant: 'Cuant' };
+    $('depthStatus').textContent = `Nivel actual: ${depthLabels[activeDepth]} · más detalle no implica más certeza`;
     $('supportCount').textContent = s.support.length;
     $('opposeCount').textContent = s.oppose.length;
     $('uncertaintyText').textContent = s.uncertainty;
@@ -696,7 +699,7 @@ button.full { width: 100%; }
     $('ledgerCount').textContent = ledger.length;
     const target = $('ledgerList');
     if (!ledger.length) {
-      target.innerHTML = '<div class="empty-state">Todavía no hay Decision Records en este navegador.</div>';
+      target.innerHTML = '<div class="empty-state">Todavía no hay registros de decisión en este navegador.</div>';
       return;
     }
     target.innerHTML = ledger.slice().reverse().map(record => `
@@ -708,7 +711,7 @@ button.full { width: 100%; }
         <p><strong>Lectura:</strong> ${escapeHtml(record.hypothesis)}</p>
         <p><strong>Confianza:</strong> ${record.confidence_pct}%</p>
         <p><strong>Cambio de opinión:</strong> ${escapeHtml(record.change_mind_condition)}</p>
-        <p class="muted">${escapeHtml(record.prototype_version)} · ${escapeHtml(record.arm)} · local only</p>
+        <p class="muted">${escapeHtml(record.prototype_version)} · ${escapeHtml(record.arm)} · solo local</p>
       </article>`).join('');
     target.querySelectorAll('.ledger-record').forEach(node => {
       node.addEventListener('click', () => logEvent('decision_record_revisited', { record_id: node.dataset.recordId }));
@@ -731,6 +734,8 @@ button.full { width: 100%; }
         b.setAttribute('aria-selected', String(selected));
       });
       $('depthDetail').textContent = activeScenario.depth[activeDepth];
+      const labels = { beginner: 'Básico', investor: 'Inversor', trader: 'Trader', quant: 'Cuant' };
+      $('depthStatus').textContent = `Nivel actual: ${labels[activeDepth]} · más detalle no implica más certeza`;
       logEvent('depth_changed', { depth: activeDepth });
     });
   });
@@ -766,7 +771,7 @@ button.full { width: 100%; }
     $('confidenceInput').value = '50';
     $('confidenceValue').textContent = '50%';
     renderLedger();
-    toast('Decision Record añadido al ledger local.');
+    toast('Registro de decisión añadido al historial local.');
   });
 
   document.querySelectorAll('#modeSwitcher [data-arm]').forEach(btn => {
