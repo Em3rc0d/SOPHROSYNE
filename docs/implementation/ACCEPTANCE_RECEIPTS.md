@@ -8,6 +8,8 @@ A **receipt** is immutable evidence that a specific implemented surface was test
 
 Receipts are implementation evidence, not substitutes for design decisions.
 
+Under ADR-0016, applicable receipts also bind to the exact Closed Validation Graph snapshot they validate. A receipt for one graph cannot silently authorize a materially different graph.
+
 ## Common receipt envelope
 
 Every required receipt records at minimum:
@@ -21,6 +23,12 @@ environment: local | ci | staging | production
 build_digest: string | null
 config_version: string | null
 schema_or_contract_version: string | null
+graph_version: string | null
+graph_digest: string | null
+bootstrap_profile_id: string | null
+bootstrap_profile_digest: string | null
+validated_node_ids: []
+validated_edge_ids: []
 executed_at_utc: timestamp
 executed_by: human-or-service-identity
 inputs:
@@ -35,12 +43,14 @@ failures:
     description: string
 waiver:
   adr_or_risk_acceptance: string | null
-expires_at_utc: timestamp | null
+  expires_at_utc: timestamp | null
 revalidate_on:
   - build_change
   - config_change
   - provider_change
   - contract_change
+  - graph_change
+  - bootstrap_profile_change
   - security_boundary_change
 notes: string | null
 ```
@@ -49,14 +59,36 @@ notes: string | null
 
 - `PASS` means every mandatory check for that receipt type passed.
 - `FAIL` blocks the promotion gate that requires the receipt.
-- `WAIVED` is prohibited for P0/P1 integrity, authorization, rights, replay, anti-leakage or immutable-record guarantees.
+- `WAIVED` is prohibited for P0/P1 integrity, authorization, rights, replay, anti-leakage, graph-conformance or immutable-record guarantees.
 - A waiver requires an explicit ADR/risk-acceptance reference and expiry.
 - Receipts are append-only. A later run supersedes; it does not rewrite history.
 - Build-specific receipts must bind to an immutable artifact digest.
 - Provider/data receipts bind to provider capability/schema/data-rights versions where applicable.
+- Graph-bound receipts must reference the exact active `graph_version` and, once Phase 0 hashing exists, the exact `graph_digest`.
+- A receipt whose referenced node/edge digest has changed is stale when its declared `revalidate_on` policy includes that change.
 - A receipt is invalid after any declared `revalidate_on` trigger until a new receipt passes.
 
 ## Required receipt classes
+
+### `GRAPH_CONFORMANCE`
+
+Proves the implementation/release is still reachable from and consistent with the approved Closed Validation Graph.
+
+Mandatory checks:
+- graph schema valid;
+- node and edge ids unique;
+- no dangling edge endpoints;
+- no P0/P1 orphan node in active scope;
+- every closed P0/P1 node has all required incoming edges closed;
+- every promotable P0/P1 proposition has a reverse-validation path;
+- approved bootstrap profile reaches every active implementation surface;
+- every active implementation surface reaches at least one mandatory verification node;
+- verification paths return to their governing proposition/design/evidence node;
+- no unresolved P0/P1 contradiction exists on the release path;
+- build/profile/graph digests agree;
+- canonical graph digest generation is deterministic.
+
+This receipt cannot be waived.
 
 ### `RUNTIME_TOPOLOGY`
 
@@ -208,7 +240,8 @@ Mandatory scenarios before beta:
 - credential compromise/rotation;
 - replay mismatch;
 - database recovery path;
-- rights kill-switch activation.
+- rights kill-switch activation;
+- graph/profile mismatch or stale receipt detection.
 
 For each scenario record detection, containment, recovery, owner, timeline and corrective gaps.
 
@@ -231,6 +264,8 @@ Proves artifact promotion semantics.
 
 Mandatory checks:
 - immutable build digest;
+- active graph/profile digests recorded;
+- `GRAPH_CONFORMANCE` current PASS;
 - SBOM/provenance attached;
 - mandatory tests green;
 - staging uses exact release artifact;
@@ -241,22 +276,24 @@ Mandatory checks:
 
 ### Start MK1 production implementation
 
-No implementation receipt is required to start coding; the evidence gates in `BUILD_READINESS.md` control start readiness.
+No implementation receipt is required to start coding; the evidence gates plus graph-integrity requirements in `BUILD_READINESS.md` control start readiness.
+
+The initial graph is structurally audited before build. Phase 0 then creates executable graph validation and deterministic digests.
 
 ### Complete a vertical slice
 
-Requires the relevant subset of:
-- API contract;
-- provider contract;
-- security checks;
-- failure/degradation;
-- telemetry;
-- migration/persistence checks.
+Requires:
+- current graph/profile traceability;
+- affected node/edge declarations;
+- a valid reverse-validation path;
+- `GRAPH_CONFORMANCE` when the slice changes or instantiates a P0/P1 graph path;
+- the relevant subset of API contract, provider contract, security checks, failure/degradation, telemetry and migration/persistence checks.
 
 ### Beta
 
 Beta requires, at minimum, current PASS receipts for:
 
+- `GRAPH_CONFORMANCE`;
 - `GOLDEN_REPLAY`;
 - `ANTI_LEAKAGE`;
 - `QUANT_ACCOUNTING` for enabled quant surfaces;
@@ -269,10 +306,14 @@ Beta requires, at minimum, current PASS receipts for:
 - `RIGHTS_CONFIGURATION` for commercial data;
 - `CI_RELEASE`.
 
+A later green receipt cannot rescue a fatal failed governing edge elsewhere in the active graph.
+
 ## Ownership
 
 Each receipt type has one accountable implementation owner. Ownership may be one person during MK1, but responsibility must be explicit in the receipt.
 
+`GRAPH_CONFORMANCE` ownership is jointly operational: engineering owns mechanical integrity; semantic owners remain accountable for the truth and scope of the nodes/edges they author.
+
 ## Design-closure consequence
 
-Because receipt schemas, triggers and gate effects are defined here, security, observability and operations no longer remain `CLOSED_FOR_DESIGN`. Their design state is simply `CLOSED`; only execution evidence remains pending.
+Because receipt schemas, triggers, gate effects and graph bindings are defined here, security, observability, operations and graph integrity no longer remain `CLOSED_FOR_DESIGN`. Their design state is simply `CLOSED`; only execution evidence remains pending.
