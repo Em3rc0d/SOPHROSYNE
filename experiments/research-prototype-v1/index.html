@@ -102,6 +102,7 @@ code { color: var(--accent-2); font-size: .92em; }
 .eyebrow { color: var(--dim); text-transform: uppercase; letter-spacing: .13em; font-size: 10px; font-weight: 800; }
 .variant-pill { width: fit-content; border: 1px solid #355447; background: #0e1915; color: var(--accent); border-radius: 999px; padding: 5px 9px; font-size: 11px; font-weight: 800; }
 .mode-switcher { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+.q00-arms { grid-template-columns:1fr; }
 .mode-switcher button { border:1px solid var(--line); background:#0d1512; color:var(--muted); border-radius:8px; padding:8px 6px; font-size:10px; font-weight:800; cursor:pointer; }
 .mode-switcher button.active { color:var(--accent); border-color:#406a57; background:#102019; box-shadow:inset 0 0 0 1px rgba(104,211,158,.08); }
 .research-flow { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; }
@@ -194,6 +195,13 @@ button.ghost:hover { color: var(--text); border-color: var(--line); }
 button.danger:hover { color: var(--danger); border-color: #57343a; }
 button.full { width: 100%; }
 
+.arm-note { margin-top:12px; padding:10px 12px; border:1px solid var(--line-soft); border-radius:10px; color:var(--muted); font-size:11px; line-height:1.45; }
+.arm-note.blocked { border-color:#5b4b2f; background:#17140e; color:#e6d2a8; }
+.memory-box { display:grid; gap:9px; margin-top:16px; }
+.memory-item { border:1px solid var(--line-soft); border-radius:11px; padding:11px 12px; background:#0b1016; color:var(--muted); font-size:12px; line-height:1.45; }
+.outcome-box { display:none; margin-top:14px; border:1px solid #355447; background:#0e1915; border-radius:12px; padding:13px; color:var(--accent-2); font-size:12px; line-height:1.5; }
+.outcome-box.show { display:block; }
+.assignment-badge { display:inline-flex; align-items:center; gap:7px; border:1px solid #355447; background:#0e1915; color:var(--accent); border-radius:999px; padding:6px 9px; font-size:10px; font-weight:800; letter-spacing:.05em; }
 .raw-facts { display: grid; gap: 9px; margin-top: 18px; }
 .raw-fact { padding: 12px; background: #0b1016; border: 1px solid var(--line-soft); border-radius: 10px; color: #c5ced8; font-size: 13px; line-height: 1.5; }
 .friction-list { margin: 18px 0 0; padding-left: 24px; display: grid; gap: 14px; }
@@ -272,12 +280,16 @@ button.full { width: 100%; }
       <details class="research-controls">
         <summary>Controles de investigación</summary>
         <div class="research-controls-body">
-          <div class="mode-switcher" id="modeSwitcher" aria-label="Cambiar modo de prueba">
-            <button type="button" data-arm="full">COMPLETO</button>
-            <button type="button" data-arm="friction">CHECKLIST</button>
-            <button type="button" data-arm="raw">CRUDO</button>
+          <div class="mode-switcher q00-arms" id="modeSwitcher" aria-label="Cambiar brazo de investigación">
+            <button type="button" data-arm="A">A · CRUDO</button>
+            <button type="button" data-arm="B">B · ESTRUCTURA</button>
+            <button type="button" data-arm="C">C · CHECKLIST</button>
+            <button type="button" data-arm="D">D · FEEDBACK</button>
+            <button type="button" data-arm="E">E · MEMORIA CORTA</button>
+            <button type="button" data-arm="F">F · COMPLETO</button>
+            <button type="button" data-arm="G">G · COMPARADOR</button>
           </div>
-          <p class="small muted">Sólo para UAT. En un experimento formal, el brazo queda asignado y congelado.</p>
+          <p class="small muted">UAT libre. Con <code>?arm=F&amp;locked=1</code> el brazo queda bloqueado para rehearsal de protocolo.</p>
         </div>
       </details>
       <div class="sidebar-section">
@@ -292,6 +304,7 @@ button.full { width: 100%; }
     </aside>
 
     <main class="main" id="mainContent">
+      <div><span class="assignment-badge" id="assignmentBadge">Brazo F · COMPLETO · UAT libre</span></div>
       <section class="research-flow" aria-label="Flujo de prueba">
         <div class="flow-step"><strong>1 · Lee</strong>Identifica qué puede afirmarse sin sobreinterpretar.</div>
         <div class="flow-step"><strong>2 · Contrasta</strong>Abre evidencia favorable, contradictoria e incertidumbre.</div>
@@ -331,7 +344,7 @@ button.full { width: 100%; }
         </div>
       </section>
 
-      <section id="rawArm" class="arm-view hidden" aria-label="Control de información sin estructura">
+      <section id="armA" class="arm-view hidden" aria-label="Control de información sin estructura">
         <div class="panel">
           <div class="panel-head">
             <div>
@@ -343,7 +356,57 @@ button.full { width: 100%; }
         </div>
       </section>
 
-      <section id="frictionArm" class="arm-view hidden" aria-label="Línea base de cinco preguntas">
+      <section id="armB" class="arm-view hidden" aria-label="Asistente estructurado sin memoria">
+        <div class="panel">
+          <div class="eyebrow">Brazo B · Asistente estructurado sin memoria</div>
+          <h2>Resumen estructurado, sin historial</h2>
+          <p class="translation-copy" id="structuredSummary"></p>
+          <div class="evidence-grid">
+            <div class="raw-facts" id="structuredSupport"></div>
+            <div class="raw-facts" id="structuredOppose"></div>
+          </div>
+          <div class="arm-note">Sin historial previo ni outcome feedback. Estructura la información de este escenario de forma stateless.</div>
+        </div>
+      </section>
+
+      <section id="armD" class="arm-view hidden" aria-label="Predicción simple y feedback">
+        <div class="panel">
+          <div class="eyebrow">Brazo D · Predicción/confianza/feedback simple</div>
+          <h2>Hechos + predicción simple</h2>
+          <div id="feedbackFacts" class="raw-facts"></div>
+          <label style="margin-top:16px">
+            <span>Clasificación previa al outcome</span>
+            <select id="simplePrediction">
+              <option value="CONTINUATION">Continuación</option>
+              <option value="REVERSAL_RANGE">Reversión / rango</option>
+              <option value="INDETERMINATE">Indeterminado</option>
+            </select>
+          </label>
+          <div class="arm-note">El outcome permanece oculto hasta guardar el registro.</div>
+          <div id="outcomeBox" class="outcome-box"></div>
+        </div>
+      </section>
+
+      <section id="armE" class="arm-view hidden" aria-label="SOPHROSYNE con memoria corta">
+        <div class="panel">
+          <div class="eyebrow">Brazo E · SOPHROSYNE con memoria corta</div>
+          <h2>Contexto reciente limitado a un registro</h2>
+          <div id="shortMemoryContext" class="memory-box"></div>
+          <p class="translation-copy" id="shortMemorySummary"></p>
+          <div class="arm-note">Sólo ve el registro inmediatamente anterior de esta sesión.</div>
+        </div>
+      </section>
+
+      <section id="armG" class="arm-view hidden" aria-label="Comparador convencional">
+        <div class="panel">
+          <div class="eyebrow">Brazo G · Comparador convencional</div>
+          <h2>Workflow convencional congelable</h2>
+          <div id="comparatorFacts" class="raw-facts"></div>
+          <div class="arm-note blocked">UAT proxy solamente. Un run promotable requiere congelar el snapshot/version exacto del comparador externo antes del preregistro.</div>
+        </div>
+      </section>
+
+      <section id="armC" class="arm-view hidden" aria-label="Línea base de cinco preguntas">
         <div class="panel">
           <div class="panel-head">
             <div>
@@ -355,7 +418,12 @@ button.full { width: 100%; }
         </div>
       </section>
 
-      <section id="fullArm" class="arm-view hidden" aria-label="Candidato SOPHROSYNE completo">
+      <section id="armF" class="arm-view hidden" aria-label="Candidato SOPHROSYNE completo">
+        <div class="panel">
+          <div class="eyebrow">Memoria de decisión disponible</div>
+          <h2>Historial relevante de esta sesión</h2>
+          <div id="fullMemoryContext" class="memory-box"></div>
+        </div>
         <div class="depth-tabs" role="tablist" aria-label="Profundidad de evidencia">
           <button class="depth-tab active" data-depth="beginner" role="tab" aria-selected="true">Básico</button>
           <button class="depth-tab" data-depth="investor" role="tab" aria-selected="false">Inversor</button>
@@ -446,6 +514,22 @@ button.full { width: 100%; }
             </label>
           </div>
 
+          <div class="form-row">
+            <label>
+              <span>Carga mental percibida</span>
+              <select id="workloadRating">
+                <option value="1">1 · Muy baja</option>
+                <option value="2">2 · Baja</option>
+                <option value="3" selected>3 · Media</option>
+                <option value="4">4 · Alta</option>
+                <option value="5">5 · Muy alta</option>
+              </select>
+            </label>
+            <label style="align-content:end">
+              <span><input id="helpRequested" type="checkbox" /> Necesité ayuda para entender la tarea</span>
+            </label>
+          </div>
+
           <label>
             <span>¿Qué evidencia concreta te haría cambiar de opinión?</span>
             <input id="changeMindInput" required maxlength="240" placeholder="Ej.: confirmación de ruptura con volumen y evidencia macro no contradictoria." />
@@ -483,9 +567,9 @@ button.full { width: 100%; }
 (() => {
   'use strict';
 
-  const VERSION = 'research-prototype-v1.4.0';
-  const STORAGE_LEDGER = 'sophrosyne.research.ledger.v1';
-  const STORAGE_EVENTS = 'sophrosyne.research.events.v1';
+  const VERSION = 'research-prototype-v2.0.0';
+  const STORAGE_LEDGER = 'sophrosyne.research.ledger.v2';
+  const STORAGE_EVENTS = 'sophrosyne.research.events.v2';
   const sessionId = crypto.randomUUID ? crypto.randomUUID() : `session-${Date.now()}`;
 
   const scenarios = [
@@ -623,9 +707,21 @@ button.full { width: 100%; }
   ];
 
   const qs = new URLSearchParams(location.search);
-  let arm = ['raw', 'friction', 'full'].includes(qs.get('arm')) ? qs.get('arm') : 'full';
+  const ARM_IDS = ['A','B','C','D','E','F','G'];
+  const armLabels = { A:'CRUDO', B:'ESTRUCTURA', C:'CHECKLIST', D:'FEEDBACK', E:'MEMORIA CORTA', F:'COMPLETO', G:'COMPARADOR' };
+  const legacyArmMap = { raw:'A', structured:'B', friction:'C', feedback:'D', short:'E', full:'F', comparator:'G' };
+  const requestedArm = String(qs.get('arm') || 'F');
+  let arm = ARM_IDS.includes(requestedArm.toUpperCase()) ? requestedArm.toUpperCase() : (legacyArmMap[requestedArm] || 'F');
+  const assignmentLocked = qs.get('locked') === '1';
+  const participantId = qs.get('participant') || null;
+  const requestedOrder = String(qs.get('order') || '').split(',').map(x => x.trim()).filter(Boolean);
+  if (requestedOrder.length) {
+    const rank = new Map(requestedOrder.map((id, i) => [id, i]));
+    scenarios.sort((a,b) => (rank.get(a.id) ?? 999) - (rank.get(b.id) ?? 999));
+  }
   let activeScenario = scenarios[0];
   let activeDepth = 'beginner';
+  let scenarioStartedAt = Date.now();
 
   const $ = (id) => document.getElementById(id);
   const ledger = load(STORAGE_LEDGER, []);
@@ -647,7 +743,9 @@ button.full { width: 100%; }
       event_name: eventName,
       event_at: new Date().toISOString(),
       prototype_version: VERSION,
-      arm,
+      arm_id: arm,
+      participant_id: participantId,
+      assignment_locked: assignmentLocked,
       scenario_id: activeScenario?.id || null,
       ...extra
     };
@@ -672,7 +770,9 @@ button.full { width: 100%; }
       btn.innerHTML = `<strong>${scenario.id}</strong><span>${scenario.title}</span>`;
       btn.addEventListener('click', () => {
         activeScenario = scenario;
+        scenarioStartedAt = Date.now();
         renderAll();
+        $('outcomeBox').classList.remove('show');
         logEvent('scenario_opened');
       });
       $('scenarioNav').appendChild(btn);
@@ -728,19 +828,35 @@ button.full { width: 100%; }
     $('uncertaintyText').textContent = s.uncertainty;
     $('invalidatorText').textContent = s.invalidator;
     $('rawFacts').innerHTML = s.rawFacts.map(f => `<div class="raw-fact">${escapeHtml(f)}</div>`).join('');
+    $('feedbackFacts').innerHTML = s.rawFacts.map(f => `<div class="raw-fact">${escapeHtml(f)}</div>`).join('');
+    $('comparatorFacts').innerHTML = [...s.rawFacts, 'Indicadores convencionales visibles sin una capa obligatoria de contradicción/incertidumbre.']
+      .map(f => `<div class="raw-fact">${escapeHtml(f)}</div>`).join('');
+    $('structuredSummary').textContent = s.translation;
+    $('structuredSupport').innerHTML = s.support.map(x => `<div class="raw-fact">A favor · ${escapeHtml(x.title)}</div>`).join('');
+    $('structuredOppose').innerHTML = s.oppose.map(x => `<div class="raw-fact">En contra · ${escapeHtml(x.title)}</div>`).join('');
     $('frictionList').innerHTML = frictionQuestions.map(q => `<li>${escapeHtml(q)}</li>`).join('');
+    $('shortMemorySummary').textContent = s.translation;
+    renderMemoryContexts();
     renderEvidence('supportEvidence', s.support, 'evidence_expanded');
     renderEvidence('opposeEvidence', s.oppose, 'opposing_evidence_opened');
   }
 
+  function renderMemoryContexts() {
+    const records = ledger.filter(r => r.scenario_id !== activeScenario.id);
+    const renderOne = r => `<div class="memory-item"><strong>${escapeHtml(r.scenario_id)}</strong> · ${escapeHtml(processLabels[r.process_action] || r.process_action)} · confianza ${r.confidence_pct}%<br>${escapeHtml(r.hypothesis)}</div>`;
+    $('shortMemoryContext').innerHTML = records.length ? renderOne(records[records.length - 1]) : '<div class="memory-item">Sin contexto previo disponible.</div>';
+    $('fullMemoryContext').innerHTML = records.length ? records.slice(-5).reverse().map(renderOne).join('') : '<div class="memory-item">Sin historial previo disponible.</div>';
+  }
+
   function renderArm() {
-    $('rawArm').classList.toggle('hidden', arm !== 'raw');
-    $('frictionArm').classList.toggle('hidden', arm !== 'friction');
-    $('fullArm').classList.toggle('hidden', arm !== 'full');
+    for (const id of ARM_IDS) $('arm' + id).classList.toggle('hidden', arm !== id);
     document.querySelectorAll('#modeSwitcher [data-arm]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.arm === arm);
       btn.setAttribute('aria-pressed', String(btn.dataset.arm === arm));
+      btn.disabled = assignmentLocked;
     });
+    $('assignmentBadge').textContent = `Brazo ${arm} · ${armLabels[arm]} · ${assignmentLocked ? 'ASIGNACIÓN BLOQUEADA' : 'UAT libre'}`;
+    document.querySelector('.research-controls').classList.toggle('hidden', assignmentLocked);
   }
 
 
@@ -902,6 +1018,11 @@ button.full { width: 100%; }
       hypothesis,
       confidence_pct: confidencePct,
       process_action: processAction,
+      simple_prediction: arm === 'D' ? $('simplePrediction').value : null,
+      workload_rating: Number($('workloadRating').value),
+      help_requested: $('helpRequested').checked,
+      completion_seconds: Math.max(0, Math.round((Date.now() - scenarioStartedAt) / 1000)),
+      arm_exposure_version: VERSION + ':' + arm,
       change_mind_condition: changeCondition,
       data_scope: 'SYNTHETIC/HISTORICAL-STYLE',
       recommendation: null,
@@ -914,8 +1035,19 @@ button.full { width: 100%; }
       record_id: record.record_id,
       confidence_pct: record.confidence_pct,
       process_action: record.process_action,
-      evidence_alignment: alignment
+      evidence_alignment: alignment,
+      completion_seconds: record.completion_seconds,
+      workload_rating: record.workload_rating,
+      help_requested: record.help_requested,
+      simple_prediction: record.simple_prediction
     });
+
+    if (arm === 'D') {
+      const correct = record.simple_prediction === activeScenario.outcomeClass;
+      $('outcomeBox').textContent = `Outcome oculto: ${activeScenario.hiddenOutcome} · clasificación ${correct ? 'coincidente' : 'no coincidente'} con tu predicción previa.`;
+      $('outcomeBox').classList.add('show');
+      logEvent('simple_feedback_revealed', { prediction_correct: correct, outcome_class: activeScenario.outcomeClass });
+    }
 
     e.target.reset();
     $('confidenceInput').value = '50';
@@ -931,15 +1063,16 @@ button.full { width: 100%; }
 
   document.querySelectorAll('#modeSwitcher [data-arm]').forEach(btn => {
     btn.addEventListener('click', () => {
+      if (assignmentLocked) return;
       const nextArm = btn.dataset.arm;
-      if (!['raw', 'friction', 'full'].includes(nextArm) || nextArm === arm) return;
+      if (!ARM_IDS.includes(nextArm) || nextArm === arm) return;
       arm = nextArm;
       const url = new URL(window.location.href);
       url.searchParams.set('arm', arm);
       history.replaceState({}, '', url);
       renderArm();
-      logEvent('research_arm_changed', { arm });
-      toast(`Modo de prueba: ${arm.toUpperCase()}`);
+      logEvent('research_arm_changed', { arm_id: arm });
+      toast(`Brazo de prueba: ${arm} · ${armLabels[arm]}`);
     });
   });
 
@@ -956,7 +1089,9 @@ button.full { width: 100%; }
       exported_at: new Date().toISOString(),
       prototype_version: VERSION,
       session_id: sessionId,
-      arm,
+      participant_id: participantId,
+      arm_id: arm,
+      assignment_locked: assignmentLocked,
       disclaimer: 'NOT_PROMOTABLE_EVIDENCE_UNLESS_RUN_UNDER_FROZEN_PREREGISTERED_PROTOCOL',
       decision_records: ledger,
       events
@@ -986,7 +1121,11 @@ button.full { width: 100%; }
   window.addEventListener('beforeunload', () => logEvent('session_ended'));
 
   renderAll();
-  logEvent('session_started', { user_agent_family: navigator.userAgent.includes('Mobile') ? 'mobile-ish' : 'desktop-ish' });
+  logEvent('session_started', {
+    user_agent_family: navigator.userAgent.includes('Mobile') ? 'mobile-ish' : 'desktop-ish',
+    requested_order: requestedOrder,
+    comparator_g_promotable: false
+  });
 })();
 
   </script>
