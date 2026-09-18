@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sophrosyne.local/schemas/q03-event-v1.json",
+  "title": "SOPHROSYNE Q03 Research Event v1",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_name",
+    "event_schema_version",
+    "occurred_at_utc",
+    "experiment_id",
+    "experiment_version",
+    "session_id",
+    "variant_id",
+    "prototype_version",
+    "prototype_digest",
+    "source",
+    "promotion_geo_class"
+  ],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1 },
+    "event_name": { "type": "string", "minLength": 1 },
+    "event_schema_version": { "const": "q03-research-event-v1" },
+    "occurred_at_utc": { "type": "string", "format": "date-time" },
+    "received_at_utc": { "type": ["string", "null"], "format": "date-time" },
+    "experiment_id": { "type": "string", "minLength": 1 },
+    "experiment_version": { "type": "string", "minLength": 1 },
+    "participant_id": { "type": ["string", "null"] },
+    "session_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": ["string", "null"] },
+    "variant_id": { "type": "string", "enum": ["A","B","C","D","E","F","G","T"] },
+    "prototype_version": { "type": "string", "minLength": 1 },
+    "prototype_digest": { "type": "string", "minLength": 1 },
+    "source": { "type": "string", "enum": ["UI","MODERATOR","SYSTEM"] },
+    "recruitment_cohort": { "type": ["string", "null"] },
+    "promotion_geo_class": { "type": "string", "enum": ["PERU_ELIGIBLE","NON_PERU_EXPLORATORY","UNKNOWN"] }
+  },
+  "additionalProperties": true
+}
