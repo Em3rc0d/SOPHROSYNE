@@ -1,8 +1,0 @@
-{
-  "name": "sophrosyne-pre-mk0-research-v1",
-  "private": true,
-  "version": "1.0.0",
-  "scripts": {
-    "test": "node prototype.test.mjs"
-  }
-}
