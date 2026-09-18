@@ -239,7 +239,19 @@ observation_window_days: 14
 promotion_geography: Peru primary or explicit Peru-confirmation stratum
 ```
 
-Participants may receive onboarding and neutral availability reminders. A session entered directly from a reminder within the pre-registered attribution window is **not** counted as an unprompted revisit.
+Canonical candidate longitudinal semantics are defined in `experiments/q03/Q03_14_DAY_RUNBOOK.md`.
+
+Candidate freeze:
+- study timezone: `America/Lima`;
+- day 0–6: no reminders;
+- day 8: one neutral reminder;
+- day 12 reminder: disabled by default unless activated before preregistration;
+- 0–24h after reminder: `PROMPTED`;
+- 24–48h: `AMBIGUOUS`;
+- >=48h or before first reminder: eligible `UNPROMPTED`;
+- same-session repeated record openings never count as `decision_record_revisited`.
+
+These rules remain candidates until Q01 consent/privacy authority and independent pre-outcome review are complete.
 
 ## Prototype boundary
 
