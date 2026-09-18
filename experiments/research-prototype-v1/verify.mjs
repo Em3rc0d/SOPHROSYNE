@@ -37,17 +37,28 @@ assert('low-information guard present', html.includes('decision_record_rejected_
 assert('explicit evidence divergence guard present', html.includes('evidence_alignment') && html.includes('divergenceAck'));
 assert('internal process labels mapped for display', html.includes('processLabels'));
 assert('confidence semantics clarified', html.includes('No es una probabilidad de que el mercado suba o baje'));
-assert('Q03-compatible core events', [
+assert('Q03/Q05 canonical core events', [
   'session_started',
-  'evidence_expanded',
+  'task_started',
+  'task_answer_submitted',
+  'evidence_item_opened',
   'opposing_evidence_opened',
   'uncertainty_opened',
   'invalidation_opened',
+  'decision_record_opened',
   'decision_record_created',
   'decision_record_revisited',
+  'component_eligible',
+  'component_exposed',
+  'component_used',
   'session_ended'
 ].every(x => html.includes(x)));
-assert('v2.0 version frozen', html.includes('research-prototype-v2.0.0'));
+assert('revisit requires prior session identity', html.includes('created_session_id') && html.includes("record.created_session_id !== sessionId"));
+assert('event envelope includes canonical identity fields', [
+  'event_schema_version','occurred_at_utc','experiment_id','experiment_version',
+  'task_id','variant_id','prototype_digest','promotion_geo_class'
+].every(x => html.includes(x)));
+assert('v2.1 version frozen', html.includes('research-prototype-v2.1.0'));
 
 const matches = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
 assert('exactly one inline application script', matches.length === 1);
