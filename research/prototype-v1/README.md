@@ -1,4 +1,4 @@
-# SOPHROSYNE Research Prototype v1.3
+# SOPHROSYNE Research Prototype v1.4
 
 ## Status
 
@@ -39,7 +39,7 @@ Formal Q00 execution must freeze the assigned arm before observation; the UAT sw
 
 ## Version
 
-`research-prototype-v1.3.0`
+`research-prototype-v1.4.0`
 
 ## Verification
 
@@ -48,7 +48,7 @@ Formal Q00 execution must freeze the assigned arm before observation; the UAT sw
 - no external JavaScript dependencies
 - no backend/API dependencies
 
-## UAT v1.3
+## UAT v1.4
 
 - Spanish-facing copy normalized.
 - Active depth is explicit and states that more detail does not imply more certainty.
@@ -69,9 +69,25 @@ Formal Q00 execution must freeze the assigned arm before observation; the UAT sw
 
 The GitHub Actions workflow `.github/workflows/research-prototype-smoke.yml` runs this verifier on research-branch changes.
 
-## UAT v1.3
+## UAT v1.4
 
 - research controls moved behind progressive disclosure so they do not dominate the product experience;
 - beginner-first 20-second summary added: known / missing / responsible reading;
 - deeper levels remain available without changing the conclusion state;
 - reviewer authority split is documented in `UAT_BOUNDARY.md`.
+
+
+## UAT v1.4
+
+The novice UAT intentionally attempted a high-confidence, action-like, low-information record. That exposed a research-integrity defect.
+
+v1.4 adds:
+- explicit confidence semantics: confidence in the interpretation, not a market probability;
+- low-information/repetitive record rejection;
+- explicit detection of a stronger user posture when the evidence state remains cautious;
+- an acknowledgment step that preserves user agency while making the divergence visible;
+- `system_conclusion` and `evidence_alignment` fields in new records;
+- human-readable labels in the ledger instead of leaking internal enum values;
+- extreme-confidence instrumentation for later calibration review.
+
+These are implementation/research controls only. They do not make the prototype promotable evidence.
