@@ -26,6 +26,10 @@ assert('novice quick summary present', ['quickKnown','quickMissing','quickTakeaw
 assert('progressive depth preserved', ['data-depth="beginner"','data-depth="investor"','data-depth="trader"','data-depth="quant"'].every(x => html.includes(x)));
 assert('detail does not imply certainty', html.includes('más detalle no implica más certeza'));
 assert('local-only persistence boundary', html.includes('localStorage'));
+assert('low-information guard present', html.includes('decision_record_rejected_low_information') && html.includes('looksLowInformation'));
+assert('explicit evidence divergence guard present', html.includes('evidence_alignment') && html.includes('divergenceAck'));
+assert('internal process labels mapped for display', html.includes('processLabels'));
+assert('confidence semantics clarified', html.includes('No es una probabilidad de que el mercado suba o baje'));
 assert('Q03-compatible core events', [
   'session_started',
   'evidence_expanded',
@@ -36,7 +40,7 @@ assert('Q03-compatible core events', [
   'decision_record_revisited',
   'session_ended'
 ].every(x => html.includes(x)));
-assert('v1.3 version frozen', html.includes('research-prototype-v1.3.0'));
+assert('v1.4 version frozen', html.includes('research-prototype-v1.4.0'));
 
 const matches = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
 assert('exactly one inline application script', matches.length === 1);
