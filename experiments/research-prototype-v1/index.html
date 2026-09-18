@@ -567,10 +567,19 @@ button.full { width: 100%; }
 (() => {
   'use strict';
 
-  const VERSION = 'research-prototype-v2.0.0';
+  const VERSION = 'research-prototype-v2.1.0';
   const STORAGE_LEDGER = 'sophrosyne.research.ledger.v2';
   const STORAGE_EVENTS = 'sophrosyne.research.events.v2';
   const sessionId = crypto.randomUUID ? crypto.randomUUID() : `session-${Date.now()}`;
+  const eventSchemaVersion = 'q03-research-event-v1';
+  const experimentId = qsSafe('experiment') || 'REHEARSAL';
+  const experimentVersion = qsSafe('experiment_version') || VERSION;
+  const componentExposureSeen = new Set();
+
+  function qsSafe(name) {
+    try { return new URLSearchParams(location.search).get(name); }
+    catch { return null; }
+  }
 
   const scenarios = [
     {
@@ -830,14 +839,26 @@ button.full { width: 100%; }
   }
 
   function logEvent(eventName, extra = {}) {
+    const occurredAt = new Date().toISOString();
     const event = {
       event_id: crypto.randomUUID ? crypto.randomUUID() : `event-${Date.now()}-${Math.random()}`,
-      session_id: sessionId,
       event_name: eventName,
-      event_at: new Date().toISOString(),
-      prototype_version: VERSION,
-      arm_id: arm,
+      event_schema_version: eventSchemaVersion,
+      occurred_at_utc: occurredAt,
+      event_at: occurredAt,
+      received_at_utc: null,
+      experiment_id: experimentId,
+      experiment_version: experimentVersion,
       participant_id: participantId,
+      session_id: sessionId,
+      task_id: activeScenario?.id || null,
+      variant_id: arm,
+      prototype_version: VERSION,
+      prototype_digest: 'UNFROZEN_REHEARSAL',
+      source: 'UI',
+      recruitment_cohort: null,
+      promotion_geo_class: 'UNKNOWN',
+      arm_id: arm,
       assignment_locked: assignmentLocked,
       scenario_id: activeScenario?.id || null,
       ...extra
@@ -867,12 +888,13 @@ button.full { width: 100%; }
         renderAll();
         $('outcomeBox').classList.remove('show');
         logEvent('scenario_opened');
+        logEvent('task_started', { task_type: 'scenario_reasoning', case_id: activeScenario.id });
       });
       $('scenarioNav').appendChild(btn);
     });
   }
 
-  function renderEvidence(targetId, items, eventName) {
+  function renderEvidence(targetId, items, evidenceRole) {
     const target = $(targetId);
     target.innerHTML = '';
     items.forEach((item) => {
@@ -889,7 +911,11 @@ button.full { width: 100%; }
         const expanded = wrap.classList.toggle('expanded');
         button.setAttribute('aria-expanded', String(expanded));
         button.querySelector('.evidence-title > span:last-child').textContent = expanded ? '−' : '＋';
-        if (expanded) logEvent(eventName, { evidence_title: item.title });
+        if (expanded) {
+          logEvent('evidence_item_opened', { evidence_role: evidenceRole, evidence_title: item.title });
+          if (evidenceRole === 'OPPOSING') logEvent('opposing_evidence_opened', { evidence_title: item.title });
+          logEvent('component_used', { component_id: 'C01', use_type: 'EVIDENCE_EXPANDED' });
+        }
       });
       target.appendChild(wrap);
     });
@@ -930,8 +956,8 @@ button.full { width: 100%; }
     $('frictionList').innerHTML = frictionQuestions.map(q => `<li>${escapeHtml(q)}</li>`).join('');
     $('shortMemorySummary').textContent = s.translation;
     renderMemoryContexts();
-    renderEvidence('supportEvidence', s.support, 'evidence_expanded');
-    renderEvidence('opposeEvidence', s.oppose, 'opposing_evidence_opened');
+    renderEvidence('supportEvidence', s.support, 'SUPPORTING');
+    renderEvidence('opposeEvidence', s.oppose, 'OPPOSING');
   }
 
   function renderMemoryContexts() {
@@ -941,7 +967,24 @@ button.full { width: 100%; }
     $('fullMemoryContext').innerHTML = records.length ? records.slice(-5).reverse().map(renderOne).join('') : '<div class="memory-item">Sin historial previo disponible.</div>';
   }
 
-  function renderArm() {
+  function exposeComponent(componentId, reasonCode) {
+    const key = `${arm}:${componentId}`;
+    if (componentExposureSeen.has(key)) return;
+    componentExposureSeen.add(key);
+    logEvent('component_eligible', {
+      component_id: componentId,
+      eligibility_rule_version: 'rehearsal-v1',
+      eligibility_reason_code: reasonCode
+    });
+    logEvent('component_exposed', {
+      component_id: componentId,
+      exposure_rule_version: 'rehearsal-v1',
+      exposure_source: 'UI_RENDERED',
+      exposure_instance_id: `${sessionId}:${key}`
+    });
+  }
+
+    function renderArm() {
     for (const id of ARM_IDS) $('arm' + id).classList.toggle('hidden', arm !== id);
     document.querySelectorAll('#modeSwitcher [data-arm]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.arm === arm);
@@ -950,6 +993,13 @@ button.full { width: 100%; }
     });
     $('assignmentBadge').textContent = `Brazo ${arm} · ${armLabels[arm]} · ${assignmentLocked ? 'ASIGNACIÓN BLOQUEADA' : 'UAT libre'}`;
     document.querySelector('.research-controls').classList.toggle('hidden', assignmentLocked);
+    if (arm === 'F' || arm === 'E') {
+      exposeComponent('C01', 'EVIDENCE_STRUCTURE_VISIBLE');
+      exposeComponent('C04', 'UNCERTAINTY_INVALIDATION_VISIBLE');
+      exposeComponent('C05', 'PROGRESSIVE_DEPTH_AVAILABLE');
+      if (ledger.length) exposeComponent('C02', 'DECISION_HISTORY_AVAILABLE');
+      if (ledger.length >= 2) exposeComponent('C07', 'LONGITUDINAL_HISTORY_AVAILABLE');
+    }
   }
 
 
@@ -1018,7 +1068,18 @@ button.full { width: 100%; }
         ${record.evidence_alignment === 'DIVERGENT' ? '<span class="alignment-badge divergent">Discrepancia explícita con la evidencia</span>' : ''}
       </article>`).join('');
     target.querySelectorAll('.ledger-record').forEach(node => {
-      node.addEventListener('click', () => logEvent('decision_record_revisited', { record_id: node.dataset.recordId }));
+      node.addEventListener('click', () => {
+        const record = ledger.find(r => r.record_id === node.dataset.recordId);
+        logEvent('decision_record_opened', {
+          record_id: node.dataset.recordId,
+          record_age_class: record?.created_session_id === sessionId ? 'CURRENT' : 'HISTORICAL'
+        });
+        logEvent('component_used', { component_id: 'C02', use_type: 'DECISION_RECORD_OPENED' });
+        if (record && record.created_session_id && record.created_session_id !== sessionId) {
+          logEvent('decision_record_revisited', { record_id: record.record_id });
+          logEvent('component_used', { component_id: 'C07', use_type: 'HISTORICAL_RECORD_REVISITED' });
+        }
+      });
     });
   }
 
@@ -1042,12 +1103,19 @@ button.full { width: 100%; }
       const labels = { beginner: 'Básico', investor: 'Inversor', trader: 'Trader', quant: 'Cuant' };
       $('depthStatus').textContent = `Nivel actual: ${labels[activeDepth]} · más detalle no implica más certeza`;
       logEvent('depth_changed', { depth: activeDepth });
+      logEvent('component_used', { component_id: 'C05', use_type: 'DEPTH_CHANGED' });
     });
   });
 
-  $('uncertaintyCard').addEventListener('click', () => logEvent('uncertainty_opened'));
+  $('uncertaintyCard').addEventListener('click', () => {
+    logEvent('uncertainty_opened');
+    logEvent('component_used', { component_id: 'C04', use_type: 'UNCERTAINTY_OPENED' });
+  });
   $('uncertaintyCard').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') logEvent('uncertainty_opened'); });
-  $('invalidatorCard').addEventListener('click', () => logEvent('invalidation_opened'));
+  $('invalidatorCard').addEventListener('click', () => {
+    logEvent('invalidation_opened');
+    logEvent('component_used', { component_id: 'C04', use_type: 'INVALIDATION_OPENED' });
+  });
   $('invalidatorCard').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') logEvent('invalidation_opened'); });
 
   $('confidenceInput').addEventListener('input', e => {
@@ -1102,6 +1170,7 @@ button.full { width: 100%; }
     const record = Object.freeze({
       record_id: crypto.randomUUID ? crypto.randomUUID() : `record-${Date.now()}`,
       created_at: new Date().toISOString(),
+      created_session_id: sessionId,
       prototype_version: VERSION,
       arm,
       scenario_id: activeScenario.id,
@@ -1133,6 +1202,13 @@ button.full { width: 100%; }
       workload_rating: record.workload_rating,
       help_requested: record.help_requested,
       simple_prediction: record.simple_prediction
+    });
+    logEvent('task_answer_submitted', {
+      answer_ref: record.record_id,
+      confidence_percent: record.confidence_pct,
+      completion_ms: record.completion_seconds * 1000,
+      workload_rating: record.workload_rating,
+      help_requested: record.help_requested
     });
 
     if (arm === 'D') {
@@ -1219,6 +1295,7 @@ button.full { width: 100%; }
     requested_order: requestedOrder,
     comparator_g_promotable: false
   });
+  logEvent('task_started', { task_type: 'scenario_reasoning', case_id: activeScenario.id });
 })();
 
   </script>
