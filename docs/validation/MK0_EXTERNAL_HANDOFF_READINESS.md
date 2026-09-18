@@ -33,8 +33,11 @@ experiments/q00/Q00_SCORING_RUBRIC.md
 experiments/q00/Q00_REVIEWER_HANDOFF.md
 experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md
 experiments/q00/generate_assignment.py
+experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md
 
 experiments/q03/Q03_14_DAY_RUNBOOK.md
+experiments/q03/q03_event.schema.json
+experiments/q03/validate_event_export.py
 
 experiments/q04/Q04_INDEPENDENT_REPRODUCTION_PACKET.md
 
