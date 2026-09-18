@@ -85,47 +85,76 @@ The run must support the following analyses:
 
 ## 7. Sample and assignment plan
 
-Before `PRE_REGISTERED`, freeze:
+Canonical candidate plan: `experiments/q00/Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md`.
+
+Candidate values to be reviewed and frozen before `PRE_REGISTERED`:
 
 ```yaml
-target_sample_size: TBD
-minimum_usable_sample: TBD
-primary_peru_minimum: TBD
-recruitment_channels: TBD
-randomization_or_counterbalancing: TBD
-repeated_task_structure: TBD
-missing_data_policy: TBD
-withdrawal_policy: TBD
+target_sample_size: 84 usable primary participants
+minimum_usable_sample: 70
+primary_peru_minimum: 70
+williams_sequences: 14
+target_per_sequence: 6
+minimum_per_sequence: 5
+recruitment_target: 98
+randomization_or_counterbalancing: seven-arm first-order carryover-balanced Williams crossover
+arm_tasks_per_participant: 7
+unassisted_transfer_tasks_per_participant: 1
+unit_of_independence: participant
+missing_data_policy: pairwise COMPLETE_CASE_PRIMARY for arm contrasts; behavioral non-action remains denominator where observable
+withdrawal_policy: preserve withdrawal/exclusion reason; never reclassify for directional convenience
 ```
 
-If the minimum usable sample is not reached, the result is `INCONCLUSIVE`; favorable descriptive results cannot override that state.
+The canonical generator is `experiments/q00/generate_assignment.py`.
+
+If fewer than 70 usable primary participants remain, or any Williams sequence has fewer than five usable participants, the primary Q00 result is `INCONCLUSIVE` unless an independently reviewed recovery rule was frozen before outcome inspection.
 
 ## 8. Primary outcomes
 
-Before outcome inspection, freeze a small primary set selected from the following candidate families:
+The generic scoring semantics are frozen as a candidate in `experiments/q00/Q00_SCORING_RUBRIC.md`. Scenario-specific answer keys remain private and are bound by digest before the formal run.
 
-- calibration quality;
-- scenario discrimination;
-- contradiction/opposing-evidence detection;
-- uncertainty recognition;
-- process-vs-outcome separation;
-- unnecessary-action avoidance in paper scenarios;
-- transfer to novel hidden-outcome tasks;
-- cognitive/time cost.
-
-For each selected primary measure the final manifest must define:
+Mandatory primary decision surfaces:
 
 ```yaml
-name:
-definition:
-unit:
-direction_of_better:
-aggregation:
-minimum_practically_meaningful_effect:
-uncertainty_interval_rule:
+P1_full_vs_raw:
+  metric: decision_process_score_0_100
+  contrast: F - A
+  minimum_mean_delta: +8
+  90pct_interval_lower_bound: "> +3"
+
+P2_full_vs_friction:
+  metric: decision_process_score_0_100
+  contrast: F - C
+  minimum_mean_delta: +4
+  90pct_interval_lower_bound: "> 0"
+  simple_friction_capture_limit: "< 80% of F benefit over A"
+
+P3_full_vs_strong_substitute:
+  metric: decision_process_score_0_100
+  contrast: F - G
+  superiority_candidate:
+    minimum_mean_delta: +5
+    90pct_interval_lower_bound: "> 0"
+  comparator_noninferiority_margin: 3 points
+
+memory_ablation:
+  contrast: F - E
+  full_memory_support_minimum_mean_delta: +4
+  90pct_interval_lower_bound: "> 0"
+
+unassisted_transfer:
+  metric: transfer_process_score_0_100
+  contrast: prior_F_exposure - not_yet_F_exposed
+  minimum_mean_delta: +5
+  90pct_interval_lower_bound: "> 0"
+
+cognitive_cost_guardrails:
+  median_completion_time_ratio_F_over_C: "<= 1.50"
+  mean_workload_delta_F_minus_C: "<= 0.75"
+  help_requested_rate_delta_F_minus_C: "<= 0.10"
 ```
 
-Secondary measures may explain a result but cannot rescue a failed primary decision rule.
+Contradiction detection, uncertainty/staleness recognition, process/outcome separation and unnecessary-action avoidance remain rubric dimensions and diagnostic outcomes. They may explain a primary result but cannot rescue a failed mandatory gate.
 
 ## 9. Frozen decision rules
 
@@ -157,17 +186,22 @@ No threshold or primary outcome may be moved after outcome inspection to protect
 
 ## 10. Analysis plan
 
-Before `PRE_REGISTERED`, freeze:
-- comparison method for repeated/counterbalanced observations;
-- uncertainty interval method;
-- participant/task dependence treatment;
-- multiplicity rule;
-- missing-data handling;
-- pre-specified sensitivity analyses;
-- subgroup policy;
-- hidden-rubric scoring version.
+Candidate analysis method, subject only to independent pre-outcome review:
 
-Exploratory analyses must be labeled exploratory and cannot alter the registered terminal decision.
+- requested A–G contrasts are computed as participant-level paired differences;
+- uncertainty uses 10,000 two-sided 90% percentile bootstrap resamples;
+- bootstrap resampling is stratified by Williams sequence;
+- participant is the independence unit; repeated tasks are never counted as independent participants;
+- transfer analysis compares the predeclared `prior_F_exposure` groups created by the transfer insertion rule;
+- exact bootstrap seed is frozen in the final manifest;
+- primary missing-data handling follows the candidate sample plan;
+- no sequential peeking/stopping;
+- subgroup analyses are exploratory unless separately preregistered;
+- generic scoring rubric version and private scenario answer-key digest are frozen before first outcome inspection.
+
+The final analysis code/seed/answer-key digest become immutable at `PRE_REGISTERED`.
+
+Exploratory analyses cannot alter the registered terminal decision.
 
 ## 11. Provenance and anti-gaming
 
