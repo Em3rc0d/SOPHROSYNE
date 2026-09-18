@@ -121,6 +121,10 @@ Two reruns using the same manifest/code/environment must produce:
 
 A second reviewer/run path reproduces the primary benchmark outputs from the frozen manifest without manual result editing.
 
+Canonical handoff: `experiments/q04/Q04_INDEPENDENT_REPRODUCTION_PACKET.md`.
+
+The external reviewer receives the frozen inputs/environment instructions but not the original numeric benchmark output until their independent result artifact is frozen. Same-author/same-runtime reruns do not satisfy G4.
+
 ### G5 — cost monotonicity
 
 For a fixed trade path, increasing non-negative transaction costs may not improve net P&L through an accounting bug.
