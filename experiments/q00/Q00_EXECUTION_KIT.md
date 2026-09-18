@@ -34,7 +34,7 @@ Required arms remain:
 
 Candidate interactive rehearsal material now exists at `experiments/research-prototype-v1/` and exposes A–G with a lockable assignment mode. This closes the **instrumentation shell**, not the empirical gate. G is intentionally non-promotable until the external comparator snapshot/version is frozen before preregistration.
 
-The exact participant allocation, minimum usable sample and counterbalancing schedule remain subject to independent-review approval before status may become `PRE_REGISTERED`.
+Candidate allocation/minimum/counterbalancing semantics are now instantiated in `Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md` and `generate_assignment.py`. They remain subject to independent-review approval before status may become `PRE_REGISTERED`.
 
 ## 3. Scenario corpus contract
 
@@ -47,12 +47,7 @@ Every scenario must include the same underlying fact set across arms and contain
 - 1 item that is correlated but not evidence of causality;
 - a hidden outcome revealed only after the process task.
 
-Current candidate scenario families:
-1. trend with incomplete confirmation;
-2. range/mean-reversion context with narrative overreach;
-3. constructive signals with critical stale evidence;
-4. high-volatility breakout context with conflicting freshness;
-5. transfer scenario with salient narrative and weak causal identification.
+Current rehearsal corpus contains eight scenario instances across the required families. Seven are assigned to A–G via the Williams schedule; SYN-05 is reserved for the unassisted transfer task.
 
 These are rehearsal materials only until independent market-domain review and final corpus hashing.
 
@@ -84,7 +79,7 @@ unnecessary_action_avoidance: 0-4
 transfer_quality: 0-4
 ```
 
-`decision_process_score = sum / 32 * 100`.
+`decision_process_score = sum(D1..D7) / 28 * 100` for normal A–G tasks; transfer uses all eight dimensions: `sum(D1..D8) / 32 * 100`. Canonical anchors live in `Q00_SCORING_RUBRIC.md`.
 
 Confidence is collected separately from correctness/process score for calibration analysis.
 
@@ -161,11 +156,15 @@ Q00 cannot move to `PRE_REGISTERED` until all are frozen:
 independent_reviewer: MISSING
 adult_peru_participants: NOT_RECRUITED
 candidate_rehearsal_artifact: experiments/research-prototype-v1/index.html
-candidate_branch_head: 8400ff03c191b3873fe5eca63c86fe24dbbc47a2
-candidate_index_git_blob: aeddd8612ae5f41bda3351b7ab1e38eb3c0b1388
+candidate_branch: research/mk0-handoff-hardening
+candidate_index_git_blob: c8d49efb30569f7b3ae3e1b0426e57032f489ff3
 seven_arm_instrumentation: READY_FOR_REHEARSAL
-five_scenario_corpus: READY_FOR_REVIEW
-external_comparator_g_snapshot: MISSING
+eight_scenario_rehearsal_corpus: READY_FOR_REVIEW
+external_comparator_g_execution_state: NOT_FROZEN
+sample_assignment_plan: READY_FOR_REVIEW
+scoring_rubric: READY_FOR_REVIEW
+reviewer_handoff: READY_TO_SEND
+recruitment_moderator_packet: DRAFT_REQUIRES_Q01
 scenario_materials_final_digest: MISSING
 consent_privacy_clearance: REQUIRES_Q01_REVIEW
 status: OPEN
