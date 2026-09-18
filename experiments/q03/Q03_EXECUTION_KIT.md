@@ -2,9 +2,17 @@
 
 ## Status
 
-`READY_FOR_EXTERNAL_EXECUTION / NOT_EVIDENCE`
+`READY_FOR_REHEARSAL / BLOCKED_FOR_PROMOTABLE_EXECUTION / NOT_EVIDENCE`
 
 This kit operationalizes `Q03_PREREGISTRATION.md`. It does not manufacture participants, commitment events or paid demand.
+
+Candidate prototype:
+- path: `experiments/research-prototype-v1/index.html`;
+- semantic version: `research-prototype-v2.1.0`;
+- branch head at this update: `f0c80227b40e28bfb58cc50a5af6e3c9aaef078a`;
+- Git blob identity: `12d42e0427caa868bb3276416e4e2bb8869a71b4`.
+
+The prototype is suitable for rehearsal and instrumentation review only. Its `prototype_digest` event field intentionally remains `UNFROZEN_REHEARSAL` until the final material set is independently reviewed and frozen before a promotable run.
 
 ## 1. Cohort boundary
 
@@ -90,7 +98,29 @@ technical_interruption_seconds
 
 The scoring answer key must be frozen before the first participant result is inspected.
 
-## 4. E03-C 14-day event contract
+## 4. Prototype instrumentation readiness
+
+The candidate prototype currently emits the following directly in-browser:
+- `session_started` / `session_ended`;
+- `task_started` / `task_answer_submitted`;
+- `evidence_item_opened` and explicit opposing-evidence events;
+- uncertainty / invalidation events;
+- decision record create/open events;
+- cross-session-only `decision_record_revisited`;
+- component eligibility/exposure/use events for instrumented surfaces;
+- completion time, workload rating and help-requested fields;
+- pseudonymous participant id when supplied by the study launcher.
+
+Still missing for promotion-grade E03-C:
+- approved consent event/version and privacy retention authority;
+- server/research-pipeline `received_at_utc`;
+- frozen `prototype_digest`;
+- neutral reminder delivery/open instrumentation and attribution classification;
+- server/analysis-derived `qualifying_activity` / `revisit_classified`;
+- test-account/recruitment cohort and Peru eligibility ingestion under the approved protocol;
+- 14-day real participant observations.
+
+## 5. E03-C 14-day event contract
 
 Minimum events:
 
@@ -125,7 +155,7 @@ Rules:
 - revisits directly attributable to a reminder inside the frozen attribution window do not count as unprompted revisits;
 - do not award compensation for returning, choosing a paid band, or producing favorable feedback.
 
-## 5. E03-D pricing/commitment execution
+## 6. E03-D pricing/commitment execution
 
 Until Q01 clears the exact commercial flow, **no real charge is permitted by this research protocol**.
 
@@ -158,7 +188,7 @@ copy_version
 exclusion_reason
 ```
 
-## 6. E03-E historical record diagnostic
+## 7. E03-E historical record diagnostic
 
 Use immutable `as_of` records. Later information is shown separately.
 
@@ -170,7 +200,7 @@ Measure:
 
 Never rewrite the historical record after later outcomes are known.
 
-## 7. Recruitment integrity
+## 8. Recruitment integrity
 
 Use at least two recruitment channels where practical. Record channel per participant. Exclude:
 - minors;
@@ -181,7 +211,7 @@ Use at least two recruitment channels where practical. Record channel per partic
 
 Do not exclude negative participants post hoc.
 
-## 8. Required immutable outputs
+## 9. Required immutable outputs
 
 Each sub-experiment must produce:
 - frozen manifest/digest;
@@ -193,11 +223,15 @@ Each sub-experiment must produce:
 - terminal sub-experiment result;
 - independent-review note.
 
-## 9. Current execution blockers
+## 10. Current execution blockers
 
 ```yaml
 adult_peru_participants: NOT_RECRUITED
-prototype_version: NOT_FROZEN
+prototype_semantic_version: research-prototype-v2.1.0
+prototype_instrumentation: READY_FOR_REHEARSAL
+prototype_digest: NOT_FROZEN
+reminder_attribution_pipeline: NOT_IMPLEMENTED
+fourteen_day_observation: NOT_STARTED
 consent_privacy_review: REQUIRES_Q01
 paid_charge_flow: PROHIBITED_UNTIL_Q01
 independent_reviewer: MISSING
