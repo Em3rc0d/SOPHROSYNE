@@ -160,6 +160,7 @@ candidate_branch: research/mk0-handoff-hardening
 candidate_index_git_blob: c8d49efb30569f7b3ae3e1b0426e57032f489ff3
 seven_arm_instrumentation: READY_FOR_REHEARSAL
 eight_scenario_rehearsal_corpus: READY_FOR_REVIEW
+external_comparator_g_candidate_sheet: experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md
 external_comparator_g_execution_state: NOT_FROZEN
 sample_assignment_plan: READY_FOR_REVIEW
 scoring_rubric: READY_FOR_REVIEW
