@@ -586,6 +586,8 @@ button.full { width: 100%; }
       quickKnown: 'El precio viene subiendo con fuerza.',
       quickMissing: 'La confirmación por volumen y amplitud es débil.',
       quickTakeaway: 'Hay señales positivas, pero todavía no alcanza para afirmar una continuación sólida.',
+      outcomeClass: 'REVERSAL_RANGE',
+      hiddenOutcome: 'La expansión no se sostuvo; el precio volvió al rango y la amplitud siguió debilitándose.',
       translation: 'Hay impulso positivo observable, pero la estructura de evidencia todavía no permite separar una continuación robusta de una expansión frágil. La conclusión disciplinada es mantener ambas hipótesis abiertas.',
       depth: {
         beginner: 'Lo importante no es adivinar el siguiente movimiento: es reconocer que el impulso existe y, al mismo tiempo, que faltan confirmaciones independientes.',
@@ -627,6 +629,8 @@ button.full { width: 100%; }
       quickKnown: 'El precio rebotó desde la parte baja del rango.',
       quickMissing: 'Aún no rompió la zona que demostraría un cambio de tendencia.',
       quickTakeaway: 'El rebote existe, pero todavía puede ser sólo un movimiento dentro del mismo rango.',
+      outcomeClass: 'REVERSAL_RANGE',
+      hiddenOutcome: 'El rebote alcanzó la zona media-superior del rango pero no produjo un cambio de régimen.',
       translation: 'El rebote es real, pero todavía encaja dentro del rango existente. La narrativa externa puede explicar atención, no causalidad. No hay evidencia suficiente para declarar cambio de régimen.',
       depth: {
         beginner: 'Un rebote no es lo mismo que una nueva tendencia. Aquí el movimiento sigue dentro de límites que ya existían.',
@@ -668,6 +672,8 @@ button.full { width: 100%; }
       quickKnown: 'Varias señales recientes son favorables.',
       quickMissing: 'Una fuente crítica está desactualizada y falta confirmación secundaria.',
       quickTakeaway: 'No conviene tratar una lectura favorable como conclusión mientras falte información vigente.',
+      outcomeClass: 'INDETERMINATE',
+      hiddenOutcome: 'La fuente actualizada contradijo parte de la lectura constructiva y el escenario permaneció sin dirección defendible.',
       translation: 'La evidencia disponible favorece una lectura constructiva, pero una fuente crítica está desactualizada. SOPHROSYNE separa “lo que parece probable” de “lo que puede defenderse con evidencia vigente”.',
       depth: {
         beginner: 'Una señal puede verse bien y aun así no ser suficiente si una pieza importante está desactualizada.',
@@ -695,6 +701,93 @@ button.full { width: 100%; }
         'Volatilidad en régimen media-alta.',
         'La política del escenario requiere inputs críticos vigentes.'
       ]
+    },
+    {
+      id: 'SYN-04',
+      family: 'Repetición sintética · alta volatilidad',
+      title: 'Ruptura aparente en un régimen de volatilidad extrema',
+      question: 'El precio supera un nivel importante durante una expansión brusca de volatilidad, mientras dos fuentes de contexto no tienen la misma vigencia. ¿Qué puede sostenerse sin confundir velocidad con confirmación?',
+      freshness: '1 fuente con rezago · sintético',
+      state: 'Ruptura aparente bajo estrés',
+      volatility: 'Extrema',
+      evidenceQuality: 'Mixta',
+      conclusion: 'ESPERAR EVIDENCIA',
+      quickKnown: 'Hubo una ruptura rápida y un aumento fuerte de volatilidad.',
+      quickMissing: 'El contexto no está sincronizado y la participación no confirma de forma uniforme.',
+      quickTakeaway: 'La velocidad del movimiento no convierte una ruptura en evidencia suficiente por sí sola.',
+      outcomeClass: 'CONTINUATION',
+      hiddenOutcome: 'Tras una pausa volátil, el precio sostuvo el nivel roto y la participación terminó ampliándose.',
+      translation: 'La ruptura es observable, pero ocurre en un entorno donde la volatilidad puede amplificar movimientos transitorios. Una fuente de contexto llega con rezago, por lo que la conclusión debe permanecer condicionada.',
+      depth: {
+        beginner: 'Un movimiento muy rápido puede parecer más convincente de lo que realmente es. Aquí falta comprobar si otras señales acompañan.',
+        investor: 'La persistencia fuera del nivel y la actualización del contexto son necesarias antes de tratar la ruptura como cambio estructural.',
+        trader: 'La expansión de volatilidad aumenta el riesgo de whipsaw. Falta confirmación consistente de participación y sincronía de contexto.',
+        quant: 'La volatilidad realizada sintética está en percentil 96; una entrada contextual excede su TTL. La política de completitud impide elevar certeza sólo por magnitud del retorno.'
+      },
+      support: [
+        { title: 'Nivel previo superado', meta: 'OBSERVADO · vigente', detail: 'El precio se mantiene temporalmente por encima del nivel de referencia.' },
+        { title: 'Momentum acelera', meta: 'OBSERVADO · vigente', detail: 'La pendiente de corto plazo aumenta de forma material.' },
+        { title: 'Liquidez aún operativa', meta: 'OBSERVADO · vigente', detail: 'No existe fallo total del proxy de liquidez durante la expansión.' }
+      ],
+      oppose: [
+        { title: 'Contexto desincronizado', meta: 'DESACTUALIZADO · material', detail: 'Una fuente clave no comparte la misma ventana temporal que el movimiento de precio.' },
+        { title: 'Participación irregular', meta: 'OBSERVADO · vigente', detail: 'La confirmación de actividad varía entre ventanas y no es uniforme.' }
+      ],
+      uncertainty: 'No sabemos si la ruptura sobrevivirá cuando la volatilidad se normalice ni si la fuente retrasada confirmará el nuevo contexto.',
+      invalidator: 'Un retorno rápido y sostenido bajo el nivel, junto con deterioro de participación, invalida la hipótesis de ruptura persistente.',
+      rawFacts: [
+        'Precio sintético supera un nivel previo durante una ventana de alta velocidad.',
+        'Volatilidad realizada: percentil 96 de la muestra sintética.',
+        'Momentum de corto plazo acelera.',
+        'Una fuente contextual excede su ventana de vigencia.',
+        'Participación relativa es irregular entre observaciones.',
+        'Liquidez permanece operativa, pero con mayor dispersión.',
+        'No existe outcome disponible durante la tarea.'
+      ]
+    },
+    {
+      id: 'SYN-05',
+      family: 'Transferencia · narrativa y causalidad',
+      title: 'Catalizador narrativo fuerte, evidencia causal débil',
+      question: 'Una narrativa externa coincide con un movimiento llamativo y se repite en múltiples fuentes. ¿La repetición de la historia demuestra que causó el movimiento?',
+      freshness: 'fuentes narrativas vigentes · sintético',
+      state: 'Narrativa dominante, causalidad no establecida',
+      volatility: 'Media',
+      evidenceQuality: 'Moderada',
+      conclusion: 'SIN CONCLUSIÓN',
+      quickKnown: 'La narrativa y el movimiento aparecen al mismo tiempo.',
+      quickMissing: 'No existe una prueba que separe correlación de causalidad.',
+      quickTakeaway: 'Que muchas fuentes repitan una explicación no la convierte automáticamente en causa.',
+      outcomeClass: 'INDETERMINATE',
+      hiddenOutcome: 'El movimiento se revirtió parcialmente mientras la narrativa siguió circulando; no se pudo establecer un vínculo causal único.',
+      translation: 'La coincidencia temporal y la popularidad de una explicación son observables, pero no bastan para atribuir causalidad. Deben mantenerse abiertas explicaciones alternativas.',
+      depth: {
+        beginner: 'Dos cosas pueden ocurrir al mismo tiempo sin que una sea la causa de la otra.',
+        investor: 'La tesis narrativa necesita un mecanismo verificable y evidencia que descarte explicaciones rivales.',
+        trader: 'El catalyst story puede afectar posicionamiento, pero el flujo observable no identifica por sí mismo una causa única.',
+        quant: 'El escenario está diseñado como transfer test: alta saliencia narrativa, señal causal no identificada y outcome no inferible desde frecuencia de menciones.'
+      },
+      support: [
+        { title: 'Coincidencia temporal clara', meta: 'OBSERVADO · vigente', detail: 'El aumento de menciones y el movimiento ocurren en ventanas cercanas.' },
+        { title: 'Narrativa consistente entre fuentes', meta: 'ATRIBUIDO · vigente', detail: 'Múltiples fuentes describen una explicación similar.' },
+        { title: 'Movimiento de magnitud material', meta: 'OBSERVADO · vigente', detail: 'El cambio de precio supera el ruido típico del escenario sintético.' }
+      ],
+      oppose: [
+        { title: 'Mecanismo causal no identificado', meta: 'AUSENTE · material', detail: 'No hay evidencia que conecte de forma única la narrativa con el movimiento.' },
+        { title: 'Explicaciones rivales plausibles', meta: 'INFERIDO · vigente', detail: 'Cambios de posicionamiento y liquidez también son compatibles con los hechos.' }
+      ],
+      uncertainty: 'No sabemos qué fracción del movimiento, si alguna, corresponde a la narrativa observada.',
+      invalidator: 'Evidencia temporal y mecánica independiente que descarte explicaciones rivales cambiaría la evaluación causal.',
+      rawFacts: [
+        'Menciones de una narrativa aumentan en múltiples fuentes.',
+        'El movimiento de precio ocurre durante el mismo intervalo general.',
+        'No existe variable que identifique causalidad individual.',
+        'Liquidez y posicionamiento también cambian durante la ventana.',
+        'Las fuentes narrativas citan explicaciones similares entre sí.',
+        'No se muestra el outcome durante la tarea.',
+        'Este escenario pertenece al bloque de transferencia.'
+      ],
+      transferScenario: true
     }
   ];
 
