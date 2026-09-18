@@ -126,6 +126,10 @@ Minimum sample not reached, promotable Q03 persona/geography is unresolved, comp
 
 # E05-B — Repeat-Use Linkage
 
+Canonical component eligibility/exposure/use semantics: `experiments/q05/Q05_COMPONENT_EXPOSURE_CONTRACT.md`.
+
+The current research prototype is rehearsal-instrumented for C01, C02, C04, C05 and C07 only. C03, C06 and C08 may not receive promotable component-level conclusions from prototype v2.2.
+
 ## Question
 
 Are the candidate moat components actually used by people who return over time, or are they merely praised during a one-session demo?
