@@ -111,6 +111,11 @@ The candidate prototype currently emits the following directly in-browser:
 - completion time, workload rating and help-requested fields;
 - pseudonymous participant id when supplied by the study launcher.
 
+Canonical rehearsal/event-validation artifacts:
+- `experiments/q03/q03_event.schema.json`;
+- `experiments/q03/validate_event_export.py`;
+- `experiments/q03/Q03_14_DAY_RUNBOOK.md`.
+
 Still missing for promotion-grade E03-C:
 - approved consent event/version and privacy retention authority;
 - server/research-pipeline `received_at_utc`;
