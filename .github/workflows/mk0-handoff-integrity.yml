@@ -37,11 +37,14 @@ jobs:
         run: |
           python -m py_compile experiments/q00/generate_assignment.py
           python -m py_compile experiments/q04/harness.py
+          python -m py_compile experiments/q03/validate_event_export.py
           python -m py_compile experiments/mk0_handoff_check.py
       - name: Execute assignment generator rehearsal
         run: |
           python experiments/q00/generate_assignment.py --n 84 --seed 20260917 --output-dir /tmp/q00
           test -s /tmp/q00/q00_assignment_manifest.json
+      - name: Verify Q03 event validator
+        run: python experiments/q03/validate_event_export.py --self-test
       - name: Verify research prototype
         run: node experiments/research-prototype-v1/verify.mjs
       - name: Verify MK0 handoff graph
