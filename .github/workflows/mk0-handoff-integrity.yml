@@ -5,7 +5,7 @@ on:
     paths:
       - 'experiments/**'
       - 'docs/validation/**'
-      - 'mining-site/external/**'
+      - 'mining-site/**'
       - '.github/workflows/mk0-handoff-integrity.yml'
   push:
     branches:
@@ -14,7 +14,7 @@ on:
     paths:
       - 'experiments/**'
       - 'docs/validation/**'
-      - 'mining-site/external/**'
+      - 'mining-site/**'
       - '.github/workflows/mk0-handoff-integrity.yml'
   workflow_dispatch:
 
