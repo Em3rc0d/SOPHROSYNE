@@ -15,24 +15,45 @@ It does not close a Q by itself.
 
 | Gate | What has now been executed | Current terminal/status interpretation | What still blocks promotion |
 |---|---|---|---|
-| Q00 — causal value | execution kit, destructive baselines, scoring/data contract, TradingView comparator snapshot | `OPEN / READY_FOR_INDEPENDENT_REVIEW` | independent reviewer, frozen materials/sample plan, adult Peru participants, consent/privacy profile |
-| Q01 — Peru regulatory boundary | official-source public precheck covering SMV boundary, personal-data regulation, 2026 e-commerce/consumer changes | `OPEN / EXTERNAL_AUTHORITY_REQUIRED` | qualified written Peru legal review of exact frozen product/commercial flows |
-| Q02 — commercial data rights | current official public-terms precheck for CoinGecko and Alpaca; fail-closed candidate profiles | `OPEN / EXTERNAL_AUTHORITY_REQUIRED` | written/executed provider rights, quotes, entitlement/retention/model-use confirmation for exact profiles |
-| Q03 — user value / repeat use / WTP | complete execution kit for discovery, comprehension, 14-day telemetry, research-intent pricing and historical-record diagnostic | `OPEN / READY_FOR_EXTERNAL_EXECUTION` | adult Peru participants, frozen prototype, Q01 privacy/commercial-flow clearance, independent review |
-| Q04 — quant / optional ML | deterministic synthetic mechanics harness executed; accounting defect found/fixed; internal G1/G2/G3/G5/G6/G7/G8 dry-run checks pass | `INCONCLUSIVE / DRY_RUN_ONLY / NOT_PROMOTABLE` | real point-in-time provider dataset, Q02-compatible rights profile, full profile fixtures, G4 independent reproduction; ML not evaluated |
-| Q05 — moat / durability | TradingView comparator frozen; comparative/repeat-use/defensibility execution kit complete | `OPEN / READY_FOR_EXTERNAL_EXECUTION` | Q03 persona and repeat-use receipt, adult Peru participants, valid exposure denominators, Q01/Q02 compatibility, independent review |
+| Q00 — causal value | seven-arm v2.2 rehearsal prototype, eight-case corpus, Williams assignment generator, candidate sample/analysis thresholds, scoring rubric, reviewer/recruitment packets, comparator freeze sheet | `OPEN / READY_FOR_INDEPENDENT_REVIEW` | independent methods + market review, exact G execution state, Q01-approved research flow, adult Peru participants, final material digests |
+| Q01 — Peru regulatory boundary | regulatory review packet, counsel cover note and refreshed official public-source precheck | `OPEN / EXTERNAL_AUTHORITY_REQUIRED` | qualified written Peru legal/privacy/consumer review of exact frozen product/research/commercial flows |
+| Q02 — commercial data rights | DataUseProfile contract, provider inquiry template, refreshed CoinGecko/Alpaca public-source precheck | `OPEN / EXTERNAL_AUTHORITY_REQUIRED` | written/executed provider rights, current quotes, entitlement/retention/derived/model-use confirmation for exact profiles |
+| Q03 — user value / repeat use / WTP | execution kit + 14-day runbook + Q03 event schema/validator + v2.2 rehearsal telemetry | `OPEN / READY_FOR_Q01_AND_INDEPENDENT_REVIEW` | Q01 consent/retention clearance, promotion-grade collector/export receipt path, independent review, adult Peru participants, full 14-day observation |
+| Q04 — quant / optional ML | deterministic synthetic mechanics harness + dry-run receipt + independent reproduction handoff; internal G1/G2/G3/G5/G6/G7/G8 dry-run checks pass | `INCONCLUSIVE / DRY_RUN_ONLY / NOT_PROMOTABLE` | real point-in-time provider dataset, Q02-compatible rights profile, full profile fixtures, G4 independent reproduction; ML not evaluated |
+| Q05 — moat / durability | comparator candidate snapshot + component exposure contract + comparative/repeat-use/defensibility execution kit | `OPEN / READY_FOR_INDEPENDENT_REVIEW` | exact comparator execution state, Q03 persona/repeat-use receipt, adult Peru participants, valid exposure denominators, Q01/Q02 compatibility, independent review |
 
 ## Executed internal artifacts
 
 ```text
 mining-site/regulation/2026-09-17-peru-regulatory-precheck.md
 mining-site/data-licensing/2026-09-17-provider-rights-precheck.md
+mining-site/external/2026-09-17-public-source-refresh.md
 mining-site/competitors/2026-09-17-tradingview-comparator-snapshot.md
+
+experiments/research-prototype-v1/
 experiments/q00/Q00_EXECUTION_KIT.md
+experiments/q00/Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md
+experiments/q00/Q00_SCORING_RUBRIC.md
+experiments/q00/Q00_REVIEWER_HANDOFF.md
+experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md
+experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md
+experiments/q00/generate_assignment.py
+
 experiments/q03/Q03_EXECUTION_KIT.md
+experiments/q03/Q03_14_DAY_RUNBOOK.md
+experiments/q03/q03_event.schema.json
+experiments/q03/validate_event_export.py
+
 experiments/q04/harness.py
 experiments/q04/Q04_DRY_RUN_RECEIPT.md
+experiments/q04/Q04_INDEPENDENT_REPRODUCTION_PACKET.md
+
 experiments/q05/Q05_EXECUTION_KIT.md
+experiments/q05/Q05_COMPONENT_EXPOSURE_CONTRACT.md
+
+docs/validation/q01/COUNSEL_COVER_NOTE.md
+docs/validation/q02/PROVIDER_INQUIRY_TEMPLATE.md
+docs/validation/MK0_EXTERNAL_HANDOFF_READINESS.md
 ```
 
 ## Q04 engineering finding
@@ -71,7 +92,7 @@ PHASE_0: NOT_AUTHORIZED
 MK1_PRODUCTION_IMPLEMENTATION: NOT_AUTHORIZED
 ```
 
-This blocking state is expected and correct. The remaining work is no longer primarily missing architecture documentation; it is external authority and empirical evidence.
+This blocking state is expected and correct. The internal pre-handoff package is now hardened enough that the remaining known promotion blockers are external authority, independent review, exact external execution-state freezes and empirical evidence. If any reviewer uncovers a material design flaw, that internal node reopens rather than being defended.
 
 ## Next valid promotion path
 

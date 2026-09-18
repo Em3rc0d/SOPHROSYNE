@@ -8,9 +8,9 @@ This kit operationalizes `Q03_PREREGISTRATION.md`. It does not manufacture parti
 
 Candidate prototype:
 - path: `experiments/research-prototype-v1/index.html`;
-- semantic version: `research-prototype-v2.1.0`;
-- branch head at this update: `f0c80227b40e28bfb58cc50a5af6e3c9aaef078a`;
-- Git blob identity: `12d42e0427caa868bb3276416e4e2bb8869a71b4`.
+- semantic version: `research-prototype-v2.2.0`;
+- candidate branch: `research/mk0-handoff-hardening`;
+- Git blob identity: `c8d49efb30569f7b3ae3e1b0426e57032f489ff3`.
 
 The prototype is suitable for rehearsal and instrumentation review only. Its `prototype_digest` event field intentionally remains `UNFROZEN_REHEARSAL` until the final material set is independently reviewed and frozen before a promotable run.
 
@@ -111,6 +111,11 @@ The candidate prototype currently emits the following directly in-browser:
 - completion time, workload rating and help-requested fields;
 - pseudonymous participant id when supplied by the study launcher.
 
+Canonical rehearsal/event-validation artifacts:
+- `experiments/q03/q03_event.schema.json`;
+- `experiments/q03/validate_event_export.py`;
+- `experiments/q03/Q03_14_DAY_RUNBOOK.md`.
+
 Still missing for promotion-grade E03-C:
 - approved consent event/version and privacy retention authority;
 - server/research-pipeline `received_at_utc`;
@@ -121,6 +126,8 @@ Still missing for promotion-grade E03-C:
 - 14-day real participant observations.
 
 ## 5. E03-C 14-day event contract
+
+Canonical longitudinal semantics: `experiments/q03/Q03_14_DAY_RUNBOOK.md`.
 
 Minimum events:
 
@@ -227,7 +234,7 @@ Each sub-experiment must produce:
 
 ```yaml
 adult_peru_participants: NOT_RECRUITED
-prototype_semantic_version: research-prototype-v2.1.0
+prototype_semantic_version: research-prototype-v2.2.0
 prototype_instrumentation: READY_FOR_REHEARSAL
 prototype_digest: NOT_FROZEN
 reminder_attribution_pipeline: NOT_IMPLEMENTED

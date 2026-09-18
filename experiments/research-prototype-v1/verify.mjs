@@ -22,7 +22,8 @@ assert('runtime record forbids recommendation', html.includes('recommendation: n
 assert('runtime record forbids live trade', html.includes('live_trade: false'));
 assert('no external JavaScript', !/<script[^>]+src=/i.test(html));
 assert('seven Q00 arms preserved', ['A','B','C','D','E','F','G'].every(x => html.includes(`data-arm="${x}"`)));
-assert('five scenario corpus present', ['SYN-01','SYN-02','SYN-03','SYN-04','SYN-05'].every(x => html.includes(x)));
+assert('eight scenario corpus present', ['SYN-01','SYN-02','SYN-03','SYN-04','SYN-05','SYN-06','SYN-07','SYN-08'].every(x => html.includes(x)));
+assert('unassisted transfer mode present', html.includes('transferMode') && html.includes('TRANSFERENCIA · SIN ASISTENCIA') && html.includes('unassisted_transfer'));
 assert('locked rehearsal assignment present', html.includes('assignmentLocked') && html.includes('ASIGNACIÓN BLOQUEADA'));
 assert('task timing captured', html.includes('completion_seconds') && html.includes('scenarioStartedAt'));
 assert('cognitive cost captured', html.includes('workload_rating') && html.includes('help_requested'));
@@ -58,7 +59,7 @@ assert('event envelope includes canonical identity fields', [
   'event_schema_version','occurred_at_utc','experiment_id','experiment_version',
   'task_id','variant_id','prototype_digest','promotion_geo_class'
 ].every(x => html.includes(x)));
-assert('v2.1 version frozen', html.includes('research-prototype-v2.1.0'));
+assert('v2.2 version frozen', html.includes('research-prototype-v2.2.0'));
 
 const matches = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
 assert('exactly one inline application script', matches.length === 1);

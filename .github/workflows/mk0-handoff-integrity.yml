@@ -1,0 +1,51 @@
+name: MK0 external handoff integrity
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/**'
+      - 'docs/validation/**'
+      - 'mining-site/**'
+      - '.github/workflows/mk0-handoff-integrity.yml'
+  push:
+    branches:
+      - main
+      - research/mk0-handoff-hardening
+    paths:
+      - 'experiments/**'
+      - 'docs/validation/**'
+      - 'mining-site/**'
+      - '.github/workflows/mk0-handoff-integrity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compile research scripts
+        run: |
+          python -m py_compile experiments/q00/generate_assignment.py
+          python -m py_compile experiments/q04/harness.py
+          python -m py_compile experiments/q03/validate_event_export.py
+          python -m py_compile experiments/mk0_handoff_check.py
+      - name: Execute assignment generator rehearsal
+        run: |
+          python experiments/q00/generate_assignment.py --n 84 --seed 20260917 --output-dir /tmp/q00
+          test -s /tmp/q00/q00_assignment_manifest.json
+      - name: Verify Q03 event validator
+        run: python experiments/q03/validate_event_export.py --self-test
+      - name: Verify research prototype
+        run: node experiments/research-prototype-v1/verify.mjs
+      - name: Verify MK0 handoff graph
+        run: python experiments/mk0_handoff_check.py
