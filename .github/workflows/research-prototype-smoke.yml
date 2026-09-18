@@ -1,0 +1,36 @@
+name: Research prototype smoke
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/research-prototype-v1/**'
+      - 'experiments/q00/Q00_EXECUTION_KIT.md'
+      - 'experiments/q03/Q03_EXECUTION_KIT.md'
+      - 'experiments/q05/Q05_EXECUTION_KIT.md'
+      - '.github/workflows/research-prototype-smoke.yml'
+  push:
+    branches:
+      - main
+      - research/pre-mk0-prototype-v1
+    paths:
+      - 'experiments/research-prototype-v1/**'
+      - 'experiments/q00/Q00_EXECUTION_KIT.md'
+      - 'experiments/q03/Q03_EXECUTION_KIT.md'
+      - 'experiments/q05/Q05_EXECUTION_KIT.md'
+      - '.github/workflows/research-prototype-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify research prototype boundaries
+        run: node experiments/research-prototype-v1/verify.mjs
