@@ -101,6 +101,8 @@ All tasks are paper/historical/synthetic. No investment action is requested.
 
 Primary source is the valid E03-C 14-day experiment.
 
+Canonical component semantics are frozen as a candidate in `experiments/q05/Q05_COMPONENT_EXPOSURE_CONTRACT.md`.
+
 For every C01-C08 component define before analysis:
 
 ```yaml
@@ -205,7 +207,7 @@ E05-C:
 ```yaml
 q03_promotable_persona: NOT_FROZEN
 adult_peru_participants: NOT_RECRUITED
-prototype_semantic_version: research-prototype-v2.1.0
+prototype_semantic_version: research-prototype-v2.2.0
 instrumented_components: [C01, C02, C04, C05, C07]
 non_promotable_or_missing_component_surfaces: [C03, C06, C08]
 e03c_14_day_repeat_use_receipt: MISSING
