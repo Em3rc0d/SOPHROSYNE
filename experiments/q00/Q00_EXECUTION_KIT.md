@@ -30,7 +30,9 @@ Required arms remain:
 - D simple feedback;
 - E short-memory SOPHROSYNE;
 - F full candidate SOPHROSYNE;
-- G TradingView conventional-workflow comparator using the frozen comparator snapshot.
+- G conventional-workflow comparator using the frozen approved comparator snapshot.
+
+Candidate interactive rehearsal material now exists at `experiments/research-prototype-v1/` and exposes A–G with a lockable assignment mode. This closes the **instrumentation shell**, not the empirical gate. G is intentionally non-promotable until the external comparator snapshot/version is frozen before preregistration.
 
 The exact participant allocation, minimum usable sample and counterbalancing schedule remain subject to independent-review approval before status may become `PRE_REGISTERED`.
 
@@ -45,12 +47,14 @@ Every scenario must include the same underlying fact set across arms and contain
 - 1 item that is correlated but not evidence of causality;
 - a hidden outcome revealed only after the process task.
 
-Recommended scenario families:
-1. trend with contradictory macro/event evidence;
-2. range/mean-reversion context with stale technical evidence;
-3. high-volatility context with conflicting source freshness;
-4. apparent narrative catalyst with weak causal support;
-5. transfer scenario with materially different regime.
+Current candidate scenario families:
+1. trend with incomplete confirmation;
+2. range/mean-reversion context with narrative overreach;
+3. constructive signals with critical stale evidence;
+4. high-volatility breakout context with conflicting freshness;
+5. transfer scenario with salient narrative and weak causal identification.
+
+These are rehearsal materials only until independent market-domain review and final corpus hashing.
 
 All tasks are paper/historical/synthetic. No participant is asked to buy, sell or hold a real asset.
 
@@ -156,6 +160,12 @@ Q00 cannot move to `PRE_REGISTERED` until all are frozen:
 ```yaml
 independent_reviewer: MISSING
 adult_peru_participants: NOT_RECRUITED
+candidate_rehearsal_artifact: experiments/research-prototype-v1/index.html
+candidate_branch_head: 8400ff03c191b3873fe5eca63c86fe24dbbc47a2
+candidate_index_git_blob: aeddd8612ae5f41bda3351b7ab1e38eb3c0b1388
+seven_arm_instrumentation: READY_FOR_REHEARSAL
+five_scenario_corpus: READY_FOR_REVIEW
+external_comparator_g_snapshot: MISSING
 scenario_materials_final_digest: MISSING
 consent_privacy_clearance: REQUIRES_Q01_REVIEW
 status: OPEN
