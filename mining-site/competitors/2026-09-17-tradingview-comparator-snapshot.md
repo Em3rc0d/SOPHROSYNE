@@ -38,6 +38,9 @@ TradingView's current official feature material describes a broad market-researc
 Supporting official pages:
 - https://www.tradingview.com/support/solutions/43000746464-getting-started-with-supercharts/
 - https://www.tradingview.com/support/solutions/43000739708-watchlist-alerts-your-trading-edge/
+- https://www.tradingview.com/pricing/
+
+The official pricing surface observed on 2026-09-17 exposes a Basic/free tier plus paid tiers. Basic is therefore the current initial cheap/free comparator candidate, not a frozen execution state.
 
 ## Why this is a fair comparator candidate
 
@@ -54,6 +57,8 @@ snapshot_date: 2026-09-17
 role:
   - Q00 strongest realistic conventional-workflow comparator candidate
   - Q05 E05-A representative competing workflow
+candidate_plan: Basic/free
+freeze_sheet: experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md
 required_run_freeze:
   - exact plan/tier visible to participants
   - exact logged-in/logged-out state
