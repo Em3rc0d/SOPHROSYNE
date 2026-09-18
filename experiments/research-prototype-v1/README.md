@@ -4,11 +4,53 @@
 
 `PRE-MK0 / RESEARCH-ONLY / THROWAWAY / NOT PROMOTABLE EVIDENCE`
 
-This is the single canonical interactive research artifact used to prepare Q00/Q03/Q05 studies. It is explicitly outside the MK1 production architecture and cannot be promoted merely because it is useful.
+This is the canonical interactive research artifact used to prepare Q00/Q03/Q05 studies. It is explicitly outside the MK1 production architecture.
 
 ## Current version
 
-`research-prototype-v1.4.0`
+`research-prototype-v2.0.0`
+
+## Q00 rehearsal coverage
+
+The artifact now exposes all required Q00 arm identities:
+
+- A — raw information;
+- B — stateless structured assistant;
+- C — five-question friction checklist;
+- D — simple prediction/confidence/outcome feedback;
+- E — short-memory SOPHROSYNE;
+- F — full candidate SOPHROSYNE;
+- G — conventional-workflow comparator shell.
+
+G remains a **non-promotable proxy** until an exact external comparator snapshot/version is frozen under the preregistration.
+
+The scenario corpus contains five research families, including a transfer scenario. Outcomes remain hidden during the task and are revealed only in arm D after a record is saved.
+
+## Rehearsal locking
+
+Informal UAT allows arm switching.
+
+A rehearsal assignment can be frozen in the browser with query parameters such as:
+
+```
+?arm=F&locked=1&participant=<opaque-id>&order=SYN-03,SYN-01,SYN-05,SYN-02,SYN-04
+```
+
+This is an implementation mechanism only. It does not make a run preregistered or promotable.
+
+## Captured research fields
+
+New records include:
+- arm/scenario/version identity;
+- completion seconds;
+- workload rating;
+- help-requested flag;
+- hypothesis and change-of-mind condition;
+- confidence in interpretation;
+- process posture;
+- evidence alignment;
+- simple prediction for arm D;
+- hidden-outcome feedback event where applicable.
 
 ## Boundaries
 
@@ -19,7 +61,6 @@ This is the single canonical interactive research artifact used to prepare Q00/Q
 - no production market-data dependency;
 - no backend persistence;
 - browser-local `localStorage` only;
-- records are append-only through the UI, not cryptographically immutable;
 - exported sessions are not promotable evidence unless collected under a frozen preregistered protocol.
 
 ## Reviewer authority
@@ -33,6 +74,10 @@ See `UAT_BOUNDARY.md`.
 
 No reviewer class substitutes for another.
 
+## Integrity controls
+
+The instrument rejects low-information/repetitive reasoning records, maps internal enums to human-readable labels, and records explicit divergence when a participant chooses a stronger posture than the scenario evidence supports. It does not prevent disagreement.
+
 ## Verification
 
 Run:
@@ -41,19 +86,13 @@ Run:
 node experiments/research-prototype-v1/verify.mjs
 ```
 
-GitHub Actions also runs the verifier on changes to this artifact.
+GitHub Actions runs the same verifier on branch changes.
 
-## UAT findings incorporated through v1.4
+Current engineering identity (candidate, not preregistration digest):
 
-- Spanish-first visible copy;
-- progressive depth with explicit “more detail does not imply more certainty” semantics;
-- novice 20-second known/missing/responsible-reading summary;
-- research controls separated from the product-facing path;
-- local decision-history semantics corrected (not falsely called cryptographically immutable);
-- human-readable process labels;
-- confidence clarified as confidence in interpretation, not market probability;
-- low-information/repetitive records rejected;
-- stronger-than-evidence user postures remain allowed but must be recorded as explicit divergence;
-- extreme-confidence and divergence events are instrumented for later calibration research.
+```
+branch_head: 8400ff03c191b3873fe5eca63c86fe24dbbc47a2
+index_git_blob: aeddd8612ae5f41bda3351b7ab1e38eb3c0b1388
+```
 
-These controls improve the instrument. They do not close any evidence gate.
+The final Q00 material digest remains unfrozen until independent review, comparator-G authority, scenario review and preregistration closure.
