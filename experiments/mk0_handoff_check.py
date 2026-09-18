@@ -8,21 +8,32 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED = [
+    "experiments/q00/Q00_EXECUTION_KIT.md",
+    "experiments/q00/Q00_PREREGISTRATION.md",
     "experiments/q00/Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md",
     "experiments/q00/Q00_SCORING_RUBRIC.md",
     "experiments/q00/Q00_REVIEWER_HANDOFF.md",
     "experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md",
     "experiments/q00/generate_assignment.py",
     "experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md",
+    "experiments/q03/Q03_EXECUTION_KIT.md",
+    "experiments/q03/Q03_PREREGISTRATION.md",
     "experiments/q03/Q03_14_DAY_RUNBOOK.md",
     "experiments/q03/q03_event.schema.json",
     "experiments/q03/validate_event_export.py",
+    "experiments/q04/Q04_PREREGISTRATION.md",
+    "experiments/q04/Q04_DRY_RUN_RECEIPT.md",
     "experiments/q04/Q04_INDEPENDENT_REPRODUCTION_PACKET.md",
+    "experiments/q05/Q05_EXECUTION_KIT.md",
+    "experiments/q05/Q05_PREREGISTRATION.md",
     "experiments/q05/Q05_COMPONENT_EXPOSURE_CONTRACT.md",
+    "docs/validation/q01/REGULATORY_REVIEW_PACKET.md",
     "docs/validation/q01/COUNSEL_COVER_NOTE.md",
+    "docs/validation/q02/DATA_USE_PROFILE_PACKET.md",
     "docs/validation/q02/PROVIDER_INQUIRY_TEMPLATE.md",
     "docs/validation/MK0_EXTERNAL_HANDOFF_READINESS.md",
     "mining-site/external/2026-09-17-public-source-refresh.md",
+    "mining-site/competitors/2026-09-17-tradingview-comparator-snapshot.md",
 ]
 
 def require(name: str, condition: bool) -> None:
@@ -52,6 +63,14 @@ require("Q04 synthetic receipt remains inconclusive", "INCONCLUSIVE / DRY_RUN_ON
 require("Q05 exposure contract bound", "Q05_COMPONENT_EXPOSURE_CONTRACT.md" in q05)
 require("MK0 remains blocked", "MK0_PROMOTION: BLOCKED" in status and "MK1_PRODUCTION_IMPLEMENTATION: NOT_AUTHORIZED" in status)
 require("public refresh cannot promote", "PUBLIC_PRECHECK_ONLY / NOT_EXTERNAL_AUTHORITY / NOT_PROMOTABLE" in public_refresh)
+
+g_sheet = (ROOT / "experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md").read_text(encoding="utf-8")
+q01_cover = (ROOT / "docs/validation/q01/COUNSEL_COVER_NOTE.md").read_text(encoding="utf-8")
+q02_inquiry = (ROOT / "docs/validation/q02/PROVIDER_INQUIRY_TEMPLATE.md").read_text(encoding="utf-8")
+
+require("G comparator remains explicitly unfrozen", "NOT_FROZEN" in g_sheet and "INDEPENDENT_REVIEW_REQUIRED" in g_sheet)
+require("Q01 still requires external authority", "EXTERNAL" in q01_cover or "counsel" in q01_cover.lower())
+require("Q02 still requires provider authority", "PROVIDER AUTHORITY REQUIRED" in q02_inquiry)
 
 generator_path = ROOT / "experiments/q00/generate_assignment.py"
 spec = importlib.util.spec_from_file_location("q00_assignment", generator_path)
