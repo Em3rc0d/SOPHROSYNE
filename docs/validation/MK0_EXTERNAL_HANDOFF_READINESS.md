@@ -18,7 +18,7 @@ This is not an MK0 promotion receipt.
 
 | Gate | Internal handoff state | External / empirical blocker |
 |---|---|---|
-| Q00 causal value | READY_FOR_INDEPENDENT_REVIEW — seven-arm prototype v2.2, eight-case corpus, Williams assignment generator, candidate sample/analysis thresholds, scoring rubric, recruitment/moderator packet, reviewer handoff | independent methods + market review, exact G comparator freeze, Q01-approved participant flow, adult Peru cohort, actual run |
+| Q00 causal value | READY_FOR_INDEPENDENT_REVIEW — seven-arm prototype v2.3, eight-case corpus, Williams assignment generator, candidate sample/analysis thresholds, scoring rubric, recruitment/moderator packet, reviewer handoff | independent methods + market review, exact G comparator freeze, Q01-approved participant flow, adult Peru cohort, actual run |
 | Q01 Peru boundary | READY_TO_SEND_AFTER_FLOW_DIGESTS — regulatory packet + counsel cover note + public-source refresh | qualified Peru counsel/privacy/consumer authority tied to exact frozen flows |
 | Q02 data rights | READY_TO_SEND — DataUseProfile packet + provider inquiry template + public-source refresh | executed/written provider authority and current commercial quote for exact use profiles |
 | Q03 repeat use / WTP | READY_FOR_Q01_AND_INDEPENDENT_REVIEW — 14-day runbook, telemetry contract, prototype rehearsal events | Q01-approved consent/retention, promotion-grade collector/export receipt path, adults, 14-day observation, pricing evidence |
@@ -31,6 +31,8 @@ This is not an MK0 promotion receipt.
 experiments/q00/Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md
 experiments/q00/Q00_SCORING_RUBRIC.md
 experiments/q00/Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md
+experiments/q00/Q00_MARKET_SCENARIO_AUDIT_V1.md
+experiments/q00/Q00_SCENARIO_DOMAIN_MAP.json
 experiments/q00/Q00_REVIEWER_HANDOFF.md
 experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md
 experiments/q00/generate_assignment.py
@@ -55,7 +57,7 @@ docs/quant/MARKET_DOMAIN_FOUNDATION.md
 ## Q00 candidate design identity
 
 ~~~yaml
-prototype_semver: research-prototype-v2.2.0
+prototype_semver: research-prototype-v2.3.0
 treatment_arms: [A, B, C, D, E, F, G]
 unassisted_transfer_variant: T
 arm_task_scenarios: [SYN-01, SYN-02, SYN-03, SYN-04, SYN-06, SYN-07, SYN-08]
