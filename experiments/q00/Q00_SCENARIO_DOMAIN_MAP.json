@@ -1,0 +1,430 @@
+{
+  "schema_version": "q00-scenario-domain-map-v1",
+  "prototype_version": "research-prototype-v2.3.0",
+  "scenarios": [
+    {
+      "scenario_id": "SYN-01",
+      "decision_context": "RESEARCH_ONLY",
+      "horizon": "3–10 sesiones / corto plazo",
+      "instrument": "acción sintética líquida",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "execution_relevance": "CONTEXT_ONLY",
+      "raw_fact_map": [
+        {
+          "index": 1,
+          "evidence_class": "PRICE",
+          "independence_group": "PRICE_STRUCTURE",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 2,
+          "evidence_class": "MOMENTUM",
+          "independence_group": "PRICE_STRUCTURE",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 3,
+          "evidence_class": "VOLATILITY",
+          "independence_group": "VOLATILITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 4,
+          "evidence_class": "VOLUME",
+          "independence_group": "VOLUME",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 5,
+          "evidence_class": "BREADTH",
+          "independence_group": "BREADTH",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 6,
+          "evidence_class": "LIQUIDITY",
+          "independence_group": "EXECUTION_LIQUIDITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 7,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "TIMELINESS",
+          "directional_relevance": "UNCERTAINTY"
+        }
+      ]
+    },
+    {
+      "scenario_id": "SYN-02",
+      "decision_context": "RESEARCH_ONLY",
+      "horizon": "18 ventanas / rango de corto plazo",
+      "instrument": "acción sintética líquida",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "execution_relevance": "NOT_MATERIAL_TO_PRIMARY_REASONING",
+      "raw_fact_map": [
+        {
+          "index": 1,
+          "evidence_class": "PRICE",
+          "independence_group": "PRICE_RANGE",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 2,
+          "evidence_class": "PRICE",
+          "independence_group": "PRICE_RANGE",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 3,
+          "evidence_class": "PRICE",
+          "independence_group": "PRICE_RANGE",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 4,
+          "evidence_class": "VOLATILITY",
+          "independence_group": "VOLATILITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 5,
+          "evidence_class": "EVENT",
+          "independence_group": "NARRATIVE",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 6,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "CAUSALITY",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 7,
+          "evidence_class": "MOMENTUM",
+          "independence_group": "PRICE_RANGE",
+          "directional_relevance": "SUPPORTING"
+        }
+      ]
+    },
+    {
+      "scenario_id": "SYN-03",
+      "decision_context": "RESEARCH_ONLY",
+      "horizon": "corto plazo con contexto externo",
+      "instrument": "acción sintética líquida",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "execution_relevance": "CONTEXT_ONLY",
+      "raw_fact_map": [
+        {
+          "index": 1,
+          "evidence_class": "PRICE",
+          "independence_group": "PRICE_STRUCTURE",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 2,
+          "evidence_class": "MOMENTUM",
+          "independence_group": "PRICE_STRUCTURE",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 3,
+          "evidence_class": "LIQUIDITY",
+          "independence_group": "EXECUTION_LIQUIDITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 4,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "CRITICAL_CONTEXT",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 5,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "SECONDARY_CONFIRMATION",
+          "directional_relevance": "UNCERTAINTY"
+        },
+        {
+          "index": 6,
+          "evidence_class": "VOLATILITY",
+          "independence_group": "VOLATILITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 7,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "POLICY",
+          "directional_relevance": "CONTEXT"
+        }
+      ]
+    },
+    {
+      "scenario_id": "SYN-04",
+      "decision_context": "RESEARCH_ONLY",
+      "horizon": "ruptura de corto plazo bajo alta volatilidad",
+      "instrument": "acción sintética líquida",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "execution_relevance": "CONTEXT_ONLY",
+      "raw_fact_map": [
+        {
+          "index": 1,
+          "evidence_class": "PRICE",
+          "independence_group": "PRICE_STRUCTURE",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 2,
+          "evidence_class": "VOLATILITY",
+          "independence_group": "VOLATILITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 3,
+          "evidence_class": "MOMENTUM",
+          "independence_group": "PRICE_STRUCTURE",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 4,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "CRITICAL_CONTEXT",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 5,
+          "evidence_class": "VOLUME",
+          "independence_group": "PARTICIPATION",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 6,
+          "evidence_class": "LIQUIDITY",
+          "independence_group": "EXECUTION_LIQUIDITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 7,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "OUTCOME_BOUNDARY",
+          "directional_relevance": "CONTEXT"
+        }
+      ]
+    },
+    {
+      "scenario_id": "SYN-05",
+      "decision_context": "RESEARCH_ONLY",
+      "horizon": "evento narrativo de corto plazo",
+      "instrument": "acción sintética líquida",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "execution_relevance": "NOT_MATERIAL_TO_PRIMARY_REASONING",
+      "raw_fact_map": [
+        {
+          "index": 1,
+          "evidence_class": "EVENT",
+          "independence_group": "NARRATIVE",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 2,
+          "evidence_class": "PRICE",
+          "independence_group": "PRICE_MOVE",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 3,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "CAUSALITY",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 4,
+          "evidence_class": "POSITIONING",
+          "independence_group": "ALTERNATIVE_EXPLANATIONS",
+          "directional_relevance": "UNCERTAINTY"
+        },
+        {
+          "index": 5,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "NARRATIVE",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 6,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "OUTCOME_BOUNDARY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 7,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "TRANSFER_PROTOCOL",
+          "directional_relevance": "CONTEXT"
+        }
+      ]
+    },
+    {
+      "scenario_id": "SYN-06",
+      "decision_context": "EXECUTION_ONLY",
+      "horizon": "ventana inmediata de ejecución",
+      "instrument": "acción sintética líquida bajo estrés",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "execution_relevance": "PRIMARY",
+      "raw_fact_map": [
+        {
+          "index": 1,
+          "evidence_class": "MOMENTUM",
+          "independence_group": "PRICE_SIGNAL",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 2,
+          "evidence_class": "EXECUTION",
+          "independence_group": "EXECUTION_LIQUIDITY",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 3,
+          "evidence_class": "LIQUIDITY",
+          "independence_group": "EXECUTION_LIQUIDITY",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 4,
+          "evidence_class": "VOLUME",
+          "independence_group": "ACTIVITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 5,
+          "evidence_class": "VOLATILITY",
+          "independence_group": "VOLATILITY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 6,
+          "evidence_class": "EXECUTION",
+          "independence_group": "MARKET_FUNCTION",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 7,
+          "evidence_class": "EXECUTION",
+          "independence_group": "COST_MODEL",
+          "directional_relevance": "UNCERTAINTY"
+        }
+      ]
+    },
+    {
+      "scenario_id": "SYN-07",
+      "decision_context": "RESEARCH_ONLY",
+      "horizon": "mismo as_of multi-fuente",
+      "instrument": "acción sintética líquida",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "execution_relevance": "NOT_MATERIAL_TO_PRIMARY_REASONING",
+      "raw_fact_map": [
+        {
+          "index": 1,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "SOURCE_A",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 2,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "SOURCE_B_UNKNOWN_DEPENDENCE",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 3,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "SOURCE_C_STALE",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 4,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "SOURCE_C_STALE",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 5,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "SOURCE_DEPENDENCE_UNKNOWN",
+          "directional_relevance": "UNCERTAINTY"
+        },
+        {
+          "index": 6,
+          "evidence_class": "EVENT",
+          "independence_group": "ABSENCE_OF_CONTRADICTION",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 7,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "TASK_RULE",
+          "directional_relevance": "CONTEXT"
+        }
+      ]
+    },
+    {
+      "scenario_id": "SYN-08",
+      "decision_context": "RESEARCH_ONLY",
+      "horizon": "comparación entre regímenes",
+      "instrument": "acción sintética líquida",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "execution_relevance": "NOT_MATERIAL_TO_PRIMARY_REASONING",
+      "raw_fact_map": [
+        {
+          "index": 1,
+          "evidence_class": "PRICE",
+          "independence_group": "PRICE_PATTERN",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 2,
+          "evidence_class": "MOMENTUM",
+          "independence_group": "PRICE_PATTERN",
+          "directional_relevance": "SUPPORTING"
+        },
+        {
+          "index": 3,
+          "evidence_class": "VOLATILITY",
+          "independence_group": "REGIME",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 4,
+          "evidence_class": "POSITIONING",
+          "independence_group": "REGIME",
+          "directional_relevance": "OPPOSING"
+        },
+        {
+          "index": 5,
+          "evidence_class": "VOLUME",
+          "independence_group": "PARTICIPATION",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 6,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "OUTCOME_BOUNDARY",
+          "directional_relevance": "CONTEXT"
+        },
+        {
+          "index": 7,
+          "evidence_class": "PROVENANCE",
+          "independence_group": "TRANSFER_RULE",
+          "directional_relevance": "CONTEXT"
+        }
+      ]
+    }
+  ]
+}
