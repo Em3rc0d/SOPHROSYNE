@@ -8,9 +8,9 @@ This kit operationalizes `Q03_PREREGISTRATION.md`. It does not manufacture parti
 
 Candidate prototype:
 - path: `experiments/research-prototype-v1/index.html`;
-- semantic version: `research-prototype-v2.2.0`;
-- candidate branch: `research/mk0-handoff-hardening`;
-- Git blob identity: `c8d49efb30569f7b3ae3e1b0426e57032f489ff3`.
+- semantic version: `research-prototype-v2.3.0`;
+- candidate branch: `research/q00-market-scenario-hardening`;
+- Git blob identity: `UNFROZEN_UNTIL_FINAL_REVIEW_COMMIT`.
 
 The prototype is suitable for rehearsal and instrumentation review only. Its `prototype_digest` event field intentionally remains `UNFROZEN_REHEARSAL` until the final material set is independently reviewed and frozen before a promotable run.
 
@@ -129,20 +129,26 @@ Still missing for promotion-grade E03-C:
 
 Canonical longitudinal semantics: `experiments/q03/Q03_14_DAY_RUNBOOK.md`.
 
-Minimum events:
+Minimum current prototype events:
 
 ```text
 session_started
-translator_opened
-evidence_expanded
+task_started
+task_answer_submitted
+evidence_item_opened
 opposing_evidence_opened
 uncertainty_opened
 invalidation_opened
 decision_record_created
+decision_record_opened
 decision_record_revisited
-reminder_opened
+component_eligible
+component_exposed
+component_used
 session_ended
 ```
+
+Future promotion-grade reminder pipeline additionally requires `reminder_delivered` / `reminder_opened` (or a superseding frozen naming contract) before E03-C execution.
 
 Every event records:
 
@@ -234,7 +240,7 @@ Each sub-experiment must produce:
 
 ```yaml
 adult_peru_participants: NOT_RECRUITED
-prototype_semantic_version: research-prototype-v2.2.0
+prototype_semantic_version: research-prototype-v2.3.0
 prototype_instrumentation: READY_FOR_REHEARSAL
 prototype_digest: NOT_FROZEN
 reminder_attribution_pipeline: NOT_IMPLEMENTED

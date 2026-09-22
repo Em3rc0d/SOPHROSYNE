@@ -45,16 +45,26 @@ Internal market-domain QA before independent R2:
 
 The project owner is not treated as a market-domain authority. User feedback remains UX/comprehension evidence; market correctness is checked against the domain baseline and then independently reviewed.
 
-Every scenario must include the same underlying fact set across arms and contain at minimum:
-- 3 supporting observations;
-- 2 contradicting observations;
-- 1 stale/uncertain item;
-- 1 explicit missing-data item;
-- 1 scenario invalidator;
-- 1 item that is correlated but not evidence of causality;
+Every scenario must expose the same underlying fact set across arms and contain enough material tension to test disciplined reasoning without encouraging signal-count voting.
+
+Required:
+- at least one material supporting observation where a supporting claim exists;
+- at least one material contradiction or limitation;
+- explicit uncertainty/staleness/missingness where relevant;
+- one falsifiable scenario invalidator;
+- explicit separation of non-directional context from directional evidence;
+- declared evidence classes and independence grouping;
 - a hidden outcome revealed only after the process task.
 
+The number of evidence items is never interpreted as strength, independence or probability.
+
 Current rehearsal corpus contains eight scenario instances across the required families. Seven are assigned to A–G via the Williams schedule; SYN-05 is reserved for the unassisted transfer task.
+
+Internal market audit:
+- `Q00_MARKET_SCENARIO_AUDIT_V1.md`;
+- `Q00_SCENARIO_DOMAIN_MAP.json`.
+
+Internal result is `READY_FOR_R2`, not independent approval.
 
 These are rehearsal materials only until independent market-domain review and final corpus hashing.
 
@@ -163,10 +173,10 @@ Q00 cannot move to `PRE_REGISTERED` until all are frozen:
 independent_reviewer: MISSING
 adult_peru_participants: NOT_RECRUITED
 candidate_rehearsal_artifact: experiments/research-prototype-v1/index.html
-candidate_branch: research/mk0-handoff-hardening
-candidate_index_git_blob: c8d49efb30569f7b3ae3e1b0426e57032f489ff3
+candidate_branch: research/q00-market-scenario-hardening
+candidate_index_git_blob: UNFROZEN_UNTIL_FINAL_REVIEW_COMMIT
 seven_arm_instrumentation: READY_FOR_REHEARSAL
-eight_scenario_rehearsal_corpus: READY_FOR_REVIEW
+eight_scenario_rehearsal_corpus: INTERNAL_QA_PASS_READY_FOR_R2
 external_comparator_g_candidate_sheet: experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md
 external_comparator_g_execution_state: NOT_FROZEN
 sample_assignment_plan: READY_FOR_REVIEW

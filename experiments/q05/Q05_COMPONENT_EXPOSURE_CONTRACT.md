@@ -21,16 +21,16 @@ eligible_exposed_repeat_user =
 
 Missing exposure data never means "exposed but did not use".
 
-## C01 — supporting/opposing evidence structure
+## C01 — supporting/opposing/context evidence structure
 
 ```yaml
 eligibility:
   arm: [E, F]
-  condition: scenario contains both supporting and opposing evidence
+  condition: scenario contains material evidence tension; directional and non-directional items remain distinguishable
 exposure:
   event: component_exposed
   component_id: C01
-  rule: evidence structure rendered in a qualifying session
+  rule: supporting/opposing/context evidence structure rendered in a qualifying session
 use:
   event: component_used
   qualifying_use_type: EVIDENCE_EXPANDED
@@ -58,7 +58,7 @@ Same-session duplicate opening is not revisit.
 
 ```yaml
 current_prototype_status: NOT_SUFFICIENTLY_INSTRUMENTED
-promotion_use: PROHIBITED_FROM_V2_2
+promotion_use: PROHIBITED_IN_CURRENT_PROTOTYPE
 required_future_exposure:
   provenance/replay control rendered with valid as_of semantics
 required_future_use:
@@ -103,7 +103,7 @@ Programmatic/default depth changes do not count.
 
 ```yaml
 current_prototype_status: NOT_IMPLEMENTED
-promotion_use: PROHIBITED_FROM_V2_2
+promotion_use: PROHIBITED_IN_CURRENT_PROTOTYPE
 ```
 
 No Q05 claim for C06 is allowed from this prototype.
@@ -126,7 +126,7 @@ adoption_candidate:
 
 ```yaml
 current_prototype_status: NOT_IMPLEMENTED_AS_PROMOTABLE_SURFACE
-promotion_use: PROHIBITED_FROM_V2_2
+promotion_use: PROHIBITED_IN_CURRENT_PROTOTYPE
 dependency: Q02
 ```
 
@@ -145,7 +145,7 @@ Every component event must include:
 
 Duplicate retries are deduplicated by event ID/exposure instance ID.
 
-## Q05 v2.2 allowed interpretation
+## Q05 v2.3 allowed interpretation
 
 Instrumented enough for rehearsal:
 `C01, C02, C04, C05, C07`.

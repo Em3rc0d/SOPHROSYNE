@@ -105,7 +105,7 @@ def self_test() -> None:
         "session_id": "s1",
         "task_id": "SYN-01",
         "variant_id": "F",
-        "prototype_version": "research-prototype-v2.2.0",
+        "prototype_version": "research-prototype-v2.3.0",
         "prototype_digest": "UNFROZEN_REHEARSAL",
         "source": "UI",
         "recruitment_cohort": None,

@@ -93,6 +93,9 @@ code { color: var(--accent-2); font-size: .92em; }
 .research-controls summary::after { content:'＋'; float:right; color:var(--dim); }
 .research-controls[open] summary::after { content:'−'; }
 .research-controls-body { padding:0 10px 11px; display:grid; gap:9px; }
+.domain-context { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+.domain-chip { border:1px solid var(--line-soft); border-radius:999px; padding:5px 8px; color:var(--muted); font-size:10px; line-height:1; }
+.domain-chip strong { color:var(--text); font-weight:800; }
 .quick-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:16px; }
 .quick-cell { border:1px solid var(--line-soft); background:#0c1219; border-radius:12px; padding:13px; }
 .quick-cell span { display:block; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; font-size:9px; font-weight:800; margin-bottom:6px; }
@@ -310,7 +313,7 @@ button.full { width: 100%; }
       <div id="transferNotice" class="transfer-notice">Tarea de transferencia sin asistencia: responde usando únicamente la información cruda del caso. No se muestran estructuras SOPHROSYNE ni feedback antes de enviar.</div>
       <section class="research-flow" aria-label="Flujo de prueba">
         <div class="flow-step"><strong>1 · Lee</strong>Identifica qué puede afirmarse sin sobreinterpretar.</div>
-        <div class="flow-step"><strong>2 · Contrasta</strong>Abre evidencia favorable, contradictoria e incertidumbre.</div>
+        <div class="flow-step"><strong>2 · Contrasta</strong>Abre evidencia favorable, contradictoria, contexto no direccional e incertidumbre.</div>
         <div class="flow-step"><strong>3 · Registra</strong>Expresa tu hipótesis, confianza y condición de cambio.</div>
       </section>
       <section class="hero-card">
@@ -322,6 +325,7 @@ button.full { width: 100%; }
           <div class="freshness" id="freshnessBadge">—</div>
         </div>
         <p id="scenarioQuestion" class="hero-question"></p>
+        <div class="domain-context" id="domainContext" aria-label="Contexto del escenario"></div>
         <div class="quick-summary" aria-label="Resumen rápido">
           <div class="quick-cell"><span>Lo que sí sabemos</span><strong id="quickKnown">—</strong></div>
           <div class="quick-cell"><span>Lo que falta</span><strong id="quickMissing">—</strong></div>
@@ -368,6 +372,7 @@ button.full { width: 100%; }
             <div class="raw-facts" id="structuredSupport"></div>
             <div class="raw-facts" id="structuredOppose"></div>
           </div>
+          <div class="raw-facts" id="structuredContext"></div>
           <div class="arm-note">Sin historial previo ni outcome feedback. Estructura la información de este escenario de forma stateless.</div>
         </div>
       </section>
@@ -447,6 +452,7 @@ button.full { width: 100%; }
           <div class="depth-detail" id="depthDetail"></div>
         </section>
 
+        <div class="arm-note"><strong>Importante:</strong> la cantidad de ítems no es una puntuación, no mide independencia y no representa una probabilidad. Una sola contradicción material puede pesar más que varios indicadores correlacionados.</div>
         <section class="evidence-grid">
           <article class="panel evidence-panel support">
             <div class="panel-head compact">
@@ -469,6 +475,17 @@ button.full { width: 100%; }
             </div>
             <div id="opposeEvidence" class="evidence-list"></div>
           </article>
+        </section>
+
+        <section class="panel evidence-panel context-panel">
+          <div class="panel-head compact">
+            <div>
+              <div class="eyebrow">Contexto no direccional</div>
+              <h2>No cuenta como voto alcista/bajista</h2>
+            </div>
+            <span class="count-badge" id="contextCount">0</span>
+          </div>
+          <div id="contextEvidence" class="evidence-list"></div>
         </section>
 
         <section class="risk-grid">
@@ -535,7 +552,7 @@ button.full { width: 100%; }
 
           <label>
             <span>¿Qué evidencia concreta te haría cambiar de opinión?</span>
-            <input id="changeMindInput" required maxlength="240" placeholder="Ej.: confirmación de ruptura con volumen y evidencia macro no contradictoria." />
+            <input id="changeMindInput" required maxlength="240" placeholder="Ej.: una fuente actualizada, confirmación independiente o un cambio observable que invalide mi lectura." />
           </label>
 
           <div id="formFeedback" class="form-feedback" role="status" aria-live="polite"></div>
@@ -570,7 +587,7 @@ button.full { width: 100%; }
 (() => {
   'use strict';
 
-  const VERSION = 'research-prototype-v2.2.0';
+  const VERSION = 'research-prototype-v2.3.0';
   const STORAGE_LEDGER = 'sophrosyne.research.ledger.v2';
   const STORAGE_EVENTS = 'sophrosyne.research.events.v2';
   const sessionId = crypto.randomUUID ? crypto.randomUUID() : `session-${Date.now()}`;
@@ -587,6 +604,7 @@ button.full { width: 100%; }
   const scenarios = [
     {
       id: 'SYN-01',
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'3–10 sesiones / corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','VOLUME','BREADTH','VOLATILITY','LIQUIDITY'], independenceNote:'Momentum y ruptura comparten el mismo grupo de precio; volumen, amplitud y liquidez no se cuentan como réplicas independientes de esa señal.' },
       family: 'Repetición sintética · conflicto de tendencia',
       title: 'Impulso fuerte, confirmación incompleta',
       question: 'El precio acelera después de varias sesiones positivas, pero parte de la evidencia de confirmación pierde calidad. ¿Qué puede afirmarse rigurosamente con la información disponible?',
@@ -603,14 +621,14 @@ button.full { width: 100%; }
       translation: 'Hay impulso positivo observable, pero la estructura de evidencia todavía no permite separar una continuación robusta de una expansión frágil. La conclusión disciplinada es mantener ambas hipótesis abiertas.',
       depth: {
         beginner: 'Lo importante no es adivinar el siguiente movimiento: es reconocer que el impulso existe y, al mismo tiempo, que faltan confirmaciones independientes.',
-        investor: 'La tesis positiva depende de que el impulso sobreviva sin deteriorar amplitud/liquidez y de que la evidencia macro no introduzca una contradicción material.',
+        investor: 'La lectura de continuidad depende de que el impulso sobreviva sin deterioro adicional de amplitud y de que aparezca confirmación verdaderamente independiente; la liquidez sólo condiciona la calidad operativa, no la dirección.',
         trader: 'Momentum y expansión de rango son favorables, pero la confirmación por volumen relativo es débil y el cambio de volatilidad aumenta el riesgo de falsa continuidad.',
         quant: 'Variables sintéticas: momentum normalizado +1.42σ, régimen de volatilidad realizada en percentil 82, z-score de volumen relativo +0.18 y proxy de amplitud en deterioro. No se calibra ni se muestra ninguna probabilidad predictiva.'
       },
       support: [
         { title: 'Momentum persistente', meta: 'OBSERVADO · vigente', detail: 'Tres ventanas consecutivas mantienen pendiente positiva; la magnitud está por encima de su rango sintético reciente.' },
         { title: 'Ruptura del rango previo', meta: 'OBSERVADO · vigente', detail: 'El nivel superior del rango de referencia fue superado y no se reingresó inmediatamente.' },
-        { title: 'Liquidez operativa suficiente', meta: 'OBSERVADO · vigente', detail: 'No aparece un deterioro extremo de profundidad en el corte sintético utilizado.' }
+        { title: 'Liquidez operativa suficiente', meta: 'OBSERVADO · vigente', detail: 'No aparece un deterioro extremo de profundidad en el corte sintético utilizado. Esto no es evidencia direccional.', directional: false }
       ],
       oppose: [
         { title: 'Volumen no confirma', meta: 'OBSERVADO · vigente', detail: 'El volumen relativo permanece cerca de neutral pese a la expansión del precio.' },
@@ -630,6 +648,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-02',
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'18 ventanas / rango de corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','EVENT','PROVENANCE'], independenceNote:'Rebote, soporte y desaceleración vendedora comparten historia de precio; narrativa y volatilidad son contexto separado, no votos adicionales.' },
       family: 'Repetición sintética · rango',
       title: 'Rebote dentro de un rango, narrativa excesiva',
       question: 'El precio rebota desde la zona inferior de un rango mientras una narrativa externa gana atención. ¿El rebote demuestra un cambio de régimen?',
@@ -653,7 +672,7 @@ button.full { width: 100%; }
       support: [
         { title: 'Reacción en soporte', meta: 'OBSERVADO · vigente', detail: 'La zona inferior del rango produjo una respuesta rápida y medible.' },
         { title: 'Presión vendedora desacelera', meta: 'OBSERVADO · vigente', detail: 'La magnitud de movimientos negativos disminuye en las últimas observaciones.' },
-        { title: 'Volatilidad estable', meta: 'OBSERVADO · vigente', detail: 'No aparece expansión brusca que invalide por sí sola la lógica de rango.' }
+        { title: 'Volatilidad estable', meta: 'OBSERVADO · vigente', detail: 'No aparece expansión brusca; la volatilidad por sí sola no confirma dirección.', directional: false }
       ],
       oppose: [
         { title: 'Rango superior intacto', meta: 'OBSERVADO · vigente', detail: 'El precio no supera la frontera que distinguiría rebote de cambio estructural.' },
@@ -673,6 +692,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-03',
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'corto plazo con contexto externo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','LIQUIDITY','PROVENANCE','EVENT'], independenceNote:'Estructura y momentum comparten grupo de precio; la fuente crítica/provenance es una condición de completitud distinta; liquidez es contexto operativo.' },
       family: 'Repetición sintética · evidencia desactualizada',
       title: 'Señales favorables con una fuente crítica desactualizada',
       question: 'Varios indicadores son constructivos, pero una fuente importante está desactualizada. ¿Debe mantenerse una conclusión direccional?',
@@ -696,7 +716,7 @@ button.full { width: 100%; }
       support: [
         { title: 'Estructura de corto plazo mejora', meta: 'OBSERVADO · vigente', detail: 'El patrón sintético de máximos/mínimos mejora en las ventanas recientes.' },
         { title: 'Momentum sale de zona débil', meta: 'OBSERVADO · vigente', detail: 'La señal normalizada cruza a terreno positivo sin aceleración extrema.' },
-        { title: 'Liquidez no se deteriora', meta: 'OBSERVADO · vigente', detail: 'El proxy de liquidez permanece dentro de límites operativos.' }
+        { title: 'Liquidez no se deteriora', meta: 'OBSERVADO · vigente', detail: 'El proxy de liquidez permanece dentro de límites operativos. No implica una dirección futura.', directional: false }
       ],
       oppose: [
         { title: 'Fuente crítica desactualizada', meta: 'DESACTUALIZADO · bloqueante', detail: 'El contexto crítico supera la ventana de vigencia definida para este escenario.' },
@@ -716,6 +736,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-04',
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'ruptura de corto plazo bajo alta volatilidad', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','LIQUIDITY','PROVENANCE'], independenceNote:'Ruptura y momentum comparten grupo de precio; volatilidad no aporta dirección; provenance y participación deben evaluarse por separado.' },
       family: 'Repetición sintética · alta volatilidad',
       title: 'Ruptura aparente en un régimen de volatilidad extrema',
       question: 'El precio supera un nivel importante durante una expansión brusca de volatilidad, mientras dos fuentes de contexto no tienen la misma vigencia. ¿Qué puede sostenerse sin confundir velocidad con confirmación?',
@@ -739,7 +760,7 @@ button.full { width: 100%; }
       support: [
         { title: 'Nivel previo superado', meta: 'OBSERVADO · vigente', detail: 'El precio se mantiene temporalmente por encima del nivel de referencia.' },
         { title: 'Momentum acelera', meta: 'OBSERVADO · vigente', detail: 'La pendiente de corto plazo aumenta de forma material.' },
-        { title: 'Liquidez aún operativa', meta: 'OBSERVADO · vigente', detail: 'No existe fallo total del proxy de liquidez durante la expansión.' }
+        { title: 'Liquidez aún operativa', meta: 'OBSERVADO · vigente', detail: 'No existe fallo total del proxy de liquidez durante la expansión. Es contexto de ejecución, no confirmación alcista.', directional: false }
       ],
       oppose: [
         { title: 'Contexto desincronizado', meta: 'DESACTUALIZADO · material', detail: 'Una fuente clave no comparte la misma ventana temporal que el movimiento de precio.' },
@@ -759,6 +780,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-05',
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'evento narrativo de corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','EVENT','POSITIONING','LIQUIDITY','PROVENANCE'], independenceNote:'Múltiples fuentes narrativas pueden compartir origen; repetición de una historia no constituye confirmación causal independiente.' },
       family: 'Transferencia · narrativa y causalidad',
       title: 'Catalizador narrativo fuerte, evidencia causal débil',
       question: 'Una narrativa externa coincide con un movimiento llamativo y se repite en múltiples fuentes. ¿La repetición de la historia demuestra que causó el movimiento?',
@@ -781,7 +803,7 @@ button.full { width: 100%; }
       },
       support: [
         { title: 'Coincidencia temporal clara', meta: 'OBSERVADO · vigente', detail: 'El aumento de menciones y el movimiento ocurren en ventanas cercanas.' },
-        { title: 'Narrativa consistente entre fuentes', meta: 'ATRIBUIDO · vigente', detail: 'Múltiples fuentes describen una explicación similar.' },
+        { title: 'Narrativa consistente entre fuentes', meta: 'ATRIBUIDO · vigente', detail: 'Múltiples fuentes repiten una explicación similar; repetición no establece causalidad.', directional: false },
         { title: 'Movimiento de magnitud material', meta: 'OBSERVADO · vigente', detail: 'El cambio de precio supera el ruido típico del escenario sintético.' }
       ],
       oppose: [
@@ -803,6 +825,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-06',
+      marketContext: { mode:'EXECUTION_ONLY', horizon:'ventana inmediata de ejecución', instrument:'acción sintética líquida bajo estrés', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'PRIMARY', evidenceClasses:['PRICE','MOMENTUM','VOLUME','VOLATILITY','LIQUIDITY','EXECUTION'], independenceNote:'Momentum y estructura comparten señal de precio; volumen es actividad; spread y profundidad pertenecen al bloque de ejecución/liquidez.' },
       family: 'Repetición sintética · liquidez y señal',
       title: 'Señal positiva con deterioro de liquidez',
       question: 'Una señal técnica mejora mientras la liquidez se deteriora y el spread se amplía. ¿Debe tratarse la señal como igual de accionable?',
@@ -826,7 +849,7 @@ button.full { width: 100%; }
       support: [
         { title: 'Momentum mejora', meta: 'OBSERVADO · vigente', detail: 'La señal normalizada cambia de negativa a positiva.' },
         { title: 'Estructura de corto plazo mejora', meta: 'OBSERVADO · vigente', detail: 'Se recuperan niveles recientes.' },
-        { title: 'Volumen bruto aumenta', meta: 'OBSERVADO · vigente', detail: 'La actividad crece frente al intervalo previo.' }
+        { title: 'Actividad/volumen bruto aumenta', meta: 'OBSERVADO · vigente', detail: 'La actividad crece frente al intervalo previo; volumen no equivale por sí solo a liquidez ni dirección.', directional: false }
       ],
       oppose: [
         { title: 'Spread se amplía', meta: 'OBSERVADO · vigente', detail: 'La fricción de ejecución sube materialmente.' },
@@ -846,6 +869,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-07',
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'mismo as_of multi-fuente', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PROVENANCE','EVENT','PRICE'], independenceNote:'La independencia entre fuentes A/B es desconocida hasta demostrar provenance distinto; la fuente C desactualizada no confirma el mismo as_of.' },
       family: 'Repetición sintética · multi-fuente',
       title: 'Fuentes coinciden en dirección, discrepan en tiempo',
       question: 'Tres fuentes sugieren mejora, pero una de ellas fue publicada mucho antes que las otras. ¿La coincidencia basta para tratar el conjunto como confirmación independiente?',
@@ -868,8 +892,8 @@ button.full { width: 100%; }
       },
       support: [
         { title: 'Dos fuentes actuales coinciden', meta: 'OBSERVADO · vigente', detail: 'Ambas describen mejora en la misma ventana.' },
-        { title: 'Tercera fuente también fue favorable', meta: 'OBSERVADO · histórica', detail: 'Su dirección coincide, pero pertenece a otra ventana.' },
-        { title: 'No hay contradicción explícita actual', meta: 'OBSERVADO · vigente', detail: 'Ninguna fuente vigente contradice directamente la mejora.' }
+        { title: 'Tercera fuente histórica coincide', meta: 'OBSERVADO · histórica', detail: 'Su dirección coincide, pero pertenece a otra ventana y no confirma el mismo as_of.', directional: false },
+        { title: 'No hay contradicción explícita actual', meta: 'OBSERVADO · vigente', detail: 'La ausencia de contradicción no constituye confirmación positiva por sí sola.', directional: false }
       ],
       oppose: [
         { title: 'Una fuente tiene available_at incompatible', meta: 'DESACTUALIZADO · material', detail: 'No puede contarse como confirmación del mismo as_of.' },
@@ -889,6 +913,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-08',
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'comparación entre regímenes', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','POSITIONING'], independenceNote:'Patrón y momentum comparten grupo de precio; volatilidad/correlación definen el régimen y participación es contexto, no confirmación automática.' },
       family: 'Repetición sintética · régimen',
       title: 'Señal familiar en un régimen diferente',
       question: 'Una regla que funcionó bien en un contexto anterior reaparece, pero el régimen de volatilidad y correlación cambió. ¿Puede reutilizarse la conclusión anterior sin más?',
@@ -912,7 +937,7 @@ button.full { width: 100%; }
       support: [
         { title: 'Patrón de precio similar', meta: 'OBSERVADO · vigente', detail: 'La forma reciente coincide con un patrón histórico.' },
         { title: 'Momentum comparable', meta: 'OBSERVADO · vigente', detail: 'La magnitud normalizada es parecida.' },
-        { title: 'Participación suficiente', meta: 'OBSERVADO · vigente', detail: 'No existe ausencia extrema de actividad.' }
+        { title: 'Participación suficiente', meta: 'OBSERVADO · vigente', detail: 'No existe ausencia extrema de actividad; esto no valida automáticamente la analogía histórica.', directional: false }
       ],
       oppose: [
         { title: 'Volatilidad de régimen distinta', meta: 'OBSERVADO · vigente', detail: 'El contexto actual está en un percentil materialmente superior.' },
@@ -1065,6 +1090,15 @@ button.full { width: 100%; }
     $('scenarioTitle').textContent = s.title;
     $('scenarioQuestion').textContent = s.question;
     $('freshnessBadge').textContent = s.freshness;
+    const mc = s.marketContext;
+    $('domainContext').innerHTML = [
+      ['Modo', mc.mode],
+      ['Horizonte', mc.horizon],
+      ['Instrumento', mc.instrument],
+      ['Leverage', mc.leverage],
+      ['Ejecución', mc.executionRelevance]
+    ].map(([k,v]) => `<span class="domain-chip"><strong>${escapeHtml(k)}:</strong> ${escapeHtml(v)}</span>`).join('') +
+      `<span class="domain-chip"><strong>Independencia:</strong> ${escapeHtml(mc.independenceNote)}</span>`;
     $('marketState').textContent = s.state;
     $('volatility').textContent = s.volatility;
     $('evidenceQuality').textContent = s.evidenceQuality;
@@ -1076,8 +1110,11 @@ button.full { width: 100%; }
     $('depthDetail').textContent = s.depth[activeDepth];
     const depthLabels = { beginner: 'Básico', investor: 'Inversor', trader: 'Trader', quant: 'Cuant' };
     $('depthStatus').textContent = `Nivel actual: ${depthLabels[activeDepth]} · más detalle no implica más certeza`;
-    $('supportCount').textContent = s.support.length;
+    const directionalSupport = s.support.filter(item => item.directional !== false);
+    const contextualEvidence = s.support.filter(item => item.directional === false);
+    $('supportCount').textContent = directionalSupport.length;
     $('opposeCount').textContent = s.oppose.length;
+    $('contextCount').textContent = contextualEvidence.length;
     $('uncertaintyText').textContent = s.uncertainty;
     $('invalidatorText').textContent = s.invalidator;
     $('rawFacts').innerHTML = s.rawFacts.map(f => `<div class="raw-fact">${escapeHtml(f)}</div>`).join('');
@@ -1085,13 +1122,15 @@ button.full { width: 100%; }
     $('comparatorFacts').innerHTML = [...s.rawFacts, 'Indicadores convencionales visibles sin una capa obligatoria de contradicción/incertidumbre.']
       .map(f => `<div class="raw-fact">${escapeHtml(f)}</div>`).join('');
     $('structuredSummary').textContent = s.translation;
-    $('structuredSupport').innerHTML = s.support.map(x => `<div class="raw-fact">A favor · ${escapeHtml(x.title)}</div>`).join('');
+    $('structuredSupport').innerHTML = directionalSupport.map(x => `<div class="raw-fact">A favor · ${escapeHtml(x.title)}</div>`).join('');
     $('structuredOppose').innerHTML = s.oppose.map(x => `<div class="raw-fact">En contra · ${escapeHtml(x.title)}</div>`).join('');
+    $('structuredContext').innerHTML = contextualEvidence.map(x => `<div class="raw-fact">Contexto · ${escapeHtml(x.title)}</div>`).join('');
     $('frictionList').innerHTML = frictionQuestions.map(q => `<li>${escapeHtml(q)}</li>`).join('');
     $('shortMemorySummary').textContent = s.translation;
     renderMemoryContexts();
-    renderEvidence('supportEvidence', s.support, 'SUPPORTING');
+    renderEvidence('supportEvidence', directionalSupport, 'SUPPORTING');
     renderEvidence('opposeEvidence', s.oppose, 'OPPOSING');
+    renderEvidence('contextEvidence', contextualEvidence, 'CONTEXT');
   }
 
   function renderMemoryContexts() {
@@ -1316,6 +1355,11 @@ button.full { width: 100%; }
       arm: transferMode ? 'T' : arm,
       scenario_id: activeScenario.id,
       scenario_digest_hint: `${activeScenario.id}:${activeScenario.freshness}`,
+      decision_context: activeScenario.marketContext.mode,
+      decision_horizon: activeScenario.marketContext.horizon,
+      instrument_class: activeScenario.marketContext.instrument,
+      leverage_class: activeScenario.marketContext.leverage,
+      evidence_classes: activeScenario.marketContext.evidenceClasses,
       system_conclusion: activeScenario.conclusion,
       evidence_alignment: alignment,
       hypothesis,
