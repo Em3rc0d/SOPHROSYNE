@@ -181,7 +181,17 @@ RSI, momentum oscillator and rate-of-change derived from the same price history 
 
 ---
 
-## 4. Market-state interpretation
+## 4. Price vs value invariant
+
+**Price is not value.**
+
+Observed market price is an execution/market-state fact. Estimated fundamental value is a model output built from assumptions about cash flows, growth, risk, horizon and/or comparable assets.
+
+SOPHROSYNE must preserve both fields separately and must not convert price movement into valuation evidence without an explicit model.
+
+---
+
+## 5. Market-state interpretation
 
 ### Trend
 
@@ -222,7 +232,7 @@ Conflicting indicators are evidence of ambiguity, not a reason to average them i
 
 ---
 
-## 5. Fundamental interpretation
+## 6. Fundamental interpretation
 
 A fundamental thesis separates:
 
@@ -247,7 +257,7 @@ Rules:
 
 ---
 
-## 6. Portfolio / risk rules
+## 7. Portfolio / risk rules
 
 SOPHROSYNE recognizes:
 - asset-specific risk;
@@ -268,7 +278,7 @@ No default percentage position size, stop distance or target return is canonical
 
 ---
 
-## 7. Execution rules
+## 8. Execution rules
 
 ### Market order
 
@@ -306,7 +316,7 @@ Relevant evidence can include:
 
 ---
 
-## 8. Leverage / short / derivative boundary
+## 9. Leverage / short / derivative boundary
 
 When `leverage != NONE`:
 - scenario must flag elevated loss mechanics;
@@ -318,7 +328,7 @@ No leverage is introduced merely to increase scenario difficulty.
 
 ---
 
-## 9. Technical-analysis epistemic contract
+## 10. Technical-analysis epistemic contract
 
 Allowed:
 - "momentum is positive under this definition";
@@ -338,7 +348,7 @@ Technical analysis may contribute evidence. It is not an oracle.
 
 ---
 
-## 10. Fundamental-analysis epistemic contract
+## 11. Fundamental-analysis epistemic contract
 
 Allowed:
 - report observed financial metrics;
@@ -355,7 +365,7 @@ Not allowed:
 
 ---
 
-## 11. Behavioral reasoning contract
+## 12. Behavioral reasoning contract
 
 The system may flag reasoning patterns such as:
 - evidence selection skew;
@@ -368,7 +378,7 @@ It must not diagnose personality or psychological disorders.
 
 ---
 
-## 12. Decision Ledger fields
+## 13. Decision Ledger fields
 
 A strong record should be able to preserve:
 
@@ -397,7 +407,7 @@ The later outcome cannot rewrite the original record.
 
 ---
 
-## 13. Beginner UX rule
+## 14. Beginner UX rule
 
 Beginner mode explains:
 - what is known;
@@ -416,7 +426,7 @@ Examples:
 
 ---
 
-## 14. Scenario realism requirements
+## 15. Scenario realism requirements
 
 Every promotable market scenario must declare:
 - instrument/context;
@@ -435,7 +445,7 @@ A market-domain reviewer evaluates realism against this foundation, not against 
 
 ---
 
-## 15. Alpha / prediction boundary
+## 16. Alpha / prediction boundary
 
 This domain foundation teaches market mechanics and disciplined reasoning.
 
