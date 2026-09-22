@@ -16,9 +16,17 @@ Minimum:
 
 ### R2 — market-domain content reviewer
 
+Internal domain baseline before R2:
+- `docs/quant/MARKET_DOMAIN_FOUNDATION.md`;
+- `experiments/q00/Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md`;
+- `mining-site/market/2026-09-21-course-synthesis.md`.
+
+These artifacts let the project reject basic market-domain mistakes without treating the project owner's trading intuition as authority. They do **not** substitute for independent R2 signoff.
+
 Minimum:
 - practical or research experience interpreting market evidence;
 - reviews scenario plausibility, terminology and information equivalence across arms;
+- can challenge the internal market-domain baseline when a documented source or domain argument is stronger;
 - does **not** decide participant outcomes or rewrite scenarios after seeing results.
 
 One person may satisfy both only if independence and competence are documented. Preferred: two different reviewers.
@@ -30,6 +38,8 @@ Send:
 - `Q00_EXECUTION_KIT.md`;
 - `Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md`;
 - `Q00_SCORING_RUBRIC.md`;
+- `Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md`;
+- `docs/quant/MARKET_DOMAIN_FOUNDATION.md`;
 - `generate_assignment.py`;
 - prototype candidate under `experiments/research-prototype-v1/`;
 - candidate G comparator execution sheet;
