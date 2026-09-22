@@ -6,7 +6,7 @@
 
 Canonical baseline:
 - `docs/quant/MARKET_DOMAIN_FOUNDATION.md`
-- `mining-site/market-education/2026-09-21-market-course-synthesis.md`
+- `mining-site/market/2026-09-21-course-synthesis.md`
 
 Purpose: permit the project to design and internally reject weak market scenarios without asking the project owner to act as a trading expert.
 
