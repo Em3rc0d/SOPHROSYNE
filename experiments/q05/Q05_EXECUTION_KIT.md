@@ -6,7 +6,7 @@
 
 This kit operationalizes `Q05_PREREGISTRATION.md`. It does not assert that SOPHROSYNE has a moat.
 
-The shared candidate artifact at `experiments/research-prototype-v1/` now emits candidate C01/C02/C04/C05/C07 eligibility, exposure and use events. These are **instrumentation readiness**, not adoption/moat evidence. C03/C06/C08 are not represented strongly enough in this throwaway prototype to support promotable component conclusions.
+The shared candidate artifact at `experiments/research-prototype-v1/` v2.3 emits candidate C01/C02/C04/C05/C07 eligibility, exposure and use events. C01 now distinguishes directional supporting/opposing evidence from non-directional market context. These are **instrumentation readiness**, not adoption/moat evidence. C03/C06/C08 are not represented strongly enough in this throwaway prototype to support promotable component conclusions.
 
 ## 1. Entry conditions
 
@@ -207,7 +207,7 @@ E05-C:
 ```yaml
 q03_promotable_persona: NOT_FROZEN
 adult_peru_participants: NOT_RECRUITED
-prototype_semantic_version: research-prototype-v2.2.0
+prototype_semantic_version: research-prototype-v2.3.0
 instrumented_components: [C01, C02, C04, C05, C07]
 non_promotable_or_missing_component_surfaces: [C03, C06, C08]
 e03c_14_day_repeat_use_receipt: MISSING
