@@ -452,6 +452,7 @@ button.full { width: 100%; }
           <div class="depth-detail" id="depthDetail"></div>
         </section>
 
+        <div class="arm-note"><strong>Importante:</strong> la cantidad de ítems no es una puntuación, no mide independencia y no representa una probabilidad. Una sola contradicción material puede pesar más que varios indicadores correlacionados.</div>
         <section class="evidence-grid">
           <article class="panel evidence-panel support">
             <div class="panel-head compact">
@@ -603,7 +604,7 @@ button.full { width: 100%; }
   const scenarios = [
     {
       id: 'SYN-01',
-      marketContext: { mode:'RESEARCH_ONLY', horizon:'3–10 sesiones / corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','VOLUME','BREADTH','VOLATILITY','LIQUIDITY'] },
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'3–10 sesiones / corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','VOLUME','BREADTH','VOLATILITY','LIQUIDITY'], independenceNote:'Momentum y ruptura comparten el mismo grupo de precio; volumen, amplitud y liquidez no se cuentan como réplicas independientes de esa señal.' },
       family: 'Repetición sintética · conflicto de tendencia',
       title: 'Impulso fuerte, confirmación incompleta',
       question: 'El precio acelera después de varias sesiones positivas, pero parte de la evidencia de confirmación pierde calidad. ¿Qué puede afirmarse rigurosamente con la información disponible?',
@@ -647,7 +648,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-02',
-      marketContext: { mode:'RESEARCH_ONLY', horizon:'18 ventanas / rango de corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','EVENT','PROVENANCE'] },
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'18 ventanas / rango de corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','EVENT','PROVENANCE'], independenceNote:'Rebote, soporte y desaceleración vendedora comparten historia de precio; narrativa y volatilidad son contexto separado, no votos adicionales.' },
       family: 'Repetición sintética · rango',
       title: 'Rebote dentro de un rango, narrativa excesiva',
       question: 'El precio rebota desde la zona inferior de un rango mientras una narrativa externa gana atención. ¿El rebote demuestra un cambio de régimen?',
@@ -691,7 +692,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-03',
-      marketContext: { mode:'RESEARCH_ONLY', horizon:'corto plazo con contexto externo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','LIQUIDITY','PROVENANCE','EVENT'] },
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'corto plazo con contexto externo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','LIQUIDITY','PROVENANCE','EVENT'], independenceNote:'Estructura y momentum comparten grupo de precio; la fuente crítica/provenance es una condición de completitud distinta; liquidez es contexto operativo.' },
       family: 'Repetición sintética · evidencia desactualizada',
       title: 'Señales favorables con una fuente crítica desactualizada',
       question: 'Varios indicadores son constructivos, pero una fuente importante está desactualizada. ¿Debe mantenerse una conclusión direccional?',
@@ -735,7 +736,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-04',
-      marketContext: { mode:'RESEARCH_ONLY', horizon:'ruptura de corto plazo bajo alta volatilidad', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','LIQUIDITY','PROVENANCE'] },
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'ruptura de corto plazo bajo alta volatilidad', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'CONTEXT_ONLY', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','LIQUIDITY','PROVENANCE'], independenceNote:'Ruptura y momentum comparten grupo de precio; volatilidad no aporta dirección; provenance y participación deben evaluarse por separado.' },
       family: 'Repetición sintética · alta volatilidad',
       title: 'Ruptura aparente en un régimen de volatilidad extrema',
       question: 'El precio supera un nivel importante durante una expansión brusca de volatilidad, mientras dos fuentes de contexto no tienen la misma vigencia. ¿Qué puede sostenerse sin confundir velocidad con confirmación?',
@@ -779,7 +780,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-05',
-      marketContext: { mode:'RESEARCH_ONLY', horizon:'evento narrativo de corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','EVENT','POSITIONING','LIQUIDITY','PROVENANCE'] },
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'evento narrativo de corto plazo', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','EVENT','POSITIONING','LIQUIDITY','PROVENANCE'], independenceNote:'Múltiples fuentes narrativas pueden compartir origen; repetición de una historia no constituye confirmación causal independiente.' },
       family: 'Transferencia · narrativa y causalidad',
       title: 'Catalizador narrativo fuerte, evidencia causal débil',
       question: 'Una narrativa externa coincide con un movimiento llamativo y se repite en múltiples fuentes. ¿La repetición de la historia demuestra que causó el movimiento?',
@@ -824,7 +825,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-06',
-      marketContext: { mode:'EXECUTION_ONLY', horizon:'ventana inmediata de ejecución', instrument:'acción sintética líquida bajo estrés', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'PRIMARY', evidenceClasses:['PRICE','MOMENTUM','VOLUME','VOLATILITY','LIQUIDITY','EXECUTION'] },
+      marketContext: { mode:'EXECUTION_ONLY', horizon:'ventana inmediata de ejecución', instrument:'acción sintética líquida bajo estrés', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'PRIMARY', evidenceClasses:['PRICE','MOMENTUM','VOLUME','VOLATILITY','LIQUIDITY','EXECUTION'], independenceNote:'Momentum y estructura comparten señal de precio; volumen es actividad; spread y profundidad pertenecen al bloque de ejecución/liquidez.' },
       family: 'Repetición sintética · liquidez y señal',
       title: 'Señal positiva con deterioro de liquidez',
       question: 'Una señal técnica mejora mientras la liquidez se deteriora y el spread se amplía. ¿Debe tratarse la señal como igual de accionable?',
@@ -868,7 +869,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-07',
-      marketContext: { mode:'RESEARCH_ONLY', horizon:'mismo as_of multi-fuente', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PROVENANCE','EVENT','PRICE'] },
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'mismo as_of multi-fuente', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PROVENANCE','EVENT','PRICE'], independenceNote:'La independencia entre fuentes A/B es desconocida hasta demostrar provenance distinto; la fuente C desactualizada no confirma el mismo as_of.' },
       family: 'Repetición sintética · multi-fuente',
       title: 'Fuentes coinciden en dirección, discrepan en tiempo',
       question: 'Tres fuentes sugieren mejora, pero una de ellas fue publicada mucho antes que las otras. ¿La coincidencia basta para tratar el conjunto como confirmación independiente?',
@@ -912,7 +913,7 @@ button.full { width: 100%; }
     },
     {
       id: 'SYN-08',
-      marketContext: { mode:'RESEARCH_ONLY', horizon:'comparación entre regímenes', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','POSITIONING'] },
+      marketContext: { mode:'RESEARCH_ONLY', horizon:'comparación entre regímenes', instrument:'acción sintética líquida', leverage:'NONE', portfolioContextUsed:false, executionRelevance:'NOT_MATERIAL_TO_PRIMARY_REASONING', evidenceClasses:['PRICE','MOMENTUM','VOLATILITY','POSITIONING'], independenceNote:'Patrón y momentum comparten grupo de precio; volatilidad/correlación definen el régimen y participación es contexto, no confirmación automática.' },
       family: 'Repetición sintética · régimen',
       title: 'Señal familiar en un régimen diferente',
       question: 'Una regla que funcionó bien en un contexto anterior reaparece, pero el régimen de volatilidad y correlación cambió. ¿Puede reutilizarse la conclusión anterior sin más?',
@@ -1096,7 +1097,8 @@ button.full { width: 100%; }
       ['Instrumento', mc.instrument],
       ['Leverage', mc.leverage],
       ['Ejecución', mc.executionRelevance]
-    ].map(([k,v]) => `<span class="domain-chip"><strong>${escapeHtml(k)}:</strong> ${escapeHtml(v)}</span>`).join('');
+    ].map(([k,v]) => `<span class="domain-chip"><strong>${escapeHtml(k)}:</strong> ${escapeHtml(v)}</span>`).join('') +
+      `<span class="domain-chip"><strong>Independencia:</strong> ${escapeHtml(mc.independenceNote)}</span>`;
     $('marketState').textContent = s.state;
     $('volatility').textContent = s.volatility;
     $('evidenceQuality').textContent = s.evidenceQuality;
