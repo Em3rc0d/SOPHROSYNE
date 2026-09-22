@@ -5,7 +5,7 @@
 `CANONICAL INTERNAL DOMAIN BASELINE / NOT INVESTMENT ADVICE / NOT EMPIRICAL ALPHA EVIDENCE`
 
 Evidence source:
-`mining-site/market-education/2026-09-21-market-course-synthesis.md`.
+`mining-site/market/2026-09-21-course-synthesis.md`.
 
 Purpose: define the minimum market/investment knowledge that SOPHROSYNE design, scenarios, UI labels and reasoning logic must respect before any market-domain reviewer evaluates higher-order correctness.
 
