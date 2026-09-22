@@ -12,6 +12,7 @@ REQUIRED = [
     "experiments/q00/Q00_PREREGISTRATION.md",
     "experiments/q00/Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md",
     "experiments/q00/Q00_SCORING_RUBRIC.md",
+    "experiments/q00/Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md",
     "experiments/q00/Q00_REVIEWER_HANDOFF.md",
     "experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md",
     "experiments/q00/generate_assignment.py",
@@ -32,6 +33,8 @@ REQUIRED = [
     "docs/validation/q02/DATA_USE_PROFILE_PACKET.md",
     "docs/validation/q02/PROVIDER_INQUIRY_TEMPLATE.md",
     "docs/validation/MK0_EXTERNAL_HANDOFF_READINESS.md",
+    "docs/quant/MARKET_DOMAIN_FOUNDATION.md",
+    "mining-site/market/2026-09-21-course-synthesis.md",
     "mining-site/external/2026-09-17-public-source-refresh.md",
     "mining-site/competitors/2026-09-17-tradingview-comparator-snapshot.md",
 ]
@@ -51,6 +54,8 @@ q05 = (ROOT / "experiments/q05/Q05_PREREGISTRATION.md").read_text(encoding="utf-
 status = (ROOT / "docs/validation/MK0_EXECUTION_STATUS.md").read_text(encoding="utf-8")
 prototype = (ROOT / "experiments/research-prototype-v1/index.html").read_text(encoding="utf-8")
 public_refresh = (ROOT / "mining-site/external/2026-09-17-public-source-refresh.md").read_text(encoding="utf-8")
+market_foundation = (ROOT / "docs/quant/MARKET_DOMAIN_FOUNDATION.md").read_text(encoding="utf-8")
+market_checklist = (ROOT / "experiments/q00/Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md").read_text(encoding="utf-8")
 
 require("Q00 remains DRAFT", "status: DRAFT" in q00)
 require("Q00 candidate sample plan bound", "target_sample_size: 84" in q00 and "minimum_usable_sample: 70" in q00)
@@ -63,6 +68,8 @@ require("Q04 synthetic receipt remains inconclusive", "INCONCLUSIVE / DRY_RUN_ON
 require("Q05 exposure contract bound", "Q05_COMPONENT_EXPOSURE_CONTRACT.md" in q05)
 require("MK0 remains blocked", "MK0_PROMOTION: BLOCKED" in status and "MK1_PRODUCTION_IMPLEMENTATION: NOT_AUTHORIZED" in status)
 require("public refresh cannot promote", "PUBLIC_PRECHECK_ONLY / NOT_EXTERNAL_AUTHORITY / NOT_PROMOTABLE" in public_refresh)
+require("market domain separates price from value", "Price is not value" in market_foundation or "Price is not value" in market_foundation.title())
+require("market scenario QA rejects disguised signals", "controlled reasoning instrument, not a disguised signal" in market_checklist)
 
 g_sheet = (ROOT / "experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md").read_text(encoding="utf-8")
 q01_cover = (ROOT / "docs/validation/q01/COUNSEL_COVER_NOTE.md").read_text(encoding="utf-8")

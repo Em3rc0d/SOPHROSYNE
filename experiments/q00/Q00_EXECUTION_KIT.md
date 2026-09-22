@@ -38,6 +38,13 @@ Candidate allocation/minimum/counterbalancing semantics are now instantiated in 
 
 ## 3. Scenario corpus contract
 
+Internal market-domain QA before independent R2:
+- `docs/quant/MARKET_DOMAIN_FOUNDATION.md`;
+- `experiments/q00/Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md`;
+- `mining-site/market/2026-09-21-course-synthesis.md`.
+
+The project owner is not treated as a market-domain authority. User feedback remains UX/comprehension evidence; market correctness is checked against the domain baseline and then independently reviewed.
+
 Every scenario must include the same underlying fact set across arms and contain at minimum:
 - 3 supporting observations;
 - 2 contradicting observations;

@@ -30,6 +30,7 @@ This is not an MK0 promotion receipt.
 ~~~text
 experiments/q00/Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md
 experiments/q00/Q00_SCORING_RUBRIC.md
+experiments/q00/Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md
 experiments/q00/Q00_REVIEWER_HANDOFF.md
 experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md
 experiments/q00/generate_assignment.py
@@ -47,6 +48,8 @@ docs/validation/q01/COUNSEL_COVER_NOTE.md
 docs/validation/q02/PROVIDER_INQUIRY_TEMPLATE.md
 
 mining-site/external/2026-09-17-public-source-refresh.md
+mining-site/market/2026-09-21-course-synthesis.md
+docs/quant/MARKET_DOMAIN_FOUNDATION.md
 ~~~
 
 ## Q00 candidate design identity
