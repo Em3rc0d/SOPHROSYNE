@@ -59,7 +59,33 @@ assert('event envelope includes canonical identity fields', [
   'event_schema_version','occurred_at_utc','experiment_id','experiment_version',
   'task_id','variant_id','prototype_digest','promotion_geo_class'
 ].every(x => html.includes(x)));
-assert('v2.2 version frozen', html.includes('research-prototype-v2.2.0'));
+assert('market context rendered', html.includes('domainContext') && html.includes('decision_context') && html.includes('decision_horizon'));
+assert('neutral evidence surface present', html.includes('Contexto no direccional') && html.includes('contextEvidence') && html.includes("item.directional !== false"));
+assert('all scenarios carry marketContext', ['SYN-01','SYN-02','SYN-03','SYN-04','SYN-05','SYN-06','SYN-07','SYN-08'].every(id => {
+  const start = html.indexOf(`id: '${id}'`);
+  const next = html.indexOf("id: 'SYN-", start + 8);
+  const block = html.slice(start, next === -1 ? html.indexOf('const frictionQuestions', start) : next);
+  return block.includes('marketContext:') &&
+    block.includes("leverage:'NONE'") &&
+    block.includes('evidenceClasses:[');
+}));
+assert('non-directional market facts cannot remain implicit votes', [
+  'Liquidez operativa suficiente',
+  'Volatilidad estable',
+  'Liquidez no se deteriora',
+  'Liquidez aún operativa',
+  'Narrativa consistente entre fuentes',
+  'Actividad/volumen bruto aumenta',
+  'Tercera fuente histórica coincide',
+  'No hay contradicción explícita actual',
+  'Participación suficiente'
+].every(label => {
+  const start = html.indexOf(`title: '${label}'`);
+  if (start < 0) return false;
+  return html.slice(start, start + 420).includes('directional: false');
+}));
+assert('generic change-mind prompt has no macro assumption', !html.includes('evidencia macro no contradictoria'));
+assert('v2.3 version frozen', html.includes('research-prototype-v2.3.0'));
 
 const matches = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
 assert('exactly one inline application script', matches.length === 1);
