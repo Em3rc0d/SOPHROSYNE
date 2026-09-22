@@ -8,7 +8,7 @@ This is the canonical interactive research artifact used to prepare Q00/Q03/Q05 
 
 ## Current version
 
-`research-prototype-v2.0.0`
+`research-prototype-v2.3.0`
 
 ## Q00 rehearsal coverage
 
@@ -24,7 +24,9 @@ The artifact now exposes all required Q00 arm identities:
 
 G remains a **non-promotable proxy** until an exact external comparator snapshot/version is frozen under the preregistration.
 
-The scenario corpus contains five research families, including a transfer scenario. Outcomes remain hidden during the task and are revealed only in arm D after a record is saved.
+The rehearsal corpus contains eight scenario instances. Seven feed the A–G Williams assignment and SYN-05 is reserved for unassisted transfer. Outcomes remain hidden during the task and are revealed only in arm D after a record is saved.
+
+v2.3 additionally separates directional evidence from non-directional market context, declares mode/horizon/instrument/leverage/execution relevance for every scenario, and stores that context in Decision Records.
 
 ## Rehearsal locking
 
@@ -33,7 +35,7 @@ Informal UAT allows arm switching.
 A rehearsal assignment can be frozen in the browser with query parameters such as:
 
 ```
-?arm=F&locked=1&participant=<opaque-id>&order=SYN-03,SYN-01,SYN-05,SYN-02,SYN-04
+?arm=F&locked=1&participant=<opaque-id>&order=SYN-03,SYN-01,SYN-06,SYN-02,SYN-04,SYN-07,SYN-08
 ```
 
 This is an implementation mechanism only. It does not make a run preregistered or promotable.
@@ -50,7 +52,9 @@ New records include:
 - process posture;
 - evidence alignment;
 - simple prediction for arm D;
-- hidden-outcome feedback event where applicable.
+- hidden-outcome feedback event where applicable;
+- decision context, horizon, instrument class and leverage class;
+- evidence-class set for the scenario.
 
 ## Boundaries
 
@@ -88,11 +92,6 @@ node experiments/research-prototype-v1/verify.mjs
 
 GitHub Actions runs the same verifier on branch changes.
 
-Current engineering identity (candidate, not preregistration digest):
-
-```
-branch_head: 8400ff03c191b3873fe5eca63c86fe24dbbc47a2
-index_git_blob: aeddd8612ae5f41bda3351b7ab1e38eb3c0b1388
-```
+Current engineering identity is taken from the exact Git commit/blob used by the reviewer packet and final freeze. Branch-head strings in this README are intentionally not treated as durable authority.
 
 The final Q00 material digest remains unfrozen until independent review, comparator-G authority, scenario review and preregistration closure.
