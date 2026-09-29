@@ -20,11 +20,18 @@ REQUIRED = [
     "experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md",
     "experiments/q00/generate_assignment.py",
     "experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md",
+    "experiments/q00/Q00_FUNDAMENTAL_SCENARIO_PACK.md",
+    "experiments/q00/fundamental-scenarios/manifest.json",
+    "experiments/q00/validate_fundamental_scenarios.py",
     "experiments/q03/Q03_EXECUTION_KIT.md",
     "experiments/q03/Q03_PREREGISTRATION.md",
     "experiments/q03/Q03_14_DAY_RUNBOOK.md",
     "experiments/q03/q03_event.schema.json",
     "experiments/q03/validate_event_export.py",
+    "experiments/q03/research_collector.py",
+    "experiments/q03/Q03_COLLECTOR_EXPORT_PATH.md",
+    "experiments/q03/q03_longitudinal_metrics.py",
+    "experiments/q03/Q03_LONGITUDINAL_ANALYSIS.md",
     "experiments/q04/Q04_PREREGISTRATION.md",
     "experiments/q04/Q04_DRY_RUN_RECEIPT.md",
     "experiments/q04/Q04_INDEPENDENT_REPRODUCTION_PACKET.md",
@@ -69,6 +76,7 @@ require("Q00 transfer mode", "unassisted_transfer" in prototype and "SYN-05" in 
 require("Q00 eight scenarios", all(f"SYN-0{i}" in prototype for i in range(1, 9)))
 require("prototype v2.3", "research-prototype-v2.3.0" in prototype)
 require("Q03 runbook bound", "Q03_14_DAY_RUNBOOK.md" in q03)
+require("MK0 status uses v2.3", "seven-arm v2.3 rehearsal prototype" in status and "v2.2 rehearsal" not in status)
 require("Q04 synthetic receipt remains inconclusive", "INCONCLUSIVE / DRY_RUN_ONLY / NOT_PROMOTABLE" in q04_receipt)
 require("Q05 exposure contract bound", "Q05_COMPONENT_EXPOSURE_CONTRACT.md" in q05)
 require("MK0 remains blocked", "MK0_PROMOTION: BLOCKED" in status and "MK1_PRODUCTION_IMPLEMENTATION: NOT_AUTHORIZED" in status)
