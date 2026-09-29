@@ -1,0 +1,138 @@
+{
+  "schema_version": "mk0-external-handoff-manifest-v1",
+  "status": "CANDIDATE_FREEZE_FOR_EXTERNAL_REVIEW",
+  "source_branch": "research/mk0-final-internal-closure",
+  "source_commit": "f940c958321ae950e89ce428ec521773e7a083a9",
+  "generated_from_tree": "f4c4de1251525431106a46103f0a2d50c8a8396b",
+  "authority_rule": "Exact material identity is final merged commit plus per-file Git blob SHA-1. External authority remains required.",
+  "bundles": {
+    "q00": {
+      "files": [
+        {
+          "path": "experiments/research-prototype-v1/index.html",
+          "git_blob_sha1": "17e99aded51eb79f7f1b03a9b0f4fb0a81979af6"
+        },
+        {
+          "path": "experiments/q00/Q00_PREREGISTRATION.md",
+          "git_blob_sha1": "d28f5262a1652184897b0ad697019bc4d256a8ae"
+        },
+        {
+          "path": "experiments/q00/Q00_EXECUTION_KIT.md",
+          "git_blob_sha1": "4e0df3de6f671e3828868d1dd9b212c90bd00c36"
+        },
+        {
+          "path": "experiments/q00/Q00_SAMPLE_AND_ASSIGNMENT_PLAN.md",
+          "git_blob_sha1": "06d4ebe5fc77d67e2c74d9cd9ecd366da8630b0c"
+        },
+        {
+          "path": "experiments/q00/Q00_SCORING_RUBRIC.md",
+          "git_blob_sha1": "20773366d62f24956972af546fffb7c782b5a168"
+        },
+        {
+          "path": "experiments/q00/Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md",
+          "git_blob_sha1": "e44fca5765f7f45b67c8ba0d7249037f6c0dfc05"
+        },
+        {
+          "path": "experiments/q00/Q00_MARKET_SCENARIO_AUDIT_V1.md",
+          "git_blob_sha1": "d68fac8d2f74c552dc0797e3f2ace9469e8ea55b"
+        },
+        {
+          "path": "experiments/q00/Q00_SCENARIO_DOMAIN_MAP.json",
+          "git_blob_sha1": "0e3b705e99a829baa52260a6f3cf5635c9fecb12"
+        },
+        {
+          "path": "experiments/q00/Q00_FUNDAMENTAL_SCENARIO_PACK.md",
+          "git_blob_sha1": "0d3ee525cbf71fa881eea042aba6e3411fefe654"
+        },
+        {
+          "path": "experiments/q00/fundamental-scenarios/manifest.json",
+          "git_blob_sha1": "638e15903aa466e345786c0322cb7085875303ef"
+        },
+        {
+          "path": "experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md",
+          "git_blob_sha1": "9dcc05481346d0261fd2eb69a84e8a0c012a0a8d"
+        },
+        {
+          "path": "experiments/q00/Q00_REVIEWER_HANDOFF.md",
+          "git_blob_sha1": "8d54bbbc92dbbe81d7624e6cdfd8d92b1dfd0e05"
+        },
+        {
+          "path": "experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md",
+          "git_blob_sha1": "82343f9ba65d432eaec90125540b49dda16238b4"
+        },
+        {
+          "path": "experiments/q00/generate_assignment.py",
+          "git_blob_sha1": "41cd4e4f024404171b875e8176b86ffdaf5a37c1"
+        }
+      ]
+    },
+    "q01": {
+      "files": [
+        {
+          "path": "docs/validation/q01/REGULATORY_REVIEW_PACKET.md",
+          "git_blob_sha1": "0d2c331d86b7d532064ae9df771a872a7b2706c4"
+        },
+        {
+          "path": "docs/validation/q01/COUNSEL_COVER_NOTE.md",
+          "git_blob_sha1": "53cea3ece853341dd00eff2a14fc605763e9cc8c"
+        },
+        {
+          "path": "docs/regulatory/REGULATORY_BOUNDARY.md",
+          "git_blob_sha1": "15ff383edd295013333d1b204b8121c138207827"
+        },
+        {
+          "path": "docs/mvp/MK1_SPEC.md",
+          "git_blob_sha1": "7316685c758690dd158a56f359139e96fb5cbcd5"
+        },
+        {
+          "path": "docs/product/UX_PRINCIPLES.md",
+          "git_blob_sha1": "b66634379d6295702887b5399cf68461475434bf"
+        },
+        {
+          "path": "experiments/research-prototype-v1/index.html",
+          "git_blob_sha1": "17e99aded51eb79f7f1b03a9b0f4fb0a81979af6"
+        },
+        {
+          "path": "experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md",
+          "git_blob_sha1": "82343f9ba65d432eaec90125540b49dda16238b4"
+        },
+        {
+          "path": "experiments/q03/Q03_14_DAY_RUNBOOK.md",
+          "git_blob_sha1": "ce2b33cdf5b8b571a2d8f95dfe73254e916b3d5f"
+        },
+        {
+          "path": "experiments/q03/Q03_COLLECTOR_EXPORT_PATH.md",
+          "git_blob_sha1": "ca034fb2060397f86574b9564443e187ffb61d08"
+        },
+        {
+          "path": "experiments/q03/q03_event.schema.json",
+          "git_blob_sha1": "828a491d0766d10e184c0bed68cefa7ba56382d2"
+        }
+      ]
+    },
+    "q02": {
+      "files": [
+        {
+          "path": "docs/validation/q02/DATA_USE_PROFILE_PACKET.md",
+          "git_blob_sha1": "997b6bc1c2c98dbd226878f70f7e7a3eda67126a"
+        },
+        {
+          "path": "docs/validation/q02/PROVIDER_INQUIRY_TEMPLATE.md",
+          "git_blob_sha1": "7ff4b9fa2fc3adf9daa25966e408a71b9d10d22a"
+        },
+        {
+          "path": "docs/data/DATA_RIGHTS.md",
+          "git_blob_sha1": "4b1db11d4340e2beb0aeb3a463e74e8c989b81de"
+        },
+        {
+          "path": "mining-site/data-licensing/2026-09-17-provider-rights-precheck.md",
+          "git_blob_sha1": "940a126bc9d124877b7b3c6475499e2b30021d3b"
+        },
+        {
+          "path": "mining-site/external/2026-09-17-public-source-refresh.md",
+          "git_blob_sha1": "44f2cd6db136e84d9274b8be2bb566e19f5dac57"
+        }
+      ]
+    }
+  }
+}
