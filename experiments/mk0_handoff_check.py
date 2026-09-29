@@ -44,6 +44,7 @@ REQUIRED = [
     "docs/validation/q02/DATA_USE_PROFILE_PACKET.md",
     "docs/validation/q02/PROVIDER_INQUIRY_TEMPLATE.md",
     "docs/validation/MK0_EXTERNAL_HANDOFF_READINESS.md",
+    "docs/validation/MK0_INTERNAL_PRE_HANDOFF_CLOSURE.md",
     "docs/validation/MK0_EXTERNAL_HANDOFF_MANIFEST.json",
     "docs/quant/MARKET_DOMAIN_FOUNDATION.md",
     "mining-site/market/2026-09-21-course-synthesis.md",
