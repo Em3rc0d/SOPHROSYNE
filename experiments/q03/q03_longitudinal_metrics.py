@@ -122,9 +122,10 @@ def self_test():
         ev("4","decision_record_opened","2026-09-03T15:02:00Z","s2"),
         ev("5","reminder_delivered","2026-09-09T13:00:00Z","r1"),
         ev("6","session_started","2026-09-09T16:00:00Z","s3"),
-        ev("7","decision_record_revisited","2026-09-09T16:02:00Z","s3"),
-        ev("8","session_started","2026-09-12T16:00:00Z","s4"),
-        ev("9","task_answer_submitted","2026-09-12T16:05:00Z","s4"),
+        ev("7","decision_record_opened","2026-09-09T16:01:00Z","s3"),
+        ev("8","decision_record_revisited","2026-09-09T16:02:00Z","s3"),
+        ev("9","session_started","2026-09-12T16:00:00Z","s4"),
+        ev("10","task_answer_submitted","2026-09-12T16:05:00Z","s4"),
     ]}
     result=analyze(payload)
     p=result["participants"]["P1"]
