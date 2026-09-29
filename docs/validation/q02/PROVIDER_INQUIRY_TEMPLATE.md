@@ -1,5 +1,12 @@
 # Q02 Provider Data-Rights Inquiry Template
 
+## Frozen material identity
+
+Provider/licensing outreach uses bundle `q02` from:
+`docs/validation/MK0_EXTERNAL_HANDOFF_MANIFEST.json`.
+
+The manifest identifies the exact DataUseProfile, rights policy and public precheck supplied with the inquiry. Provider authority must still be tied to the exact provider/product/account class in each response.
+
 ## Status
 
 `READY_TO_SEND / PROVIDER AUTHORITY REQUIRED`

@@ -1,0 +1,221 @@
+{
+  "schema_version": "q00-fundamental-supplement-v1",
+  "status": "CANDIDATE_READY_FOR_R2",
+  "purpose": "Supplemental company-fundamental and valuation scenarios for R2 selection before final Q00 corpus freeze.",
+  "scenarios": [
+    {
+      "scenario_id": "FUND-01",
+      "title": "Buen negocio, valoración exigente",
+      "decision_context": "INVESTMENT",
+      "horizon": "3–5 años",
+      "instrument": "acción ordinaria sintética",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "core_concepts": [
+        "FUNDAMENTAL",
+        "VALUATION",
+        "PROVENANCE"
+      ],
+      "facts": [
+        {
+          "id": "F1",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Ingresos crecieron 18% interanual y el margen operativo pasó de 16% a 19%."
+        },
+        {
+          "id": "F2",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Free cash flow creció 11% interanual; conversión de utilidad neta a FCF = 82%."
+        },
+        {
+          "id": "F3",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Deuda neta/EBITDA = 0.6x; no hay vencimientos materiales en los próximos 24 meses."
+        },
+        {
+          "id": "F4",
+          "class": "VALUATION",
+          "observability": "DERIVED",
+          "text": "P/E forward = 42x frente a mediana sectorial de 25x."
+        },
+        {
+          "id": "F5",
+          "class": "VALUATION",
+          "observability": "DERIVED",
+          "text": "Un DCF base con crecimiento terminal 3% y WACC 9% produce valor 22% por debajo del precio actual."
+        },
+        {
+          "id": "F6",
+          "class": "VALUATION",
+          "observability": "INFERRED",
+          "text": "El consenso espera crecimiento de EPS de 20% anual por tres años; es una estimación, no un hecho."
+        },
+        {
+          "id": "F7",
+          "class": "PROVENANCE",
+          "observability": "OBSERVED",
+          "text": "Los estados financieros son vigentes al último trimestre; el DCF depende de supuestos no observables."
+        }
+      ],
+      "expected_reasoning": [
+        "Separar calidad del negocio de atractivo de la acción al precio actual.",
+        "Reconocer que crecimiento y balance sólidos no invalidan riesgo de valoración.",
+        "Tratar DCF y consenso como inferencias sensibles a supuestos.",
+        "No concluir comprar/vender; identificar qué supuestos o resultados futuros cambiarían la valoración."
+      ],
+      "invalidator_classes": [
+        "crecimiento y márgenes superan de forma sostenida los supuestos conservadores",
+        "WACC/terminal growth justificadamente cambian",
+        "precio cambia materialmente sin deterioro fundamental",
+        "deterioro de cash flow o balance invalida calidad atribuida"
+      ],
+      "hidden_outcome": "El negocio siguió creciendo, pero una compresión de múltiplos produjo retorno plano durante 18 meses."
+    },
+    {
+      "scenario_id": "FUND-02",
+      "title": "EPS mejora, caja se deteriora",
+      "decision_context": "INVESTMENT",
+      "horizon": "2–4 años",
+      "instrument": "acción ordinaria sintética",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "core_concepts": [
+        "FUNDAMENTAL",
+        "VALUATION",
+        "PROVENANCE"
+      ],
+      "facts": [
+        {
+          "id": "F1",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "EPS diluido aumentó 14% interanual."
+        },
+        {
+          "id": "F2",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Flujo de caja operativo cayó 9% y cuentas por cobrar crecieron 31%."
+        },
+        {
+          "id": "F3",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Capex aumentó 40%; free cash flow fue negativo."
+        },
+        {
+          "id": "F4",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Acciones diluidas en circulación aumentaron 7% por compensación y adquisiciones."
+        },
+        {
+          "id": "F5",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Deuda neta/EBITDA subió de 1.1x a 2.4x."
+        },
+        {
+          "id": "F6",
+          "class": "VALUATION",
+          "observability": "DERIVED",
+          "text": "P/E trailing bajó de 34x a 27x por crecimiento contable de EPS."
+        },
+        {
+          "id": "F7",
+          "class": "PROVENANCE",
+          "observability": "OBSERVED",
+          "text": "No hay todavía información suficiente para distinguir deterioro transitorio de working capital frente a menor calidad de ganancias."
+        }
+      ],
+      "expected_reasoning": [
+        "No tratar crecimiento de EPS como equivalente a mejora económica.",
+        "Integrar cash flow, working capital, dilution y leverage.",
+        "No interpretar menor P/E como bargain automático.",
+        "Mantener hipótesis alternativas sobre calidad de ganancias hasta tener evidencia adicional."
+      ],
+      "invalidator_classes": [
+        "normalización demostrable de cuentas por cobrar y cash conversion",
+        "FCF positivo consistente",
+        "reducción de leverage",
+        "evidencia de deterioro estructural en cobros/márgenes"
+      ],
+      "hidden_outcome": "El EPS siguió creciendo dos trimestres, pero posteriores deterioros de cobro obligaron a recortar guidance."
+    },
+    {
+      "scenario_id": "FUND-03",
+      "title": "Acción barata o trampa de valor",
+      "decision_context": "INVESTMENT",
+      "horizon": "3–5 años",
+      "instrument": "acción ordinaria sintética",
+      "leverage": "NONE",
+      "portfolio_context_used": false,
+      "core_concepts": [
+        "FUNDAMENTAL",
+        "VALUATION",
+        "MACRO",
+        "PROVENANCE"
+      ],
+      "facts": [
+        {
+          "id": "F1",
+          "class": "VALUATION",
+          "observability": "DERIVED",
+          "text": "P/E = 8x y EV/EBITDA = 5x, por debajo de promedios históricos de la empresa."
+        },
+        {
+          "id": "F2",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Ingresos caen 6% y margen EBITDA cayó 420 bps en dos años."
+        },
+        {
+          "id": "F3",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "Deuda neta/EBITDA = 3.8x con refinanciación relevante en 18 meses."
+        },
+        {
+          "id": "F4",
+          "class": "FUNDAMENTAL",
+          "observability": "OBSERVED",
+          "text": "La empresa recompró 2% de acciones, pero emitió deuda para financiar parte del programa."
+        },
+        {
+          "id": "F5",
+          "class": "MACRO",
+          "observability": "OBSERVED",
+          "text": "Tasas de referencia permanecen por encima del promedio de la última década."
+        },
+        {
+          "id": "F6",
+          "class": "FUNDAMENTAL",
+          "observability": "INFERRED",
+          "text": "La tesis optimista asume recuperación de demanda y retorno de márgenes a niveles históricos."
+        },
+        {
+          "id": "F7",
+          "class": "PROVENANCE",
+          "observability": "OBSERVED",
+          "text": "No existe todavía evidencia observable de recuperación de pedidos; sólo guidance de dirección."
+        }
+      ],
+      "expected_reasoning": [
+        "No equiparar múltiplo bajo con infravaloración.",
+        "Conectar deterioro operativo, leverage y refinancing risk con la valoración.",
+        "Separar guidance de evidencia observada.",
+        "Identificar condiciones necesarias para distinguir value opportunity de value trap."
+      ],
+      "invalidator_classes": [
+        "recuperación observable de pedidos/márgenes",
+        "refinanciación a costo sostenible",
+        "deleveraging verificable",
+        "nuevo deterioro operativo que haga insostenible la tesis de normalización"
+      ],
+      "hidden_outcome": "La refinanciación ocurrió a mayor costo y la recuperación de demanda tardó más de lo esperado; el múltiplo bajo no protegió contra nuevas revisiones de beneficios."
+    }
+  ]
+}

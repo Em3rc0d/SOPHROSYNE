@@ -66,6 +66,13 @@ Internal market audit:
 
 Internal result is `READY_FOR_R2`, not independent approval.
 
+Supplemental fundamental/valuation material:
+- `Q00_FUNDAMENTAL_SCENARIO_PACK.md`;
+- `fundamental-scenarios/manifest.json`;
+- `validate_fundamental_scenarios.py`.
+
+These three candidate investment-horizon scenarios close the internal fundamental-analysis coverage gap without silently changing the seven-arm Williams assignment. R2 decides whether they replace core cases, become a separate preregistered block, remain exploratory, or require rework.
+
 These are rehearsal materials only until independent market-domain review and final corpus hashing.
 
 All tasks are paper/historical/synthetic. No participant is asked to buy, sell or hold a real asset.

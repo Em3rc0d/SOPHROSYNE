@@ -2,7 +2,14 @@
 
 ## Status
 
-`READY_TO_SEND AFTER FLOW DIGESTS ARE FILLED`
+`READY_TO_SEND_CANDIDATE_BUNDLE / EXTERNAL_AUTHORITY_REQUIRED`
+
+## Frozen material identity
+
+Counsel must review bundle `q01` from:
+`docs/validation/MK0_EXTERNAL_HANDOFF_MANIFEST.json`.
+
+The authoritative review identity is the final merged commit plus the per-file Git blob SHA-1 values recorded in that bundle. If any reviewed file changes, the affected flow must be re-frozen or explicitly covered by a supplemental review.
 
 ## Objective
 

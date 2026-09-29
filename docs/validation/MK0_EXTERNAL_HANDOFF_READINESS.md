@@ -10,7 +10,7 @@ This document answers one narrow question:
 
 > Is every currently known internal artifact needed to request the remaining external authority / empirical evidence prepared, traceable and fail-closed?
 
-Current answer: **yes, subject to independent review of the candidate packets themselves**.
+Current answer: **yes, subject to independent review of the candidate packets themselves**. The Q00/Q01/Q02 candidate bundles are now pinned by exact Git blob identity in `MK0_EXTERNAL_HANDOFF_MANIFEST.json`.
 
 This is not an MK0 promotion receipt.
 
@@ -18,10 +18,10 @@ This is not an MK0 promotion receipt.
 
 | Gate | Internal handoff state | External / empirical blocker |
 |---|---|---|
-| Q00 causal value | READY_FOR_INDEPENDENT_REVIEW — seven-arm prototype v2.3, eight-case corpus, Williams assignment generator, candidate sample/analysis thresholds, scoring rubric, recruitment/moderator packet, reviewer handoff | independent methods + market review, exact G comparator freeze, Q01-approved participant flow, adult Peru cohort, actual run |
+| Q00 causal value | READY_FOR_INDEPENDENT_REVIEW — seven-arm prototype v2.3, eight-case core corpus, supplemental fundamental/valuation pack, Williams assignment generator, candidate sample/analysis thresholds, scoring rubric, recruitment/moderator packet, reviewer handoff | independent methods + market review, exact G comparator freeze, Q01-approved participant flow, adult Peru cohort, actual run |
 | Q01 Peru boundary | READY_TO_SEND_AFTER_FLOW_DIGESTS — regulatory packet + counsel cover note + public-source refresh | qualified Peru counsel/privacy/consumer authority tied to exact frozen flows |
 | Q02 data rights | READY_TO_SEND — DataUseProfile packet + provider inquiry template + public-source refresh | executed/written provider authority and current commercial quote for exact use profiles |
-| Q03 repeat use / WTP | READY_FOR_Q01_AND_INDEPENDENT_REVIEW — 14-day runbook, telemetry contract, prototype rehearsal events | Q01-approved consent/retention, promotion-grade collector/export receipt path, adults, 14-day observation, pricing evidence |
+| Q03 repeat use / WTP | READY_FOR_Q01_AND_INDEPENDENT_REVIEW — 14-day runbook, telemetry contract, prototype rehearsal events, local collector/export reference and executable longitudinal metrics | Q01-approved consent/retention + hosted collector/security posture, adults, reminder delivery receipts, 14-day observation and pricing evidence |
 | Q04 quant harness | READY_FOR_EXTERNAL_REPRODUCTION_HANDOFF — prereg, synthetic dry-run, independent reproduction packet | Q02-compatible real point-in-time dataset/profile + independent reviewer/run path |
 | Q05 durability | READY_FOR_INDEPENDENT_REVIEW — comparator snapshot candidate, execution kit, component exposure contract | Q03 persona/repeat-use receipt, exact comparator execution state, adult participants, independent review, Q01/Q02 compatibility |
 
@@ -37,10 +37,17 @@ experiments/q00/Q00_REVIEWER_HANDOFF.md
 experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md
 experiments/q00/generate_assignment.py
 experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md
+experiments/q00/Q00_FUNDAMENTAL_SCENARIO_PACK.md
+experiments/q00/fundamental-scenarios/manifest.json
+experiments/q00/validate_fundamental_scenarios.py
 
 experiments/q03/Q03_14_DAY_RUNBOOK.md
 experiments/q03/q03_event.schema.json
 experiments/q03/validate_event_export.py
+experiments/q03/research_collector.py
+experiments/q03/Q03_COLLECTOR_EXPORT_PATH.md
+experiments/q03/q03_longitudinal_metrics.py
+experiments/q03/Q03_LONGITUDINAL_ANALYSIS.md
 
 experiments/q04/Q04_INDEPENDENT_REPRODUCTION_PACKET.md
 

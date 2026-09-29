@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -20,11 +21,18 @@ REQUIRED = [
     "experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md",
     "experiments/q00/generate_assignment.py",
     "experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md",
+    "experiments/q00/Q00_FUNDAMENTAL_SCENARIO_PACK.md",
+    "experiments/q00/fundamental-scenarios/manifest.json",
+    "experiments/q00/validate_fundamental_scenarios.py",
     "experiments/q03/Q03_EXECUTION_KIT.md",
     "experiments/q03/Q03_PREREGISTRATION.md",
     "experiments/q03/Q03_14_DAY_RUNBOOK.md",
     "experiments/q03/q03_event.schema.json",
     "experiments/q03/validate_event_export.py",
+    "experiments/q03/research_collector.py",
+    "experiments/q03/Q03_COLLECTOR_EXPORT_PATH.md",
+    "experiments/q03/q03_longitudinal_metrics.py",
+    "experiments/q03/Q03_LONGITUDINAL_ANALYSIS.md",
     "experiments/q04/Q04_PREREGISTRATION.md",
     "experiments/q04/Q04_DRY_RUN_RECEIPT.md",
     "experiments/q04/Q04_INDEPENDENT_REPRODUCTION_PACKET.md",
@@ -36,6 +44,8 @@ REQUIRED = [
     "docs/validation/q02/DATA_USE_PROFILE_PACKET.md",
     "docs/validation/q02/PROVIDER_INQUIRY_TEMPLATE.md",
     "docs/validation/MK0_EXTERNAL_HANDOFF_READINESS.md",
+    "docs/validation/MK0_INTERNAL_PRE_HANDOFF_CLOSURE.md",
+    "docs/validation/MK0_EXTERNAL_HANDOFF_MANIFEST.json",
     "docs/quant/MARKET_DOMAIN_FOUNDATION.md",
     "mining-site/market/2026-09-21-course-synthesis.md",
     "mining-site/external/2026-09-17-public-source-refresh.md",
@@ -61,6 +71,7 @@ market_foundation = (ROOT / "docs/quant/MARKET_DOMAIN_FOUNDATION.md").read_text(
 market_checklist = (ROOT / "experiments/q00/Q00_MARKET_SCENARIO_REVIEW_CHECKLIST.md").read_text(encoding="utf-8")
 market_audit = (ROOT / "experiments/q00/Q00_MARKET_SCENARIO_AUDIT_V1.md").read_text(encoding="utf-8")
 scenario_domain_map = json.loads((ROOT / "experiments/q00/Q00_SCENARIO_DOMAIN_MAP.json").read_text(encoding="utf-8"))
+handoff_manifest = json.loads((ROOT / "docs/validation/MK0_EXTERNAL_HANDOFF_MANIFEST.json").read_text(encoding="utf-8"))
 
 require("Q00 remains DRAFT", "status: DRAFT" in q00)
 require("Q00 candidate sample plan bound", "target_sample_size: 84" in q00 and "minimum_usable_sample: 70" in q00)
@@ -69,10 +80,26 @@ require("Q00 transfer mode", "unassisted_transfer" in prototype and "SYN-05" in 
 require("Q00 eight scenarios", all(f"SYN-0{i}" in prototype for i in range(1, 9)))
 require("prototype v2.3", "research-prototype-v2.3.0" in prototype)
 require("Q03 runbook bound", "Q03_14_DAY_RUNBOOK.md" in q03)
+require("MK0 status uses v2.3", "seven-arm v2.3 rehearsal prototype" in status and "v2.2 rehearsal" not in status)
 require("Q04 synthetic receipt remains inconclusive", "INCONCLUSIVE / DRY_RUN_ONLY / NOT_PROMOTABLE" in q04_receipt)
 require("Q05 exposure contract bound", "Q05_COMPONENT_EXPOSURE_CONTRACT.md" in q05)
 require("MK0 remains blocked", "MK0_PROMOTION: BLOCKED" in status and "MK1_PRODUCTION_IMPLEMENTATION: NOT_AUTHORIZED" in status)
 require("public refresh cannot promote", "PUBLIC_PRECHECK_ONLY / NOT_EXTERNAL_AUTHORITY / NOT_PROMOTABLE" in public_refresh)
+require("handoff manifest is candidate freeze", handoff_manifest.get("status") == "CANDIDATE_FREEZE_FOR_EXTERNAL_REVIEW")
+for bundle_name in ("q00","q01","q02"):
+    bundle = handoff_manifest.get("bundles", {}).get(bundle_name, {})
+    files = bundle.get("files", [])
+    require(f"{bundle_name} handoff bundle is non-empty", bool(files))
+    for row in files:
+        path = row.get("path")
+        expected = row.get("git_blob_sha1")
+        require(f"{bundle_name} manifest path exists: {path}", bool(path) and (ROOT / path).is_file())
+        actual = subprocess.check_output(
+            ["git", "hash-object", str(ROOT / path)],
+            text=True,
+        ).strip()
+        require(f"{bundle_name} blob frozen: {path}", actual == expected)
+
 require("market domain separates price from value", "Price is not value" in market_foundation or "Price is not value" in market_foundation.title())
 require("market scenario QA rejects disguised signals", "controlled reasoning instrument, not a disguised signal" in market_checklist)
 require("market scenario audit ready for R2", "INTERNAL_QA_PASS / READY_FOR_R2" in market_audit)

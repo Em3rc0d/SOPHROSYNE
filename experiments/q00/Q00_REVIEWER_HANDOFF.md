@@ -31,6 +31,13 @@ Minimum:
 
 One person may satisfy both only if independence and competence are documented. Preferred: two different reviewers.
 
+## Frozen material identity
+
+The reviewer must use bundle `q00` from:
+`docs/validation/MK0_EXTERNAL_HANDOFF_MANIFEST.json`.
+
+The authoritative identity is the final merged commit plus the per-file Git blob SHA-1 values in that manifest. A file with a different blob identity is a different reviewed material version.
+
 ## Reviewer package
 
 Send:
