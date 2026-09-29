@@ -15,10 +15,10 @@ It does not close a Q by itself.
 
 | Gate | What has now been executed | Current terminal/status interpretation | What still blocks promotion |
 |---|---|---|---|
-| Q00 — causal value | seven-arm v2.2 rehearsal prototype, eight-case corpus, Williams assignment generator, candidate sample/analysis thresholds, scoring rubric, reviewer/recruitment packets, comparator freeze sheet | `OPEN / READY_FOR_INDEPENDENT_REVIEW` | independent methods + market review, exact G execution state, Q01-approved research flow, adult Peru participants, final material digests |
+| Q00 — causal value | seven-arm v2.3 rehearsal prototype, eight-case corpus, Williams assignment generator, candidate sample/analysis thresholds, scoring rubric, reviewer/recruitment packets, comparator freeze sheet | `OPEN / READY_FOR_INDEPENDENT_REVIEW` | independent methods + market review, exact G execution state, Q01-approved research flow, adult Peru participants, final material digests |
 | Q01 — Peru regulatory boundary | regulatory review packet, counsel cover note and refreshed official public-source precheck | `OPEN / EXTERNAL_AUTHORITY_REQUIRED` | qualified written Peru legal/privacy/consumer review of exact frozen product/research/commercial flows |
 | Q02 — commercial data rights | DataUseProfile contract, provider inquiry template, refreshed CoinGecko/Alpaca public-source precheck | `OPEN / EXTERNAL_AUTHORITY_REQUIRED` | written/executed provider rights, current quotes, entitlement/retention/derived/model-use confirmation for exact profiles |
-| Q03 — user value / repeat use / WTP | execution kit + 14-day runbook + Q03 event schema/validator + v2.2 rehearsal telemetry | `OPEN / READY_FOR_Q01_AND_INDEPENDENT_REVIEW` | Q01 consent/retention clearance, promotion-grade collector/export receipt path, independent review, adult Peru participants, full 14-day observation |
+| Q03 — user value / repeat use / WTP | execution kit + 14-day runbook + Q03 event schema/validator + v2.3 rehearsal telemetry + local collector/export reference + executable longitudinal analysis | `OPEN / READY_FOR_Q01_AND_INDEPENDENT_REVIEW` | Q01 consent/retention + hosted collector/security clearance, independent review, adult Peru participants, reminder delivery receipts and full 14-day observation |
 | Q04 — quant / optional ML | deterministic synthetic mechanics harness + dry-run receipt + independent reproduction handoff; internal G1/G2/G3/G5/G6/G7/G8 dry-run checks pass | `INCONCLUSIVE / DRY_RUN_ONLY / NOT_PROMOTABLE` | real point-in-time provider dataset, Q02-compatible rights profile, full profile fixtures, G4 independent reproduction; ML not evaluated |
 | Q05 — moat / durability | comparator candidate snapshot + component exposure contract + comparative/repeat-use/defensibility execution kit | `OPEN / READY_FOR_INDEPENDENT_REVIEW` | exact comparator execution state, Q03 persona/repeat-use receipt, adult Peru participants, valid exposure denominators, Q01/Q02 compatibility, independent review |
 
@@ -37,12 +37,19 @@ experiments/q00/Q00_SCORING_RUBRIC.md
 experiments/q00/Q00_REVIEWER_HANDOFF.md
 experiments/q00/Q00_RECRUITMENT_AND_MODERATOR_PACKET.md
 experiments/q00/Q00_G_COMPARATOR_FREEZE_SHEET.md
+experiments/q00/Q00_FUNDAMENTAL_SCENARIO_PACK.md
+experiments/q00/fundamental-scenarios/manifest.json
+experiments/q00/validate_fundamental_scenarios.py
 experiments/q00/generate_assignment.py
 
 experiments/q03/Q03_EXECUTION_KIT.md
 experiments/q03/Q03_14_DAY_RUNBOOK.md
 experiments/q03/q03_event.schema.json
 experiments/q03/validate_event_export.py
+experiments/q03/research_collector.py
+experiments/q03/Q03_COLLECTOR_EXPORT_PATH.md
+experiments/q03/q03_longitudinal_metrics.py
+experiments/q03/Q03_LONGITUDINAL_ANALYSIS.md
 
 experiments/q04/harness.py
 experiments/q04/Q04_DRY_RUN_RECEIPT.md
