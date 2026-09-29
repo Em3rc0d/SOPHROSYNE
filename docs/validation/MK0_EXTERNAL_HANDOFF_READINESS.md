@@ -10,7 +10,7 @@ This document answers one narrow question:
 
 > Is every currently known internal artifact needed to request the remaining external authority / empirical evidence prepared, traceable and fail-closed?
 
-Current answer: **yes, subject to independent review of the candidate packets themselves**.
+Current answer: **yes, subject to independent review of the candidate packets themselves**. The Q00/Q01/Q02 candidate bundles are now pinned by exact Git blob identity in `MK0_EXTERNAL_HANDOFF_MANIFEST.json`.
 
 This is not an MK0 promotion receipt.
 
