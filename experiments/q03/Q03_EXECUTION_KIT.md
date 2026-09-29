@@ -116,12 +116,17 @@ Canonical rehearsal/event-validation artifacts:
 - `experiments/q03/validate_event_export.py`;
 - `experiments/q03/Q03_14_DAY_RUNBOOK.md`.
 
+Internal reference path now exists:
+- `experiments/q03/research_collector.py` — loopback-only authenticated SQLite collector with server `received_at_utc`, idempotency and canonical SHA-256 export;
+- `experiments/q03/Q03_COLLECTOR_EXPORT_PATH.md`;
+- `experiments/q03/q03_longitudinal_metrics.py` — executable M1/M2/M3 and reminder-attribution semantics;
+- `experiments/q03/Q03_LONGITUDINAL_ANALYSIS.md`.
+
 Still missing for promotion-grade E03-C:
 - approved consent event/version and privacy retention authority;
-- server/research-pipeline `received_at_utc`;
+- approved hosted collector/security/storage posture (the reference collector intentionally refuses public serving);
 - frozen `prototype_digest`;
-- neutral reminder delivery/open instrumentation and attribution classification;
-- server/analysis-derived `qualifying_activity` / `revisit_classified`;
+- real neutral reminder delivery/open receipts;
 - test-account/recruitment cohort and Peru eligibility ingestion under the approved protocol;
 - 14-day real participant observations.
 
@@ -243,7 +248,9 @@ adult_peru_participants: NOT_RECRUITED
 prototype_semantic_version: research-prototype-v2.3.0
 prototype_instrumentation: READY_FOR_REHEARSAL
 prototype_digest: NOT_FROZEN
-reminder_attribution_pipeline: NOT_IMPLEMENTED
+reminder_attribution_analysis: IMPLEMENTED_REHEARSAL
+collector_export_reference: IMPLEMENTED_LOCAL_ONLY
+hosted_promotion_grade_collector: REQUIRES_Q01_SECURITY_REVIEW
 fourteen_day_observation: NOT_STARTED
 consent_privacy_review: REQUIRES_Q01
 paid_charge_flow: PROHIBITED_UNTIL_Q01
