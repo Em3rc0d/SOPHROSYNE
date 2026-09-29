@@ -1,4 +1,4 @@
-# MK0 Execution Status — 2026-09-17
+# MK0 Execution Status — 2026-09-28
 
 ## Purpose
 
@@ -10,6 +10,8 @@ This document records what has actually been executed for MK0 after the validati
 - authority that only external counsel/providers can supply.
 
 It does not close a Q by itself.
+
+Current internal closure receipt: `docs/validation/MK0_INTERNAL_PRE_HANDOFF_CLOSURE.md`.
 
 ## Current state
 
