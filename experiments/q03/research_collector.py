@@ -118,9 +118,11 @@ def ingest(con: sqlite3.Connection, event: dict, promotion_grade: bool) -> tuple
         if not existing:
             raise
         prior = json.loads(existing[0])
-        # Idempotent retry is accepted only when client-origin fields match.
+        # received_at_utc is server-owned and must never participate in
+        # client-payload idempotency comparison.
         prior.pop("received_at_utc", None)
         retry = dict(event)
+        retry.pop("received_at_utc", None)
         if prior != retry:
             raise ValueError("event_id collision with different payload")
         return json.loads(existing[0])["received_at_utc"], False
@@ -231,6 +233,16 @@ def self_test() -> None:
         _, inserted1 = ingest(con, event, promotion_grade=True)
         _, inserted2 = ingest(con, event, promotion_grade=True)
         assert inserted1 is True and inserted2 is False
+
+        collision = sample_event()
+        collision["event_name"] = "different_event"
+        try:
+            ingest(con, collision, promotion_grade=True)
+        except ValueError as exc:
+            assert "collision" in str(exc)
+        else:
+            raise AssertionError("event_id collision with changed payload was accepted")
+
         bad = sample_event("e2")
         bad["prototype_digest"] = "UNFROZEN_REHEARSAL"
         try:
@@ -250,6 +262,7 @@ def self_test() -> None:
         print(json.dumps({
             "status": "PASS",
             "idempotent_retry": True,
+            "changed_payload_collision_rejected": True,
             "promotion_grade_guard": True,
             "stable_event_digest": True,
             "participant_deletion_rehearsed": True,
