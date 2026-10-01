@@ -123,3 +123,21 @@ Do not incur data-provider spend until:
 > Decouple evidence-engineering from market-data procurement.
 
 SOPHROSYNE can validate its reasoning UX and research methodology without carrying live-data licensing risk into the public prototype.
+
+
+## Public sources used
+
+- CoinGecko pricing: https://www.coingecko.com/en/api/pricing
+- CoinGecko API terms: https://www.coingecko.com/en/api_terms
+- CoinGecko commercial/custom license explanation: https://support.coingecko.com/hc/en-us/articles/16760512207257-What-Are-the-Differences-Between-Commercial-and-Custom-Licenses
+- Alpaca Connect API: https://docs.alpaca.markets/us/docs/about-connect-api
+- Alpaca Market Data API: https://docs.alpaca.markets/us/docs/about-market-data-api
+- Tiingo pricing: https://www.tiingo.com/about/pricing
+- Tiingo general API licensing: https://www.tiingo.com/documentation/general
+- Tiingo EOD product: https://www.tiingo.com/products/end-of-day-stock-price-data
+- Twelve Data commercial/personal usage: https://support.twelvedata.com/en/articles/5332349-commercial-and-personal-usage
+- Alpha Vantage terms: https://www.alphavantage.co/terms_of_service/
+- Alpha Vantage API documentation: https://www.alphavantage.co/documentation/
+- Nasdaq Data Link terms: https://data.nasdaq.com/terms
+
+Re-check public terms before any paid/provider-dependent implementation.
