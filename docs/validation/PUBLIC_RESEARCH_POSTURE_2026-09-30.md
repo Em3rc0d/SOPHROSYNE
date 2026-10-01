@@ -101,3 +101,17 @@ Reassess this posture if:
 ## Final invariant
 
 > Public research may proceed without pretending that public-source research substitutes for legal/provider authority.
+
+
+## Public sources used
+
+- SMV — TUO Ley del Mercado de Valores / Article 6 intermediation:
+  https://www.smv.gob.pe/ServicioConsultaNormas/uploads/TUO_LMV_DECRETO_SUPREMO_N_020_2023_EF.pdf
+- SMV legal-information system:
+  https://www.smv.gob.pe/simv/Frm_DetalleSistemaInfoLegal.aspx?CNORMA=DLG0000199600861
+- Peru personal-data regulation, Decreto Supremo N.° 016-2024-JUS:
+  https://www.gob.pe/institucion/anpd/normas-legales/6554453-16-2024-jus
+- ANPD guide on disassociation/anonymization/pseudonymization:
+  https://www.gob.pe/institucion/anpd/informes-publicaciones/7317169-guia-de-disociacion-anonimizacion-y-seudonimizacion-de-datos-personales-para-entidades-publicas
+
+These sources inform the internal fail-closed posture; they do not constitute product-specific legal advice.
