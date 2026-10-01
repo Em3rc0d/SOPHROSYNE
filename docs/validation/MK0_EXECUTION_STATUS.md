@@ -13,6 +13,24 @@ It does not close a Q by itself.
 
 Current internal closure receipt: `docs/validation/MK0_INTERNAL_PRE_HANDOFF_CLOSURE.md`.
 
+## Public research lane
+
+```yaml
+PUBLIC_RESEARCH_PREVIEW: AUTHORIZED_BY_INTERNAL_RISK_POSTURE
+PUBLIC_PREVIEW_DATA: SYNTHETIC_LOCAL_ONLY
+SERVER_SIDE_PARTICIPANT_COLLECTION: DISABLED
+LIVE_BROKER_INTEGRATION: DISABLED
+PERSONALIZED_RECOMMENDATIONS: DISABLED
+PAYMENTS_OR_FAKE_DOOR: DISABLED
+```
+
+Canonical posture:
+- `docs/validation/PUBLIC_RESEARCH_POSTURE_2026-09-30.md`;
+- `docs/data/DATA_PROVIDER_DECISION_2026-09-30.md`;
+- `docs/operations/EXTERNAL_ACTION_POLICY.md`.
+
+This lane may be deployed publicly without claiming Q00/Q01/Q02/Q03/Q04/Q05 closure.
+
 ## Current state
 
 | Gate | What has now been executed | Current terminal/status interpretation | What still blocks promotion |
@@ -79,9 +97,9 @@ The following require an actor or evidence source outside the repository:
 
 ### External authority
 
-1. Qualified Peruvian securities/privacy/consumer counsel reviews the exact MK1 interaction and commercial bundle and produces the Q01 written artifact.
-2. CoinGecko supplies written confirmation/contractual coverage for the exact candidate crypto `DataUseProfile`, especially derived retention, model/embedding use and termination behavior.
-3. Alpaca supplies partner/commercial market-data terms, applicable exchange/user-entitlement obligations and a quote for the exact US-equities/ETF `DataUseProfile`.
+1. Q01 formal promotion still requires qualified Peruvian securities/privacy/consumer authority if/when the project chooses to seek it.
+2. Q02 formal production use still requires rights compatible with the selected provider/data surface.
+3. No external outreach is an automatic next step; contacting counsel/providers requires explicit user authorization under `EXTERNAL_ACTION_POLICY.md`.
 
 ### External empirical evidence
 
@@ -101,7 +119,7 @@ PHASE_0: NOT_AUTHORIZED
 MK1_PRODUCTION_IMPLEMENTATION: NOT_AUTHORIZED
 ```
 
-This blocking state is expected and correct. The internal pre-handoff package is now hardened enough that the remaining known promotion blockers are external authority, independent review, exact external execution-state freezes and empirical evidence. If any reviewer uncovers a material design flaw, that internal node reopens rather than being defended.
+This blocking state is expected and correct for formal MK0 promotion. It does **not** block the synthetic/local-only public research preview. The internal pre-handoff package is hardened enough that the remaining promotion blockers are external authority, independent review, exact external execution-state freezes and empirical evidence. If any reviewer uncovers a material design flaw, that internal node reopens rather than being defended.
 
 ## Next valid promotion path
 

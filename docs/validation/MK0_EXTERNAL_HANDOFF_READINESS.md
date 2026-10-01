@@ -94,15 +94,24 @@ The following are **not** claimed by this hardening pass:
 - profitability;
 - MK1 build authorization.
 
-## Remaining external action queue
+## Deferred formal-authority queue
 
-### External authority
+### Formal authority / independent review
 
-1. Fill exact product/research flow digests and send Q01 packet to qualified Peru counsel/reviewers.
-2. Send one Q02 inquiry per exact provider/product/data family; obtain contract/order-form/written licensing authority and quote.
-3. Independent Q00 R1/R2 review; apply changes before any outcome inspection.
-4. Freeze Q00 G exact comparator execution state after reviewer approval.
-5. Freeze Q03 consent/privacy/retention and collector/export path.
+These remain required for formal promotion, but they are **not automatic outreach tasks**.
+
+1. Q01 authority may be sought only with explicit user authorization to contact counsel.
+2. Q02 provider-specific authority may be sought only with explicit user authorization to contact or purchase from a provider.
+3. Q00 independent R1/R2 remains a formal gate; public-source/domain research may continue internally but does not impersonate independence.
+4. Exact G comparator state remains to be frozen before formal Q00 execution.
+5. Q03 hosted consent/privacy/retention/collector posture remains to be frozen before promotion-grade human collection.
+
+Immediate allowed path without outreach:
+- deploy synthetic/local-only public research preview;
+- continue public-source research;
+- harden market/fundamental scenarios;
+- execute synthetic Q04 engineering;
+- prepare real-data Q04 without purchasing or redistributing provider data.
 
 ### Empirical execution
 
@@ -138,6 +147,6 @@ Reopen this readiness assessment when:
 
 ## Final invariant
 
-> The next honest blockers are external authority and real observations, not missing internal handoff design.
+> The next honest blockers for **formal MK0 promotion** are external authority, independent review and real observations. The public synthetic research preview may proceed in parallel.
 
 If an external reviewer finds a material defect, the affected internal node reopens rather than being defended.
